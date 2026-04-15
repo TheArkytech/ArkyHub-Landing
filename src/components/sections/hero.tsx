@@ -68,13 +68,6 @@ export function ProjectCard() {
       <ContainerScroll titleComponent={null}>
         <BrowserMockup />
       </ContainerScroll>
-
-      {/* Closing line under the scroll-animated card */}
-      <div className="pb-12 text-center sm:pb-16">
-        <p className="text-sm italic text-[var(--text-muted)]">
-          Built by architects who got tired of WhatsApp project threads.
-        </p>
-      </div>
     </section>
   );
 }

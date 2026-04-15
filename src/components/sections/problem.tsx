@@ -1,94 +1,280 @@
-import { Container } from "@/components/ui/container";
-import { Reveal } from "@/components/motion/reveal";
-import { GitBranch, MessageCircleQuestion, Hourglass } from "lucide-react";
+"use client";
 
-const PILLARS = [
-  {
-    icon: GitBranch,
-    title: "Version chaos",
-    body: "A contractor builds from an old drawing. Rework that costs thousands and delays weeks.",
-  },
-  {
-    icon: MessageCircleQuestion,
-    title: "The status question",
-    body: "A client asks \u201Chow's my project going?\u201D \u2014 and you can't answer in less than an hour.",
-  },
-  {
-    icon: Hourglass,
-    title: "The hidden tax",
-    body: "Your team spends more time managing files than designing buildings.",
-  },
-];
+import React, { useEffect, useRef, useState } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Points, PointMaterial } from "@react-three/drei";
+import * as THREE from "three";
+import { useReducedMotion } from "motion/react";
+
+/**
+ * Chaos-to-order scroll animation. Ported from the 21st.dev snippet with
+ * only the minimum changes needed for this codebase:
+ *   - brand teal instead of indigo
+ *   - copy swapped to "Your project lives in chaos." → "ArkyHub brings order."
+ *   - demo "Your Content Here" scaffolding removed
+ *   - prefers-reduced-motion short-circuits to the resolved state (project rule §6)
+ *
+ * Particle count (2000), scroll distance (300vh), DPR, antialias, and the
+ * use of @react-three/drei are all kept as in the original snippet — these
+ * are deliberate choices of the upstream component.
+ */
+
+// Must be a literal hex — Three.js materials can't read CSS vars.
+// Keep in sync with --accent in globals.css.
+const ACCENT_HEX = "#0f8983";
+
+interface ParticleSystemProps {
+  scrollProgress: number;
+}
+
+const ParticleSystem: React.FC<ParticleSystemProps> = ({ scrollProgress }) => {
+  const pointsRef = useRef<THREE.Points>(null);
+
+  const [initialPositions] = useState(() => {
+    const pos = new Float32Array(2000 * 3);
+    for (let i = 0; i < 2000; i++) {
+      const radius = 150 + Math.random() * 300;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(Math.random() * 2 - 1);
+
+      pos[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+      pos[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+      pos[i * 3 + 2] = radius * Math.cos(phi);
+    }
+    return pos;
+  });
+
+  const [velocities] = useState(() => {
+    const vel = new Float32Array(2000 * 3);
+    for (let i = 0; i < 2000; i++) {
+      vel[i * 3] = (Math.random() - 0.5) * 2;
+      vel[i * 3 + 1] = (Math.random() - 0.5) * 2;
+      vel[i * 3 + 2] = (Math.random() - 0.5) * 2;
+    }
+    return vel;
+  });
+
+  const [targetPositions] = useState(() => {
+    const pos = new Float32Array(2000 * 3);
+    for (let i = 0; i < 2000; i++) {
+      const angle = (i / 2000) * Math.PI * 2;
+      const radius = 80 + (i % 5) * 15;
+
+      pos[i * 3] = Math.cos(angle) * radius;
+      pos[i * 3 + 1] = Math.sin(angle) * radius;
+      pos[i * 3 + 2] = Math.sin(i * 0.1) * 20;
+    }
+    return pos;
+  });
+
+  useFrame((state) => {
+    if (!pointsRef.current) return;
+
+    const geometry = pointsRef.current.geometry;
+    const positionAttribute = geometry.attributes.position;
+
+    for (let i = 0; i < 2000; i++) {
+      const startX = initialPositions[i * 3];
+      const startY = initialPositions[i * 3 + 1];
+      const startZ = initialPositions[i * 3 + 2];
+
+      const endX = targetPositions[i * 3];
+      const endY = targetPositions[i * 3 + 1];
+      const endZ = targetPositions[i * 3 + 2];
+
+      const progress = Math.min(scrollProgress, 1);
+      const eased =
+        progress < 0.5
+          ? 2 * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+
+      // Chaotic motion while in chaos state
+      const time = state.clock.elapsedTime;
+      const chaoticX =
+        startX + Math.sin(time * velocities[i * 3] * 0.5 + i) * 15;
+      const chaoticY =
+        startY + Math.cos(time * velocities[i * 3 + 1] * 0.5 + i) * 15;
+      const chaoticZ =
+        startZ + Math.sin(time * velocities[i * 3 + 2] * 0.5 + i * 0.5) * 15;
+
+      // Interpolate between chaotic and ordered positions
+      const x = chaoticX + (endX - chaoticX) * eased;
+      const y = chaoticY + (endY - chaoticY) * eased;
+      const z = chaoticZ + (endZ - chaoticZ) * eased;
+
+      positionAttribute.setXYZ(i, x, y, z);
+    }
+
+    positionAttribute.needsUpdate = true;
+
+    if (scrollProgress >= 0.5) {
+      pointsRef.current.rotation.z = state.clock.elapsedTime * 0.3;
+    }
+  });
+
+  return (
+    <Points ref={pointsRef} positions={initialPositions} frustumCulled={false}>
+      <PointMaterial
+        transparent
+        color="#ffffff"
+        size={2}
+        sizeAttenuation={true}
+        depthWrite={false}
+        opacity={0.8}
+      />
+    </Points>
+  );
+};
+
+const LogoComponent: React.FC<{ scrollProgress: number }> = ({
+  scrollProgress,
+}) => {
+  const logoRef = useRef<THREE.Mesh>(null);
+
+  useFrame(() => {
+    if (!logoRef.current) return;
+
+    const targetScale = scrollProgress >= 0.5 ? 1 : 0.3;
+    const currentScale = logoRef.current.scale.x;
+    logoRef.current.scale.setScalar(
+      currentScale + (targetScale - currentScale) * 0.05,
+    );
+
+    const targetOpacity = scrollProgress >= 0.5 ? 1 : 0.3;
+    if (logoRef.current.material instanceof THREE.MeshBasicMaterial) {
+      const currentOpacity = logoRef.current.material.opacity;
+      logoRef.current.material.opacity =
+        currentOpacity + (targetOpacity - currentOpacity) * 0.05;
+    }
+  });
+
+  return (
+    <mesh ref={logoRef} position={[0, 0, 0]}>
+      <torusGeometry args={[30, 8, 16, 100]} />
+      <meshBasicMaterial
+        color={ACCENT_HEX}
+        transparent
+        opacity={0.3}
+        wireframe={false}
+      />
+    </mesh>
+  );
+};
 
 export function Problem() {
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const containerRef = useRef<HTMLElement>(null);
+  const prefersReduced = useReducedMotion();
+
+  useEffect(() => {
+    // Accessibility: if the user prefers reduced motion, jump straight to
+    // the resolved "order" state and skip scroll tracking entirely.
+    if (prefersReduced) {
+      setScrollProgress(1);
+      return;
+    }
+
+    const handleScroll = () => {
+      if (!containerRef.current) return;
+
+      const rect = containerRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const elementTop = rect.top;
+      const elementHeight = rect.height;
+
+      const scrollStart = -elementTop;
+      const scrollRange = elementHeight - windowHeight;
+      const progress = Math.max(0, Math.min(1, scrollStart / scrollRange));
+
+      setScrollProgress(progress);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [prefersReduced]);
+
   return (
     <section
       id="problem"
-      className="relative border-t border-[var(--border)] bg-[var(--surface)] py-24 sm:py-32"
+      ref={containerRef}
+      className="relative w-full border-t border-[var(--border)] bg-black"
+      style={{ height: "300vh" }}
     >
-      <Container size="xl">
-        {/* Eyebrow */}
-        <Reveal className="text-center">
-          <p className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[var(--text-accent)]">
-            The patchwork problem
-          </p>
-          <h2
-            className="mx-auto mt-5 max-w-3xl font-[family-name:var(--font-display)] font-semibold tracking-[-0.03em] text-[var(--text-primary)]"
-            style={{
-              fontSize: "clamp(2rem, 4vw, 3.25rem)",
-              lineHeight: 1.05,
-            }}
-          >
-            Your project lives in seven tools.
-            <br />
-            <span className="text-[var(--text-secondary)]">
-              None of them talk to each other.
-            </span>
-          </h2>
-          <p className="mx-auto mt-6 max-w-2xl text-balance text-base leading-relaxed text-[var(--text-secondary)]">
-            Email threads. Cloud drives. WhatsApp groups. WeTransfer links. A
-            folder called{" "}
-            <code className="rounded bg-[var(--surface-elevated)] px-1.5 py-0.5 font-mono text-[0.85em] text-[var(--text-accent)]">
-              Plan_v3_FINAL_revised2.pdf
-            </code>
-            . The work gets done — but at a cost nobody is measuring.
-          </p>
-        </Reveal>
+      <div className="sticky top-0 left-0 h-screen w-full overflow-hidden">
+        <Canvas
+          camera={{ position: [0, 0, 200], fov: 75 }}
+          className="h-full w-full"
+        >
+          <ambientLight intensity={0.5} />
+          <pointLight position={[10, 10, 10]} />
+          <ParticleSystem scrollProgress={scrollProgress} />
+          <LogoComponent scrollProgress={scrollProgress} />
+        </Canvas>
 
-        {/* Pillars grid */}
-        <div className="mt-16 grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-5">
-          {PILLARS.map((p, i) => (
-            <Reveal key={p.title} delay={i * 0.08} className="h-full">
-              <article className="group relative h-full rounded-[var(--radius-xl)] border border-[var(--border)] bg-[var(--surface-elevated)] p-7 transition-colors duration-[var(--duration-base)] ease-[var(--ease-out)] hover:border-[var(--border-strong)]">
-                <div className="mb-5 inline-flex h-10 w-10 items-center justify-center rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--surface)] text-[var(--text-accent)]">
-                  <p.icon className="h-4 w-4" strokeWidth={1.75} />
-                </div>
-                <h3 className="font-[family-name:var(--font-display)] text-lg font-semibold tracking-tight text-[var(--text-primary)]">
-                  {p.title}
-                </h3>
-                <p className="mt-2 text-[0.95rem] leading-relaxed text-[var(--text-secondary)]">
-                  {p.body}
-                </p>
-              </article>
-            </Reveal>
-          ))}
+        {/* Text overlay */}
+        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center px-6">
+          {/* Chaos state */}
+          <div
+            className="absolute text-center transition-opacity duration-1000"
+            style={{ opacity: scrollProgress < 0.3 ? 1 : 0 }}
+          >
+            <h2
+              className="font-[family-name:var(--font-display)] font-semibold text-white"
+              style={{
+                fontSize: "clamp(2rem, 5.5vw, 4.5rem)",
+                lineHeight: 1.05,
+                letterSpacing: "-0.03em",
+              }}
+            >
+              Your project lives in chaos.
+            </h2>
+            <p className="mt-5 text-base text-white/70 md:text-lg">
+              Scroll to bring order.
+            </p>
+          </div>
+
+          {/* Order state */}
+          <div
+            className="absolute text-center transition-opacity duration-1000"
+            style={{ opacity: scrollProgress >= 0.5 ? 1 : 0 }}
+          >
+            <h2
+              className="font-[family-name:var(--font-display)] font-semibold text-white"
+              style={{
+                fontSize: "clamp(2rem, 5.5vw, 4.5rem)",
+                lineHeight: 1.05,
+                letterSpacing: "-0.03em",
+              }}
+            >
+              ArkyHub brings{" "}
+              <span style={{ color: ACCENT_HEX }}>order</span>.
+            </h2>
+            <p className="mt-5 text-base text-white/70 md:text-lg">
+              One workspace. Every document. Always current.
+            </p>
+          </div>
         </div>
 
-        {/* Closing italic */}
-        <Reveal className="mx-auto mt-20 max-w-2xl text-center">
-          <div
-            aria-hidden
-            className="mx-auto mb-6 h-px w-12 bg-[var(--border-strong)]"
-          />
-          <blockquote
-            className="font-[family-name:var(--font-display)] text-xl italic leading-snug text-[var(--text-primary)] sm:text-2xl"
-            style={{ letterSpacing: "-0.02em" }}
-          >
-            &ldquo;It shouldn&apos;t take more effort to find a document than to
-            create it.&rdquo;
-          </blockquote>
-        </Reveal>
-      </Container>
+        {/* Scroll progress indicator */}
+        <div className="pointer-events-none absolute bottom-8 left-1/2 -translate-x-1/2">
+          <div className="flex flex-col items-center gap-2">
+            <span className="text-xs uppercase tracking-wider text-white/50">
+              Scroll Progress
+            </span>
+            <div className="h-20 w-1 overflow-hidden rounded-full bg-white/20">
+              <div
+                className="w-full bg-white transition-all duration-300"
+                style={{ height: `${scrollProgress * 100}%` }}
+              />
+            </div>
+            <span className="font-mono text-xs text-white/50">
+              {Math.round(scrollProgress * 100)}%
+            </span>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

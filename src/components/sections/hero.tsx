@@ -1,9 +1,9 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { AnimatePresence, motion, useScroll, useTransform } from "motion/react";
-import { Container } from "@/components/ui/container";
+import { useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { CTAButton } from "@/components/ui/cta-button";
+import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { Layers, FileText, Users, Eye, Box, MapPin } from "lucide-react";
 
 const EASE_OUT = [0.16, 1, 0.3, 1] as const;
@@ -27,29 +27,9 @@ const item = {
   },
 };
 
-const mockup = {
-  hidden: { opacity: 0, y: 32 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, ease: EASE_OUT, delay: 0.4 },
-  },
-};
-
 export function Hero() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
-  // Subtle parallax — mockup drifts up as user scrolls past hero
-  const mockupY = useTransform(scrollYProgress, [0, 1], [0, -60]);
-
   return (
-    <section
-      ref={sectionRef}
-      className="relative overflow-hidden pt-32 pb-24 sm:pt-40 sm:pb-32"
-    >
+    <section className="relative overflow-hidden pt-24 sm:pt-28">
       {/* Ambient teal radial */}
       <div
         aria-hidden
@@ -72,98 +52,83 @@ export function Hero() {
         }}
       />
 
-      <Container size="xl" className="relative">
-        <motion.div
-          variants={container}
-          initial="hidden"
-          animate="visible"
-          className="mx-auto max-w-3xl text-center"
-        >
-          {/* Eyebrow */}
-          <motion.div
-            variants={item}
-            className="mb-8 inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface-elevated)] px-3 py-1.5"
-          >
-            <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
-            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[var(--text-secondary)]">
-              The first product from Arkytech
-            </span>
-          </motion.div>
+      <ContainerScroll titleComponent={<HeroTitle />}>
+        <BrowserMockup />
+      </ContainerScroll>
 
-          {/* Headline */}
-          <motion.h1
-            variants={item}
-            className="font-[family-name:var(--font-display)] font-semibold tracking-[-0.04em] text-[var(--text-primary)]"
-            style={{
-              fontSize: "clamp(2.75rem, 6vw, 5rem)",
-              lineHeight: 0.98,
-            }}
-          >
-            Your architecture projects,
-            <br />
-            <span className="text-[var(--text-accent)]">in one place.</span>
-          </motion.h1>
-
-          {/* Subheadline */}
-          <motion.p
-            variants={item}
-            className="mx-auto mt-7 max-w-2xl text-balance text-lg leading-relaxed text-[var(--text-secondary)]"
-          >
-            The patchwork of email, Drive, and WhatsApp wasn&apos;t built for
-            architects. ArkyHub is. Centralize every plan, BIM model, and
-            virtual tour in one workspace — with version control and the right
-            access for every stakeholder.
-          </motion.p>
-
-          {/* CTAs */}
-          <motion.div
-            variants={item}
-            className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
-          >
-            <CTAButton href="#final-cta" variant="primary" size="lg">
-              Schedule a Demo
-            </CTAButton>
-            <CTAButton href="#how-it-works" variant="secondary" size="lg">
-              See How It Works
-            </CTAButton>
-          </motion.div>
-
-          {/* Trust line */}
-          <motion.p
-            variants={item}
-            className="mt-6 text-xs text-[var(--text-muted)]"
-          >
-            No credit card · Onboarding in minutes · Built specifically for
-            architecture firms
-          </motion.p>
-        </motion.div>
-
-        {/* Hero mockup with parallax */}
-        <motion.div
-          variants={mockup}
-          initial="hidden"
-          animate="visible"
-          style={{ y: mockupY }}
-          className="relative mx-auto mt-20 max-w-5xl will-change-transform"
-        >
-          <div
-            className="relative rounded-[var(--radius-2xl)] border border-[var(--border-strong)] bg-[var(--surface-elevated)] p-2 shadow-[var(--shadow-xl)]"
-            style={{
-              boxShadow:
-                "var(--shadow-xl), 0 0 80px -20px color-mix(in oklab, var(--accent) 30%, transparent)",
-            }}
-          >
-            <BrowserMockup />
-          </div>
-
-          <div className="mt-12 flex flex-col items-center gap-3 text-center">
-            <p className="text-sm italic text-[var(--text-muted)]">
-              Built by architects who got tired of WhatsApp project threads.
-            </p>
-          </div>
-        </motion.div>
-      </Container>
+      {/* Closing line under the scroll-animated card */}
+      <div className="pb-20 text-center sm:pb-24">
+        <p className="text-sm italic text-[var(--text-muted)]">
+          Built by architects who got tired of WhatsApp project threads.
+        </p>
+      </div>
     </section>
+  );
+}
+
+function HeroTitle() {
+  return (
+    <motion.div
+      variants={container}
+      initial="hidden"
+      animate="visible"
+      className="mx-auto max-w-3xl px-6"
+    >
+      {/* Eyebrow */}
+      <motion.div
+        variants={item}
+        className="mb-8 inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface-elevated)] px-3 py-1.5"
+      >
+        <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
+        <span className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[var(--text-secondary)]">
+          The first product from Arkytech
+        </span>
+      </motion.div>
+
+      {/* Headline */}
+      <motion.h1
+        variants={item}
+        className="font-[family-name:var(--font-display)] font-semibold tracking-[-0.04em] text-[var(--text-primary)]"
+        style={{
+          fontSize: "clamp(2.75rem, 6vw, 5rem)",
+          lineHeight: 0.98,
+        }}
+      >
+        Your architecture projects,
+        <br />
+        <span className="text-[var(--text-accent)]">in one place.</span>
+      </motion.h1>
+
+      {/* Subheadline */}
+      <motion.p
+        variants={item}
+        className="mx-auto mt-7 max-w-2xl text-balance text-lg leading-relaxed text-[var(--text-secondary)]"
+      >
+        The patchwork of email, Drive, and WhatsApp wasn&apos;t built for
+        architects. ArkyHub is. Centralize every plan, BIM model, and virtual
+        tour in one workspace — with version control and the right access for
+        every stakeholder.
+      </motion.p>
+
+      {/* CTAs */}
+      <motion.div
+        variants={item}
+        className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
+      >
+        <CTAButton href="#final-cta" variant="primary" size="lg">
+          Schedule a Demo
+        </CTAButton>
+        <CTAButton href="#how-it-works" variant="secondary" size="lg">
+          See How It Works
+        </CTAButton>
+      </motion.div>
+
+      {/* Trust line */}
+      <motion.p variants={item} className="mt-6 text-xs text-[var(--text-muted)]">
+        No credit card · Onboarding in minutes · Built specifically for
+        architecture firms
+      </motion.p>
+    </motion.div>
   );
 }
 
@@ -180,7 +145,7 @@ function BrowserMockup() {
   const [activeTab, setActiveTab] = useState<TabKey>("Plans");
 
   return (
-    <div className="overflow-hidden rounded-[calc(var(--radius-2xl)-6px)] border border-[var(--border)] bg-[var(--background)]">
+    <div className="flex h-full flex-col">
       <div className="flex items-center gap-3 border-b border-[var(--border)] bg-[var(--surface)] px-4 py-3">
         <div className="flex gap-1.5">
           <span className="h-2.5 w-2.5 rounded-full bg-[var(--border-strong)]" />
@@ -194,7 +159,7 @@ function BrowserMockup() {
         </div>
       </div>
 
-      <div className="grid grid-cols-12 gap-0">
+      <div className="grid flex-1 grid-cols-12 gap-0">
         <div className="col-span-3 border-r border-[var(--border)] bg-[var(--surface)] p-4">
           <p className="mb-3 text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-[var(--text-muted)]">
             Projects

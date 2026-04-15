@@ -65,10 +65,10 @@ export function ContainerScroll({
   return (
     <div
       ref={containerRef}
-      className="relative flex min-h-[56rem] items-center justify-center md:min-h-[70rem]"
+      className="relative flex min-h-[40rem] items-center justify-center md:min-h-[56rem]"
     >
       <div
-        className="relative w-full py-10 md:py-24"
+        className="relative w-full py-4 md:py-10"
         style={{ perspective: "1000px" }}
       >
         <Header translate={translate}>{titleComponent}</Header>
@@ -114,7 +114,7 @@ function Card({
         boxShadow:
           "var(--shadow-xl), 0 0 80px -20px color-mix(in oklab, var(--accent) 30%, transparent)",
       }}
-      className="relative mx-auto mt-12 h-[28rem] w-full max-w-5xl rounded-[var(--radius-2xl)] border border-[var(--border-strong)] bg-[var(--surface-elevated)] p-2 will-change-transform md:h-[40rem] md:p-3"
+      className="relative mx-auto mt-2 h-[28rem] w-full max-w-5xl rounded-[var(--radius-2xl)] border border-[var(--border-strong)] bg-[var(--surface-elevated)] p-2 will-change-transform md:h-[40rem] md:p-3"
     >
       <div className="h-full w-full overflow-hidden rounded-[calc(var(--radius-2xl)-6px)] bg-[var(--background)]">
         {children}

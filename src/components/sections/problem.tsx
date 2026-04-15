@@ -116,11 +116,11 @@ const ParticleSystem: React.FC<ParticleSystemProps> = ({ scrollProgress }) => {
     <Points ref={pointsRef} positions={initialPositions} frustumCulled={false}>
       <PointMaterial
         transparent
-        color="#ffffff"
+        color={ACCENT_HEX}
         size={2}
         sizeAttenuation={true}
         depthWrite={false}
-        opacity={0.8}
+        opacity={0.85}
       />
     </Points>
   );
@@ -199,7 +199,7 @@ export function Problem() {
     <section
       id="problem"
       ref={containerRef}
-      className="relative w-full border-t border-[var(--border)] bg-black"
+      className="relative w-full bg-transparent"
       style={{ height: "300vh" }}
     >
       <div className="sticky top-0 left-0 h-screen w-full overflow-hidden">
@@ -221,7 +221,7 @@ export function Problem() {
             style={{ opacity: scrollProgress < 0.3 ? 1 : 0 }}
           >
             <h2
-              className="font-[family-name:var(--font-display)] font-semibold text-white"
+              className="font-[family-name:var(--font-display)] font-semibold text-[var(--text-primary)]"
               style={{
                 fontSize: "clamp(2rem, 5.5vw, 4.5rem)",
                 lineHeight: 1.05,
@@ -230,7 +230,7 @@ export function Problem() {
             >
               Your project lives in chaos.
             </h2>
-            <p className="mt-5 text-base text-white/70 md:text-lg">
+            <p className="mt-5 text-base text-[var(--text-secondary)] md:text-lg">
               Scroll to bring order.
             </p>
           </div>
@@ -241,7 +241,7 @@ export function Problem() {
             style={{ opacity: scrollProgress >= 0.5 ? 1 : 0 }}
           >
             <h2
-              className="font-[family-name:var(--font-display)] font-semibold text-white"
+              className="font-[family-name:var(--font-display)] font-semibold text-[var(--text-primary)]"
               style={{
                 fontSize: "clamp(2rem, 5.5vw, 4.5rem)",
                 lineHeight: 1.05,
@@ -251,29 +251,12 @@ export function Problem() {
               ArkyHub brings{" "}
               <span style={{ color: ACCENT_HEX }}>order</span>.
             </h2>
-            <p className="mt-5 text-base text-white/70 md:text-lg">
+            <p className="mt-5 text-base text-[var(--text-secondary)] md:text-lg">
               One workspace. Every document. Always current.
             </p>
           </div>
         </div>
 
-        {/* Scroll progress indicator */}
-        <div className="pointer-events-none absolute bottom-8 left-1/2 -translate-x-1/2">
-          <div className="flex flex-col items-center gap-2">
-            <span className="text-xs uppercase tracking-wider text-white/50">
-              Scroll Progress
-            </span>
-            <div className="h-20 w-1 overflow-hidden rounded-full bg-white/20">
-              <div
-                className="w-full bg-white transition-all duration-300"
-                style={{ height: `${scrollProgress * 100}%` }}
-              />
-            </div>
-            <span className="font-mono text-xs text-white/50">
-              {Math.round(scrollProgress * 100)}%
-            </span>
-          </div>
-        </div>
       </div>
     </section>
   );

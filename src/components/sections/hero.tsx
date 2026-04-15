@@ -29,7 +29,7 @@ const item = {
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden pt-24 sm:pt-28">
+    <section className="relative overflow-hidden pt-24 pb-16 sm:pt-28 sm:pb-20">
       {/* Ambient teal radial */}
       <div
         aria-hidden
@@ -52,12 +52,25 @@ export function Hero() {
         }}
       />
 
-      <ContainerScroll titleComponent={<HeroTitle />}>
+      <HeroTitle />
+    </section>
+  );
+}
+
+/**
+ * Casa Ribera tilting card. Split out of `Hero` so the chaos-to-order
+ * `<Problem />` animation can sit between the headline and the product
+ * mockup — the narrative now runs title → chaos → order → product.
+ */
+export function ProjectCard() {
+  return (
+    <section className="relative overflow-hidden">
+      <ContainerScroll titleComponent={null}>
         <BrowserMockup />
       </ContainerScroll>
 
       {/* Closing line under the scroll-animated card */}
-      <div className="pb-20 text-center sm:pb-24">
+      <div className="pb-12 text-center sm:pb-16">
         <p className="text-sm italic text-[var(--text-muted)]">
           Built by architects who got tired of WhatsApp project threads.
         </p>
@@ -123,11 +136,6 @@ function HeroTitle() {
         </CTAButton>
       </motion.div>
 
-      {/* Trust line */}
-      <motion.p variants={item} className="mt-6 text-xs text-[var(--text-muted)]">
-        No credit card · Onboarding in minutes · Built specifically for
-        architecture firms
-      </motion.p>
     </motion.div>
   );
 }

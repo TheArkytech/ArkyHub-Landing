@@ -196,12 +196,14 @@ export function CinematicHero() {
       });
       gsap.set(".ch-card-right", { autoAlpha: 0 });
       gsap.set(".ch-ws-wrap", {
-        autoAlpha: 0, y: 120, rotationX: 30, rotationY: -12, scale: 0.7,
+        autoAlpha: 0,
+        y: 120, rotationX: 30, rotationY: -12, scale: 0.7,
+        /* Start nested at a smaller size so it can "expand" like the outer card */
+        top: "24%", bottom: "20%", left: "18%", right: "18%",
       });
       gsap.set(".ch-reveal", { autoAlpha: 0, y: 20 });
       gsap.set(".ch-cta-wrap", { autoAlpha: 0, scale: 0.85, filter: "blur(24px)" });
       gsap.set(".ch-hint", { autoAlpha: 0 });
-      gsap.set(".ch-order-label", { opacity: 0 });
       /* Stacked cards: all visible, layered with offset */
       gsap.set('.ch-feat[data-f="plans"]', { autoAlpha: 1, y: 0, scale: 1 });
       gsap.set('.ch-feat[data-f="bim"]',   { autoAlpha: 1, y: 8, scale: 0.97 });
@@ -255,7 +257,7 @@ export function CinematicHero() {
         .call(() => { particlePhaseRef.current = "clusters"; })
         .to({}, { duration: 1.2 })
 
-        /* 4 — "brings order" fades, ArkyHub migrates to top-right */
+        /* 4 — "brings order" fades, ArkyHub migrates alone to top-right */
         .to(".ch-order-sub", { opacity: 0, y: 20, duration: 0.6, ease: "power3.in" })
         .to("#chCanvas", { opacity: 0, duration: 0.8 }, "<")
         .call(() => { particlePhaseRef.current = "done"; })
@@ -264,26 +266,30 @@ export function CinematicHero() {
         .addLabel("expand")
         .to(".ch-card", { width: "100vw", height: "100vh", borderRadius: 0, ease: "power3.inOut", duration: 1.3 }, "expand")
         .to(".ch-order", {
-          top: "8%", left: "auto", right: "6%",
+          top: "14%", left: "auto", right: "6%",
           xPercent: 0, yPercent: 0,
           x: 0, y: 0,
-          fontSize: "clamp(2.5rem, 5.5vw, 5rem)",
+          fontSize: "clamp(2.25rem, 5vw, 4.5rem)",
           textAlign: "right",
-          lineHeight: 0.9,
+          lineHeight: 0.95,
           duration: 1.4,
           ease: "expo.inOut",
         }, "expand")
 
-        /* show ARKYTECH BRAND label */
-        .to(".ch-order-label", { opacity: 1, duration: 0.6, ease: "power2.out" }, "-=0.4")
-
         /* hold so brand is visible alone */
         .to({}, { duration: 1.4 })
 
-        /* 5 — workspace reveals */
-        .to(".ch-ws-wrap", { autoAlpha: 1, y: 0, rotationX: 0, rotationY: 0, scale: 1, ease: "expo.out", duration: 2.0 })
-        .to(".ch-card-right", { autoAlpha: 1, x: 0, duration: 1.2, ease: "expo.out" }, "<")
-        .fromTo(".ch-card-right", { x: 40, scale: 0.9 }, { x: 0, scale: 1, duration: 1.2, ease: "expo.out" }, "<")
+        /* 5 — inner mockup rises + expands (mirrors the outer card's expand arc) */
+        .to(".ch-ws-wrap", {
+          autoAlpha: 1,
+          y: 0, rotationX: 0, rotationY: 0, scale: 1,
+          top: "12%", bottom: "6%", left: "5%", right: "5%",
+          ease: "expo.out", duration: 2.0,
+        })
+        .fromTo(".ch-card-right",
+          { autoAlpha: 0, y: 24, scale: 0.96 },
+          { autoAlpha: 1, y: 0, scale: 1, duration: 1.2, ease: "expo.out" },
+          "-=1.4")
 
         /* 6 — widgets stagger */
         .to(".ch-reveal", { autoAlpha: 1, y: 0, stagger: 0.12, ease: "back.out(1.1)", duration: 0.9 }, "-=1.4")
@@ -321,16 +327,26 @@ export function CinematicHero() {
         .to('.ch-feat[data-f="tour"]', { y: -120, autoAlpha: 0, scale: 0.92, duration: 0.8, ease: "power3.in" }, "f4")
         .to('.ch-feat[data-f="stk"]',  { y: 0, scale: 1, duration: 0.8, ease: "expo.out" }, "f4")
         .to(".ch-fill-4", { scaleX: 1, duration: 1.8, ease: "none" }, "f4")
-        .to({}, { duration: 1.2 })
+        .to({}, { duration: 0.8 })
 
-        /* 9 — CTA swap */
+        /* Peel the last card (stk) so the mockup stands alone before CTA */
+        .addLabel("fClear", "+=0.2")
+        .to('.ch-feat[data-f="stk"]', { y: -120, autoAlpha: 0, scale: 0.92, duration: 0.8, ease: "power3.in" }, "fClear")
+        .to(".ch-card-right",          { autoAlpha: 0, duration: 0.6, ease: "power2.in" }, "fClear+=0.3")
+        .to(".ch-order",               { autoAlpha: 0, y: -20, duration: 0.8, ease: "power3.in" }, "fClear")
+        .to({}, { duration: 0.8 })
+
+        /* 9 — CTA swap: outer card frame fades to page; inner mockup shrinks to its own closing size */
         .set(".ch-hero", { autoAlpha: 0 })
         .set(".ch-cta-wrap", { autoAlpha: 1 })
         .to({}, { duration: 0.4 })
-        .to(".ch-card", {
-          width: isMob ? "94vw" : "82vw",
-          height: isMob ? "82vh" : "72vh",
-          borderRadius: isMob ? 28 : 36,
+        .addLabel("pull")
+        .to(".ch-card-bg", { autoAlpha: 0, ease: "power2.inOut", duration: 1.6 }, "pull")
+        .to(".ch-ws-wrap", {
+          top: isMob ? "14%" : "18%",
+          bottom: isMob ? "9%" : "14%",
+          left: isMob ? "3%" : "9%",
+          right: isMob ? "3%" : "9%",
           ease: "expo.inOut", duration: 1.6,
         }, "pull")
         .to(".ch-cta-wrap", { scale: 1, filter: "blur(0px)", ease: "expo.inOut", duration: 1.6 }, "pull")
@@ -540,8 +556,14 @@ export function CinematicHero() {
       <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none" style={{ perspective: 1800 }}>
         <div
           className="ch-card relative overflow-hidden pointer-events-auto will-change-transform"
-          style={{ ...S.cardBg, borderRadius: 40, width: "min(88vw, 1400px)", height: "min(80vh, 780px)" }}
+          style={{ borderRadius: 40, width: "min(88vw, 1400px)", height: "min(80vh, 780px)" }}
         >
+          {/* Outer card background/frame — fades to transparent at pull so the inner mockup takes over */}
+          <div
+            className="ch-card-bg absolute inset-0 pointer-events-none z-0"
+            style={{ ...S.cardBg, borderRadius: "inherit" }}
+          />
+
           {/* Blueprint grain inside card */}
           <div
             aria-hidden
@@ -595,35 +617,39 @@ export function CinematicHero() {
             >
               ArkyHub
             </span>
-            <span className="ch-order-sub block">{tProblem("orderHeadlinePre").trim()} <span style={{ color: ACCENT_2 }}>{tProblem("orderHeadlineAccent")}</span></span>
-            <small
-              className="ch-order-label block font-semibold"
+            <span
+              className="ch-order-sub block"
               style={{
-                fontSize: "0.18em",
-                letterSpacing: "0.28em",
-                marginTop: 10,
-                color: "rgba(227,242,240,0.55)",
-                opacity: 0,
+                fontSize: "0.6em",
+                fontWeight: 600,
+                letterSpacing: "-0.02em",
+                marginTop: "0.25em",
+                whiteSpace: "nowrap",
               }}
             >
-              ARKYTECH BRAND
-            </small>
+              {tProblem("orderHeadlinePre").trim()} <span style={{ color: ACCENT_2 }}>{tProblem("orderHeadlineAccent")}</span>
+            </span>
           </div>
 
-          {/* ── Card content grid ── */}
-          <div
-            className="relative z-[3] w-full h-full grid items-center gap-12 p-12 max-w-[1280px] mx-auto"
-            style={{ gridTemplateColumns: "1.6fr 1fr" }}
-          >
-            {/* LEFT — workspace mockup */}
-            <div className="ch-ws-wrap relative flex items-center justify-center" style={{ height: 540, transformStyle: "preserve-3d" }}>
+          {/* ── Card content stage — mockup backdrop + floating feature deck ── */}
+          <div className="relative z-[3] w-full h-full">
+            {/* Inner mockup card — nested inside the outer card with breathing room during build, shrinks to final closing size at pull */}
+            <div
+              className="ch-ws-wrap absolute"
+              style={{
+                top: "6%",
+                bottom: "6%",
+                left: "5%",
+                right: "5%",
+                transformStyle: "preserve-3d",
+              }}
+            >
               <div
                 className="ch-ws relative w-full h-full overflow-hidden will-change-transform"
                 style={{
-                  maxWidth: 540,
                   borderRadius: 20,
                   background: "#0b1b1a",
-                  boxShadow: "0 40px 80px -20px rgba(0,0,0,0.7), 0 18px 30px -10px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.06)",
+                  boxShadow: "0 40px 80px -20px rgba(0,0,0,0.7), 0 18px 30px -10px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.08)",
                   transformStyle: "preserve-3d",
                 }}
               >
@@ -685,13 +711,6 @@ export function CinematicHero() {
                           {tMockup("lastUpdated")}
                         </span>
                       </div>
-                      <span
-                        className="inline-flex items-center gap-1.5 text-[10px] font-semibold px-2 py-1 rounded-full"
-                        style={{ background: `rgba(43,165,158,0.14)`, color: ACCENT_2, border: `1px solid rgba(43,165,158,0.3)` }}
-                      >
-                        <span className="w-[5px] h-[5px] rounded-full" style={{ background: ACCENT_2, boxShadow: `0 0 6px ${ACCENT_2}` }} />
-                        {tMockup("inProgress")}
-                      </span>
                     </div>
 
                     {/* Tabs */}
@@ -807,8 +826,17 @@ export function CinematicHero() {
               </div>
             </div>
 
-            {/* RIGHT — feature deck */}
-            <div className="ch-card-right flex flex-col justify-center items-stretch gap-7 h-full">
+            {/* Feature deck — absolutely overlaid on the right side of the mockup */}
+            <div
+              className="ch-card-right absolute flex flex-col justify-center items-stretch gap-7 pointer-events-none"
+              style={{
+                right: "clamp(24px, 6vw, 120px)",
+                top: "50%",
+                transform: "translateY(-50%)",
+                width: "min(40vw, 460px)",
+                zIndex: 5,
+              }}
+            >
               {/* Feature deck — stacked cards */}
               <div className="ch-feat-stack relative w-full" style={{ height: 260, marginTop: 8 }}>
                 {([

@@ -146,7 +146,13 @@ first. No exceptions.**
 - Use `"use client"` only when needed (hooks, interactivity)
 - Components in `src/components/` with PascalCase filenames
 - Pages in `src/app/` following Next.js App Router conventions
-- All text content in Spanish unless specified otherwise
+- **i18n**: All user-facing text uses `next-intl`. Spanish is the default
+  locale. Never hardcode strings — use `useTranslations()` (client) or
+  `getTranslations()` (server). Message catalogs live in `messages/es.json`
+  and `messages/en.json`, organized by section.
+- Always use `Link` from `@/i18n/navigation`, NOT `next/link`
+- Technical terms stay in English across both locales: BIM, CAD, LOD, IFC,
+  RVT, DWG, MEP, SSO, SLA, API, SOC 2, m², GB
 - Mobile-first responsive design (test at 375px minimum)
 - Always add `alt` text to images
 - Use CSS variables for theming: `--color-primary`, `--color-background`
@@ -179,16 +185,28 @@ first. No exceptions.**
 # §8. File Structure
 
 ```
+messages/
+├── es.json               # Spanish catalog (default locale)
+└── en.json               # English catalog
 src/
-├── app/                  # Next.js App Router pages
-│   ├── layout.tsx        # Root layout
-│   ├── page.tsx          # Home page
-│   └── globals.css       # Global styles + CSS variables
+├── app/
+│   ├── layout.tsx        # Bare pass-through root layout
+│   ├── page.tsx          # Redirects / → /es
+│   ├── sitemap.ts        # Sitemap with hreflang alternates
+│   ├── globals.css       # Global styles + CSS variables
+│   └── [locale]/
+│       ├── layout.tsx    # <html>, <body>, fonts, NextIntlClientProvider
+│       └── page.tsx      # Home page with locale-specific metadata
+├── i18n/
+│   ├── routing.ts        # locales, defaultLocale, localePrefix
+│   ├── navigation.ts     # Locale-aware Link, router, pathname
+│   └── request.ts        # Server-side message loader
 ├── components/
-│   ├── ui/               # Base UI components (shadcn)
+│   ├── ui/               # Base UI (shadcn + locale-switcher)
 │   ├── sections/         # Page sections (Hero, Features, etc.)
-│   └── layout/           # Layout components (Header, Footer, etc.)
+│   └── layout/           # Header, Footer
 ├── lib/
 │   └── utils.ts          # Utility functions
 └── assets/               # Static assets, generated images
+middleware.ts             # next-intl locale routing (project root)
 ```

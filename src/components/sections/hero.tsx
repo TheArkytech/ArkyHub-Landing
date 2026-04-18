@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { useTranslations } from "next-intl";
 import { CTAButton } from "@/components/ui/cta-button";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
+import { DottedSurface } from "@/components/ui/dotted-surface";
 import { Layers, FileText, Users, Eye, Box, MapPin } from "lucide-react";
 
 const EASE_OUT = [0.16, 1, 0.3, 1] as const;
@@ -39,18 +41,8 @@ export function Hero() {
             "radial-gradient(60% 50% at 50% 0%, color-mix(in oklab, var(--accent) 14%, transparent), transparent 70%)",
         }}
       />
-      {/* Hairline grid */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.35] dark:opacity-[0.25]"
-        style={{
-          backgroundImage:
-            "linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px)",
-          backgroundSize: "64px 64px",
-          maskImage:
-            "radial-gradient(ellipse 80% 60% at 50% 30%, black 40%, transparent 80%)",
-        }}
-      />
+      {/* Animated dotted surface background */}
+      <DottedSurface className="opacity-[0.35] dark:opacity-[0.25]" />
 
       <HeroTitle />
     </section>
@@ -73,6 +65,9 @@ export function ProjectCard() {
 }
 
 function HeroTitle() {
+  const t = useTranslations("home.hero");
+  const tCta = useTranslations("common.cta");
+
   return (
     <motion.div
       variants={container}
@@ -87,7 +82,7 @@ function HeroTitle() {
       >
         <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
         <span className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[var(--text-secondary)]">
-          The first product from Arkytech
+          {t("eyebrow")}
         </span>
       </motion.div>
 
@@ -100,9 +95,9 @@ function HeroTitle() {
           lineHeight: 0.98,
         }}
       >
-        Your architecture projects,
+        {t("h1Pre")}
         <br />
-        <span className="text-[var(--text-accent)]">in one place.</span>
+        <span className="text-[var(--text-accent)]">{t("h1Accent")}</span>
       </motion.h1>
 
       {/* Subheadline */}
@@ -110,10 +105,7 @@ function HeroTitle() {
         variants={item}
         className="mx-auto mt-7 max-w-2xl text-balance text-lg leading-relaxed text-[var(--text-secondary)]"
       >
-        The patchwork of email, Drive, and WhatsApp wasn&apos;t built for
-        architects. ArkyHub is. Centralize every plan, BIM model, and virtual
-        tour in one workspace — with version control and the right access for
-        every stakeholder.
+        {t("subhead")}
       </motion.p>
 
       {/* CTAs */}
@@ -122,10 +114,10 @@ function HeroTitle() {
         className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
       >
         <CTAButton href="#final-cta" variant="primary" size="lg">
-          Schedule a Demo
+          {tCta("scheduleDemo")}
         </CTAButton>
         <CTAButton href="#how-it-works" variant="secondary" size="lg">
-          See How It Works
+          {tCta("seeHowItWorks")}
         </CTAButton>
       </motion.div>
 
@@ -144,6 +136,7 @@ const TABS: Array<{ key: TabKey; icon: typeof FileText }> = [
 
 function BrowserMockup() {
   const [activeTab, setActiveTab] = useState<TabKey>("Plans");
+  const t = useTranslations("home.mockup");
 
   return (
     <div className="flex h-full flex-col">
@@ -163,7 +156,7 @@ function BrowserMockup() {
       <div className="grid flex-1 grid-cols-12 gap-0">
         <div className="col-span-3 border-r border-[var(--border)] bg-[var(--surface)] p-4">
           <p className="mb-3 text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-[var(--text-muted)]">
-            Projects
+            {t("projects")}
           </p>
           <ul className="space-y-1">
             {[
@@ -200,38 +193,38 @@ function BrowserMockup() {
                 Casa Ribera
               </p>
               <p className="font-mono text-[0.65rem] text-[var(--text-muted)]">
-                Last updated · 2h ago by María L.
+                {t("lastUpdated")}
               </p>
             </div>
             <span className="rounded-full border border-[var(--border-accent)] bg-[color-mix(in_oklab,var(--accent)_8%,transparent)] px-2.5 py-1 text-[0.65rem] font-medium text-[var(--text-accent)]">
-              In progress
+              {t("inProgress")}
             </span>
           </div>
 
           {/* Tabs — interactive */}
           <div
             role="tablist"
-            aria-label="Project views"
+            aria-label={t("projectViews")}
             className="mb-4 flex gap-1 border-b border-[var(--border)]"
           >
-            {TABS.map((t) => {
-              const active = t.key === activeTab;
+            {TABS.map((tab) => {
+              const active = tab.key === activeTab;
               return (
                 <button
-                  key={t.key}
+                  key={tab.key}
                   type="button"
                   role="tab"
                   aria-selected={active}
-                  aria-controls={`panel-${t.key}`}
-                  onClick={() => setActiveTab(t.key)}
+                  aria-controls={`panel-${tab.key}`}
+                  onClick={() => setActiveTab(tab.key)}
                   className={
                     active
                       ? "relative flex items-center gap-1.5 border-b-2 border-[var(--accent)] px-3 py-2 text-xs font-medium text-[var(--text-primary)] transition-colors"
                       : "relative flex items-center gap-1.5 border-b-2 border-transparent px-3 py-2 text-xs text-[var(--text-muted)] transition-colors hover:text-[var(--text-secondary)]"
                   }
                 >
-                  <t.icon className="h-3 w-3" />
-                  {t.key}
+                  <tab.icon className="h-3 w-3" />
+                  {t(`tabs.${tab.key}`)}
                 </button>
               );
             })}
@@ -265,10 +258,11 @@ function BrowserMockup() {
 /* ---------- Tab panels ---------- */
 
 function PlansPanel() {
+  const t = useTranslations("home.mockup.plans");
   const PLANS = [
-    { name: "Floor plan — Level 0", v: "v07" },
-    { name: "Floor plan — Level 1", v: "v04" },
-    { name: "Section A-A", v: "v02" },
+    { name: t("floorPlanL0"), v: "v07" },
+    { name: t("floorPlanL1"), v: "v04" },
+    { name: t("sectionAA"), v: "v02" },
   ];
   return (
     <div className="grid grid-cols-3 gap-3">
@@ -304,6 +298,7 @@ function PlansPanel() {
 }
 
 function BIMPanel() {
+  const t = useTranslations("home.mockup.bim");
   return (
     <div className="flex flex-col gap-3">
       {/* Isometric viewport */}
@@ -335,16 +330,16 @@ function BIMPanel() {
           <circle cx="110" cy="20" r="2" fill="currentColor" stroke="none" />
         </svg>
         <span className="absolute bottom-2 left-2 font-mono text-[0.6rem] text-[var(--text-muted)]">
-          IFC · 42.6 MB · browser-native viewer
+          {t("viewerMeta")}
         </span>
       </div>
 
       {/* Model file list */}
       <div className="space-y-1.5">
         {[
-          { name: "Casa Ribera — Architectural", fmt: "RVT", size: "24.1 MB" },
-          { name: "Casa Ribera — Structural", fmt: "IFC", size: "12.8 MB" },
-          { name: "Casa Ribera — MEP", fmt: "IFC", size: "5.7 MB" },
+          { name: t("architectural"), fmt: "RVT", size: "24.1 MB" },
+          { name: t("structural"), fmt: "IFC", size: "12.8 MB" },
+          { name: t("mep"), fmt: "IFC", size: "5.7 MB" },
         ].map((m) => (
           <div
             key={m.name}
@@ -372,11 +367,12 @@ function BIMPanel() {
 }
 
 function TourPanel() {
+  const t = useTranslations("home.mockup.tour");
   const WAYPOINTS = [
-    { label: "Entrance", x: 18, y: 62 },
-    { label: "Living", x: 42, y: 44 },
-    { label: "Kitchen", x: 62, y: 38 },
-    { label: "Terrace", x: 82, y: 60 },
+    { label: t("entrance"), x: 18, y: 62 },
+    { label: t("living"), x: 42, y: 44 },
+    { label: t("kitchen"), x: 62, y: 38 },
+    { label: t("terrace"), x: 82, y: 60 },
   ];
   return (
     <div className="flex flex-col gap-3">
@@ -431,7 +427,7 @@ function TourPanel() {
           />
         </svg>
         <span className="absolute bottom-2 left-2 font-mono text-[0.6rem] text-[var(--text-muted)]">
-          4 waypoints · 360° panoramic
+          {t("meta")}
         </span>
       </div>
 
@@ -456,29 +452,30 @@ function TourPanel() {
 }
 
 function StakeholdersPanel() {
+  const t = useTranslations("home.mockup.stakeholders");
   const PEOPLE = [
     {
-      role: "Architect",
-      name: "María López · project lead",
-      scope: "Full access",
+      role: t("architect"),
+      name: t("architectName"),
+      scope: t("fullAccess"),
       dots: 4,
     },
     {
-      role: "Contractor",
-      name: "García & Cia",
-      scope: "Plans + Issues",
+      role: t("contractor"),
+      name: t("contractorName"),
+      scope: t("plansIssues"),
       dots: 2,
     },
     {
-      role: "Client",
-      name: "M. Ribera",
-      scope: "Dashboard + Tour",
+      role: t("client"),
+      name: t("clientName"),
+      scope: t("dashboardTour"),
       dots: 2,
     },
     {
-      role: "MEP consultant",
-      name: "Ibérica Ingeniería",
-      scope: "Plans only",
+      role: t("mepConsultant"),
+      name: t("mepName"),
+      scope: t("plansOnly"),
       dots: 1,
     },
   ];

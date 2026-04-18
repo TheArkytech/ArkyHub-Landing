@@ -1,22 +1,26 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Container } from "@/components/ui/container";
 import { CTAButton } from "@/components/ui/cta-button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { LocaleSwitcher } from "@/components/ui/locale-switcher";
 import { DEMO_URL } from "@/lib/config";
 import { cn } from "@/lib/utils";
 
-const NAV_LINKS = [
-  { label: "Product", href: "#features" },
-  { label: "How It Works", href: "#how-it-works" },
-  { label: "Why Now", href: "#why-now" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "FAQ", href: "#faq" },
-];
-
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const tNav = useTranslations("nav");
+  const tCta = useTranslations("common.cta");
+
+  const NAV_LINKS = [
+    { label: tNav("product"), href: "#features" },
+    { label: tNav("howItWorks"), href: "#how-it-works" },
+    { label: tNav("whyNow"), href: "#why-now" },
+    { label: tNav("pricing"), href: "#pricing" },
+    { label: tNav("faq"), href: "#faq" },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -65,9 +69,10 @@ export function Header() {
 
           {/* Right cluster */}
           <div className="flex items-center gap-2">
+            <LocaleSwitcher />
             <ThemeToggle />
             <CTAButton href={DEMO_URL} variant="primary" size="md">
-              Schedule a Demo
+              {tCta("scheduleDemo")}
             </CTAButton>
           </div>
         </div>

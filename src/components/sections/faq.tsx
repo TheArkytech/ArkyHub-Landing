@@ -1,35 +1,14 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/motion/reveal";
 import { Plus } from "lucide-react";
 
-const FAQS = [
-  {
-    q: "Do contractors need to install anything?",
-    a: "No. ArkyHub runs entirely in the browser — including the BIM viewer. Your contractor opens a link, sees the latest plan. That's it.",
-  },
-  {
-    q: "How is this different from Google Drive?",
-    a: "Drive stores files. ArkyHub knows what they are. Plans get version control. Issues get tied to the exact drawing. BIM and virtual tours render natively. Each stakeholder gets a different view.",
-  },
-  {
-    q: "How is it different from Procore or Autodesk Construction Cloud?",
-    a: "Those are built for contractors and run by contractors. ArkyHub is built for the architect — you control the documentation, you decide what each stakeholder sees.",
-  },
-  {
-    q: "What file formats do you support?",
-    a: "Plans in DWG and PDF. BIM models in IFC and RVT. Virtual tours via standard panoramic formats. If your workflow depends on a specific export pipeline, schedule a demo and we'll confirm the fit.",
-  },
-  {
-    q: "Is my client data isolated from my other projects?",
-    a: "Yes. Each firm — and each project within a firm — is fully separated. Working with multiple clients never means data leaks between them.",
-  },
-  {
-    q: "How much does it cost?",
-    a: "We're rolling out access with early-adopter pricing. Schedule a demo and we'll walk you through what fits your firm size.",
-  },
-];
-
 export function FAQ() {
+  const t = useTranslations("home.faq");
+  const items = t.raw("items") as Array<{ q: string; a: string }>;
+
   return (
     <section
       id="faq"
@@ -38,7 +17,7 @@ export function FAQ() {
       <Container size="md">
         <Reveal className="text-center">
           <p className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[var(--text-accent)]">
-            Questions
+            {t("eyebrow")}
           </p>
           <h2
             className="mt-5 font-[family-name:var(--font-display)] font-semibold tracking-[-0.03em] text-[var(--text-primary)]"
@@ -47,12 +26,12 @@ export function FAQ() {
               lineHeight: 1.05,
             }}
           >
-            What architects ask before signing up.
+            {t("headline")}
           </h2>
         </Reveal>
 
         <Reveal className="mx-auto mt-14 max-w-3xl divide-y divide-[var(--border)] rounded-[var(--radius-xl)] border border-[var(--border)] bg-[var(--surface-elevated)]">
-          {FAQS.map((item, i) => (
+          {items.map((item, i) => (
             <details
               key={item.q}
               className="group [&_summary::-webkit-details-marker]:hidden"
@@ -76,14 +55,14 @@ export function FAQ() {
 
         <Reveal>
           <p className="mx-auto mt-10 max-w-md text-center text-sm text-[var(--text-muted)]">
-          Have a question we didn&apos;t answer?{" "}
-          <a
-            href="#final-cta"
-            className="font-medium text-[var(--text-accent)] underline-offset-4 hover:underline"
-          >
-            Schedule a demo
-          </a>{" "}
-          and ask us live.
+            {t("ctaPre")}
+            <a
+              href="#final-cta"
+              className="font-medium text-[var(--text-accent)] underline-offset-4 hover:underline"
+            >
+              {t("ctaLink")}
+            </a>
+            {t("ctaPost")}
           </p>
         </Reveal>
       </Container>

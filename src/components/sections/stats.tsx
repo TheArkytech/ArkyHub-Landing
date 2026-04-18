@@ -1,30 +1,25 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/motion/reveal";
 import { ArrowRight } from "lucide-react";
 
-/**
- * Founder-origin proof. The numbers on the right are real — they come
- * from the BIM management practice at our founder's prior firm, before
- * and after formalizing coordinated BIM workflows. The left anchor is
- * an industry stat for external context.
- *
- * This is not a customer testimonial. ArkyHub is pre-launch. These are
- * the numbers that convinced us to build it.
- */
-
-const BEFORE = [
-  { label: "Projects", value: "7", note: "over 2 years" },
-  { label: "m² managed", value: "611" },
-  { label: "Methodology", value: "AutoCAD 2D", small: true },
-];
-
-const AFTER = [
-  { label: "Projects", value: "27", note: "over 2.25 years" },
-  { label: "m² managed", value: "2,534" },
-  { label: "Methodology", value: "Coordinated BIM", small: true },
-];
-
 export function Stats() {
+  const t = useTranslations("home.stats");
+
+  const BEFORE = [
+    { label: t("before.projects"), value: t("before.projectsValue"), note: t("before.projectsNote") },
+    { label: t("before.sqm"), value: t("before.sqmValue") },
+    { label: t("before.methodology"), value: t("before.methodValue"), small: true },
+  ];
+
+  const AFTER = [
+    { label: t("after.projects"), value: t("after.projectsValue"), note: t("after.projectsNote") },
+    { label: t("after.sqm"), value: t("after.sqmValue") },
+    { label: t("after.methodology"), value: t("after.methodValue"), small: true },
+  ];
+
   return (
     <section
       id="why-now"
@@ -33,7 +28,7 @@ export function Stats() {
       <Container size="xl">
         <Reveal className="mx-auto max-w-3xl text-center">
           <p className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[var(--text-accent)]">
-            Why we&apos;re building this
+            {t("eyebrow")}
           </p>
           <h2
             className="mt-5 font-[family-name:var(--font-display)] font-semibold tracking-[-0.03em] text-[var(--text-primary)]"
@@ -42,12 +37,10 @@ export function Stats() {
               lineHeight: 1.05,
             }}
           >
-            The numbers that convinced us.
+            {t("headline")}
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-balance text-[1.0625rem] leading-relaxed text-[var(--text-secondary)]">
-            The industry problem is well-documented. The harder question was
-            whether organized BIM coordination actually moves the needle. We
-            had reason to know it does.
+            {t("subhead")}
           </p>
         </Reveal>
 
@@ -62,15 +55,14 @@ export function Stats() {
                   lineHeight: 1,
                 }}
               >
-                48%
+                {t("industryStat.value")}
               </p>
               <div className="flex-1">
                 <p className="text-[1.0625rem] leading-relaxed text-[var(--text-primary)]">
-                  of rework on U.S. construction sites is caused by poor
-                  communication and bad project data.
+                  {t("industryStat.text")}
                 </p>
                 <p className="mt-3 font-mono text-[0.7rem] text-[var(--text-muted)]">
-                  — PlanGrid &amp; FMI, &ldquo;Construction Disconnected,&rdquo; 2018
+                  {t("industryStat.citation")}
                 </p>
               </div>
             </div>
@@ -80,8 +72,7 @@ export function Stats() {
         {/* Founder's-prior-firm before/after */}
         <Reveal>
           <p className="mx-auto mt-16 max-w-2xl text-center text-sm text-[var(--text-muted)]">
-            Then our founder joined a Madrid real estate development firm as BIM
-            Manager. What happened over the next 27 months:
+            {t("founderIntro")}
           </p>
         </Reveal>
 
@@ -92,7 +83,7 @@ export function Stats() {
               <div className="mb-5 flex items-center gap-2">
                 <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--border-strong)]" />
                 <span className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[var(--text-muted)]">
-                  Before · 2022–2023
+                  {t("before.label")}
                 </span>
               </div>
               <dl className="space-y-5">
@@ -146,7 +137,7 @@ export function Stats() {
               <div className="mb-5 flex items-center gap-2">
                 <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
                 <span className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[var(--text-accent)]">
-                  After · 2024–2026
+                  {t("after.label")}
                 </span>
               </div>
               <dl className="space-y-5">
@@ -180,16 +171,14 @@ export function Stats() {
         <Reveal>
           <p className="mx-auto mt-14 max-w-2xl text-center text-[1.0625rem] leading-relaxed text-[var(--text-primary)]">
             <span className="text-[var(--text-secondary)]">
-              In Q1 2026 alone, managed m² already exceeded the entire year
-              of 2025.
+              {t("closing.highlight")}
             </span>{" "}
             <span className="font-medium">
-              ArkyHub is the tool we wished existed during those 27 months.
+              {t("closing.bold")}
             </span>
           </p>
           <p className="mx-auto mt-4 max-w-xl text-center font-mono text-[0.7rem] text-[var(--text-muted)]">
-            — Internal data, founder&apos;s prior firm. Identifying details omitted
-            by request.
+            {t("attribution")}
           </p>
         </Reveal>
       </Container>

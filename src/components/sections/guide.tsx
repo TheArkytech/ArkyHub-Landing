@@ -1,7 +1,10 @@
+import { useTranslations } from "next-intl";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/motion/reveal";
 
 export function Guide() {
+  const t = useTranslations("home.guide");
+
   return (
     <section className="border-t border-[var(--border)] bg-[var(--background)] py-24 sm:py-32">
       <Container size="lg">
@@ -9,7 +12,7 @@ export function Guide() {
           {/* Left: eyebrow + headline */}
           <Reveal className="lg:col-span-5">
             <p className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[var(--text-accent)]">
-              Built by architects, for architects
+              {t("eyebrow")}
             </p>
             <h2
               className="mt-5 font-[family-name:var(--font-display)] font-semibold tracking-[-0.03em] text-[var(--text-primary)]"
@@ -18,36 +21,29 @@ export function Guide() {
                 lineHeight: 1.1,
               }}
             >
-              We know the moment you stopped trusting your folder structure.
+              {t("headline")}
             </h2>
           </Reveal>
 
           {/* Right: copy */}
           <Reveal delay={0.12} className="lg:col-span-7">
             <div className="space-y-6 text-[1.0625rem] leading-relaxed text-[var(--text-secondary)]">
+              <p>{t("body1")}</p>
               <p>
-                We know what it&apos;s like to search for the right version of a
-                drawing while a client waits on the line. We know how it feels
-                to discover the contractor built from a previous version.
-              </p>
-              <p>
-                ArkyHub is the first product from{" "}
+                {t("body2Pre")}
                 <span className="font-medium text-[var(--text-primary)]">
-                  Arkytech
+                  {t("body2Brand")}
                 </span>
-                {" "}— a company built to digitalize the AEC sector. It
-                wasn&apos;t adapted from construction management software or
-                repurposed from a generic file drive. It was built around how
-                architecture firms actually work.
+                {t("body2Post")}
               </p>
             </div>
 
             {/* Credentials strip */}
             <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-[var(--border)] pt-6">
               {[
-                "Architect-led design",
-                "AEC-native data model",
-                "Built in Europe",
+                t("credentials.architectLed"),
+                t("credentials.aecNative"),
+                t("credentials.builtInEurope"),
               ].map((label) => (
                 <div
                   key={label}

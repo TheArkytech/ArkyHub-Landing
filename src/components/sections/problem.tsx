@@ -5,6 +5,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial } from "@react-three/drei";
 import * as THREE from "three";
 import { useReducedMotion } from "motion/react";
+import { useTranslations } from "next-intl";
 import {
   AlertCircle,
   Box,
@@ -189,52 +190,8 @@ const ParticleSystem: React.FC<ParticleSystemProps> = ({ scrollProgress }) => {
   );
 };
 
-/** Product pillars presented by the orbital timeline. Icons mirror the
- * tab icons in `hero.tsx`'s BrowserMockup for visual consistency. */
-const ORBITAL_NODES: OrbitalNode[] = [
-  {
-    id: 1,
-    title: "Floor Plans",
-    description:
-      "Every plan revision, versioned and searchable. No more v12_final_FINAL.pdf in a Drive folder nobody opens.",
-    href: "#features",
-    icon: FileText,
-  },
-  {
-    id: 2,
-    title: "BIM Models",
-    description:
-      "RVT and IFC in a browser-native viewer. Share the model with consultants and clients without handing out Revit licenses.",
-    href: "#features",
-    icon: Box,
-  },
-  {
-    id: 3,
-    title: "Virtual Tour",
-    description:
-      "360° walkthroughs stitched from on-site panoramas. Clients step inside the project before the first brick lands.",
-    href: "#features",
-    icon: Eye,
-  },
-  {
-    id: 4,
-    title: "Issue Tracker",
-    description:
-      "Punch-list items pinned to the plan coordinates they describe. Close the loop between site and studio in one thread.",
-    href: "#features",
-    icon: AlertCircle,
-  },
-  {
-    id: 5,
-    title: "Stakeholders",
-    description:
-      "Role-based access for architects, contractors, consultants, and clients. Everyone sees exactly what they should, nothing more.",
-    href: "#features",
-    icon: Users,
-  },
-];
-
 export function Problem() {
+  const t = useTranslations("home.problem");
   const [scrollProgress, setScrollProgress] = useState(0);
   const containerRef = useRef<HTMLElement>(null);
   const prefersReduced = useReducedMotion();
@@ -268,6 +225,45 @@ export function Problem() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [prefersReduced]);
 
+  /** Product pillars presented by the orbital timeline. */
+  const ORBITAL_NODES: OrbitalNode[] = [
+    {
+      id: 1,
+      title: t("nodes.floorPlans.title"),
+      description: t("nodes.floorPlans.description"),
+      href: "#features",
+      icon: FileText,
+    },
+    {
+      id: 2,
+      title: t("nodes.bimModels.title"),
+      description: t("nodes.bimModels.description"),
+      href: "#features",
+      icon: Box,
+    },
+    {
+      id: 3,
+      title: t("nodes.virtualTour.title"),
+      description: t("nodes.virtualTour.description"),
+      href: "#features",
+      icon: Eye,
+    },
+    {
+      id: 4,
+      title: t("nodes.issueTracker.title"),
+      description: t("nodes.issueTracker.description"),
+      href: "#features",
+      icon: AlertCircle,
+    },
+    {
+      id: 5,
+      title: t("nodes.stakeholders.title"),
+      description: t("nodes.stakeholders.description"),
+      href: "#features",
+      icon: Users,
+    },
+  ];
+
   // Canvas fades out / orbital fades in across scroll 0.75 → 0.85.
   const handoff = Math.max(0, Math.min((scrollProgress - 0.75) / 0.1, 1));
   const canvasOpacity = 1 - handoff;
@@ -288,6 +284,25 @@ export function Problem() {
       style={{ height: "450vh" }}
     >
       <div className="sticky top-0 left-0 h-screen w-full overflow-hidden">
+        {/* Scroll progress indicator */}
+        <div
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-50 flex flex-col items-center"
+          style={{ height: "30vh" }}
+        >
+          <div
+            className="relative w-[2px] h-full rounded-full overflow-hidden"
+            style={{ backgroundColor: "var(--text-secondary)", opacity: 0.45 }}
+          >
+            <div
+              className="absolute top-0 left-0 w-full rounded-full"
+              style={{
+                height: `${scrollProgress * 100}%`,
+                backgroundColor: ACCENT_HEX,
+                transition: "height 100ms linear",
+              }}
+            />
+          </div>
+        </div>
         {/* Canvas layer — phases 1+2, fades out during handoff */}
         <div
           className="absolute inset-0"
@@ -336,7 +351,7 @@ export function Problem() {
                 letterSpacing: "-0.03em",
               }}
             >
-              Your project lives in chaos.
+              {t("chaosHeadline")}
             </h2>
           </div>
 
@@ -353,11 +368,12 @@ export function Problem() {
                 letterSpacing: "-0.03em",
               }}
             >
-              ArkyHub brings{" "}
-              <span style={{ color: ACCENT_HEX }}>order</span>.
+              {t("orderHeadlinePre")}
+              <span style={{ color: ACCENT_HEX }}>{t("orderHeadlineAccent")}</span>
+              {t("orderHeadlinePost")}
             </h2>
             <p className="mt-5 text-base text-[var(--text-secondary)] md:text-lg">
-              One workspace. Every document. Always current.
+              {t("orderSubhead")}
             </p>
           </div>
 
@@ -375,11 +391,12 @@ export function Problem() {
                 letterSpacing: "-0.03em",
               }}
             >
-              Every layer,{" "}
-              <span style={{ color: ACCENT_HEX }}>always connected</span>.
+              {t("orbitalHeadlinePre")}
+              <span style={{ color: ACCENT_HEX }}>{t("orbitalHeadlineAccent")}</span>
+              {t("orbitalHeadlinePost")}
             </h2>
             <p className="mt-3 text-sm text-[var(--text-secondary)] md:text-base">
-              Click any node to explore.
+              {t("orbitalSubhead")}
             </p>
           </div>
         </div>

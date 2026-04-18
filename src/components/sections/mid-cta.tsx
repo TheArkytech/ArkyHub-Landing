@@ -1,9 +1,15 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { Container } from "@/components/ui/container";
 import { CTAButton } from "@/components/ui/cta-button";
 import { Reveal } from "@/components/motion/reveal";
 import { DEMO_URL } from "@/lib/config";
 
 export function MidCTA() {
+  const t = useTranslations("home.midCta");
+  const tCta = useTranslations("common.cta");
+
   return (
     <section className="relative overflow-hidden border-t border-[var(--border)] bg-[var(--background)] py-24 sm:py-32">
       {/* Subtle teal radial */}
@@ -24,18 +30,18 @@ export function MidCTA() {
               lineHeight: 1.1,
             }}
           >
-            You&apos;ve seen what it costs to wait.
+            {t("headlinePre")}
             <br />
             <span className="text-[var(--text-accent)]">
-              See what it looks like to stop.
+              {t("headlineAccent")}
             </span>
           </h2>
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <CTAButton href={DEMO_URL} variant="primary" size="lg">
-              See it in 20 minutes
+              {tCta("seeIn20")}
             </CTAButton>
             <CTAButton href="#pricing" variant="secondary" size="lg">
-              View pricing
+              {tCta("viewPricing")}
             </CTAButton>
           </div>
         </Reveal>

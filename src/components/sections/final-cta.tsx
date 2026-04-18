@@ -1,37 +1,19 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { Container } from "@/components/ui/container";
 import { CTAButton } from "@/components/ui/cta-button";
 import { Reveal } from "@/components/motion/reveal";
 import { DEMO_URL } from "@/lib/config";
 import { X, Check } from "lucide-react";
 
-const COMPARISON = [
-  {
-    without: "You spend Tuesday morning searching for the latest plan.",
-    withIt: "The latest plan is the only plan anyone can see.",
-  },
-  {
-    without: "Your contractor calls — they built from a previous version.",
-    withIt: "Your contractor only ever sees the approved version.",
-  },
-  {
-    without:
-      "Your client emails: \u201Cany update?\u201D You don\u2019t have a fast answer.",
-    withIt:
-      "Your client opens the dashboard. They have their answer before they email.",
-  },
-  {
-    without:
-      "Issues live in a WhatsApp group nobody scrolls back through.",
-    withIt:
-      "Every issue points to the exact drawing version it came from.",
-  },
-  {
-    without: "Your team manages files.",
-    withIt: "Your team designs buildings.",
-  },
-];
+type ComparisonRow = { without: string; with: string };
 
 export function FinalCTA() {
+  const t = useTranslations("home.finalCta");
+  const tCta = useTranslations("common.cta");
+  const comparison = t.raw("comparison") as ComparisonRow[];
+
   return (
     <section
       id="final-cta"
@@ -50,7 +32,7 @@ export function FinalCTA() {
         {/* Header */}
         <Reveal className="mx-auto max-w-2xl text-center">
           <p className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[var(--text-accent)]">
-            Two versions of your next project
+            {t("eyebrow")}
           </p>
           <h2
             className="mt-5 font-[family-name:var(--font-display)] font-semibold tracking-[-0.03em] text-[var(--text-primary)]"
@@ -59,7 +41,7 @@ export function FinalCTA() {
               lineHeight: 1.05,
             }}
           >
-            The same project. Two different weeks.
+            {t("headline")}
           </h2>
         </Reveal>
 
@@ -73,11 +55,11 @@ export function FinalCTA() {
                 <X className="h-3.5 w-3.5" strokeWidth={2} />
               </span>
               <span className="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--text-muted)]">
-                Without ArkyHub
+                {t("withoutLabel")}
               </span>
             </div>
             <ul className="space-y-4">
-              {COMPARISON.map((row) => (
+              {comparison.map((row) => (
                 <li
                   key={row.without}
                   className="text-[0.95rem] leading-relaxed text-[var(--text-secondary)]"
@@ -103,16 +85,16 @@ export function FinalCTA() {
                 <Check className="h-3.5 w-3.5" strokeWidth={2.5} />
               </span>
               <span className="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--text-accent)]">
-                With ArkyHub
+                {t("withLabel")}
               </span>
             </div>
             <ul className="space-y-4">
-              {COMPARISON.map((row) => (
+              {comparison.map((row) => (
                 <li
-                  key={row.withIt}
+                  key={row.with}
                   className="text-[0.95rem] leading-relaxed text-[var(--text-primary)]"
                 >
-                  {row.withIt}
+                  {row.with}
                 </li>
               ))}
             </ul>
@@ -129,16 +111,16 @@ export function FinalCTA() {
               lineHeight: 1.15,
             }}
           >
-            One workspace. Every document. Every stakeholder.{" "}
-            <span className="text-[var(--text-accent)]">Always current.</span>
+            {t("closingPre")}
+            <span className="text-[var(--text-accent)]">{t("closingAccent")}</span>
           </h3>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <CTAButton href={DEMO_URL} variant="primary" size="lg">
-              Schedule a Demo
+              {tCta("scheduleDemo")}
             </CTAButton>
             <CTAButton href="#how-it-works" variant="secondary" size="lg">
-              See How It Works
+              {tCta("seeHowItWorks")}
             </CTAButton>
           </div>
         </Reveal>

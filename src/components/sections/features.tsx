@@ -1,36 +1,23 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/motion/reveal";
 import { GitCommit, Box, Compass, Users } from "lucide-react";
 import type { ReactNode } from "react";
 
-const FEATURES = [
-  {
-    icon: GitCommit,
-    title: "Issues tied to the exact plan version",
-    body: "When someone flags a problem, it points at the specific drawing version — not floating in a chat thread that gets lost by Friday.",
-    visual: <PlanVersionVisual />,
-  },
-  {
-    icon: Box,
-    title: "BIM models, viewable in any browser",
-    body: "No software install. No license fee. The contractor opens the model on a tablet on-site. The client opens it from their living room.",
-    visual: <BIMVisual />,
-  },
-  {
-    icon: Compass,
-    title: "Virtual walkthroughs inside the project",
-    body: "The tour lives next to the plans, not in a separate link buried in an email from three weeks ago.",
-    visual: <TourVisual />,
-  },
-  {
-    icon: Users,
-    title: "Each stakeholder sees only what they need",
-    body: "Contractors get plans. Clients get the dashboard. Your team manages the rest. One workspace, the right view for everyone.",
-    visual: <RolesVisual />,
-  },
-];
+const ICONS = [GitCommit, Box, Compass, Users];
 
 export function Features() {
+  const t = useTranslations("home.features");
+  const items = t.raw("items") as Array<{ title: string; body: string }>;
+  const VISUALS: ReactNode[] = [
+    <PlanVersionVisual key="plan" />,
+    <BIMVisual key="bim" />,
+    <TourVisual key="tour" />,
+    <RolesVisual key="roles" />,
+  ];
+
   return (
     <section
       id="features"
@@ -40,7 +27,7 @@ export function Features() {
         {/* Header */}
         <Reveal className="mx-auto max-w-2xl text-center">
           <p className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[var(--text-accent)]">
-            What&apos;s different
+            {t("eyebrow")}
           </p>
           <h2
             className="mt-5 font-[family-name:var(--font-display)] font-semibold tracking-[-0.03em] text-[var(--text-primary)]"
@@ -49,36 +36,38 @@ export function Features() {
               lineHeight: 1.05,
             }}
           >
-            Four things the patchwork can&apos;t do.
+            {t("headline")}
           </h2>
           <p className="mt-5 text-[1.0625rem] leading-relaxed text-[var(--text-secondary)]">
-            Each one is a problem we watched architecture firms solve manually,
-            week after week.
+            {t("subhead")}
           </p>
         </Reveal>
 
         {/* 2x2 grid */}
         <div className="mx-auto mt-16 grid max-w-6xl grid-cols-1 gap-5 md:grid-cols-2">
-          {FEATURES.map((f, i) => (
-            <Reveal key={f.title} delay={(i % 2) * 0.08} className="h-full">
-              <article className="group relative h-full overflow-hidden rounded-[var(--radius-xl)] border border-[var(--border)] bg-[var(--surface-elevated)] p-8 transition-colors duration-[var(--duration-base)] ease-[var(--ease-out)] hover:border-[var(--border-strong)]">
-                {/* Visual area */}
-                <div className="mb-7 h-40 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)]">
-                  {f.visual}
-                </div>
-                {/* Icon badge */}
-                <div className="mb-4 inline-flex h-9 w-9 items-center justify-center rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--surface)] text-[var(--text-accent)]">
-                  <f.icon className="h-4 w-4" strokeWidth={1.75} />
-                </div>
-                <h3 className="font-[family-name:var(--font-display)] text-lg font-semibold tracking-tight text-[var(--text-primary)]">
-                  {f.title}
-                </h3>
-                <p className="mt-2 text-[0.95rem] leading-relaxed text-[var(--text-secondary)]">
-                  {f.body}
-                </p>
-              </article>
-            </Reveal>
-          ))}
+          {items.map((f, i) => {
+            const Icon = ICONS[i];
+            return (
+              <Reveal key={f.title} delay={(i % 2) * 0.08} className="h-full">
+                <article className="group relative h-full overflow-hidden rounded-[var(--radius-xl)] border border-[var(--border)] bg-[var(--surface-elevated)] p-8 transition-colors duration-[var(--duration-base)] ease-[var(--ease-out)] hover:border-[var(--border-strong)]">
+                  {/* Visual area */}
+                  <div className="mb-7 h-40 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)]">
+                    {VISUALS[i]}
+                  </div>
+                  {/* Icon badge */}
+                  <div className="mb-4 inline-flex h-9 w-9 items-center justify-center rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--surface)] text-[var(--text-accent)]">
+                    <Icon className="h-4 w-4" strokeWidth={1.75} />
+                  </div>
+                  <h3 className="font-[family-name:var(--font-display)] text-lg font-semibold tracking-tight text-[var(--text-primary)]">
+                    {f.title}
+                  </h3>
+                  <p className="mt-2 text-[0.95rem] leading-relaxed text-[var(--text-secondary)]">
+                    {f.body}
+                  </p>
+                </article>
+              </Reveal>
+            );
+          })}
         </div>
       </Container>
     </section>
@@ -88,7 +77,7 @@ export function Features() {
 /* ---------------- Visuals — pure CSS, on-brand ---------------- */
 
 function PlanVersionVisual() {
-  // Stacked version cards with the latest one highlighted, mono version tags
+  const t = useTranslations("home.features");
   return (
     <div className="relative h-full p-5">
       <div className="flex h-full flex-col justify-end gap-1.5">
@@ -120,7 +109,7 @@ function PlanVersionVisual() {
             </span>
             {row.current && (
               <span className="ml-auto text-[0.6rem] font-semibold uppercase tracking-[0.12em] text-[var(--text-accent)]">
-                Current
+                {t("current")}
               </span>
             )}
           </div>
@@ -131,10 +120,8 @@ function PlanVersionVisual() {
 }
 
 function BIMVisual() {
-  // Isometric wireframe cube — pure SVG
   return (
     <div className="relative flex h-full items-center justify-center">
-      {/* Hairline grid floor */}
       <div
         aria-hidden
         className="absolute inset-0 opacity-50"
@@ -154,13 +141,11 @@ function BIMVisual() {
         strokeWidth="1"
         strokeLinejoin="round"
       >
-        {/* Building isometric */}
         <path d="M40 90 L100 60 L160 90 L100 120 Z" />
         <path d="M40 90 L40 50 L100 20 L100 60" />
         <path d="M160 90 L160 50 L100 20" />
         <path d="M100 60 L100 120" strokeDasharray="2 3" />
         <path d="M40 50 L100 80 L160 50" strokeDasharray="2 3" />
-        {/* Top vertex pulse dot */}
         <circle cx="100" cy="20" r="2.5" fill="currentColor" stroke="none" />
       </svg>
     </div>
@@ -168,7 +153,6 @@ function BIMVisual() {
 }
 
 function TourVisual() {
-  // 3D viewport corner with crosshair, suggesting a virtual walkthrough
   return (
     <div className="relative flex h-full items-center justify-center">
       <div
@@ -197,7 +181,6 @@ function TourVisual() {
 }
 
 function RolesVisual() {
-  // Three role chips with different scopes
   const ROLES: Array<{ label: string; access: ReactNode }> = [
     {
       label: "Architect",

@@ -1,0 +1,382 @@
+{
+  "common": {
+    "cta": {
+      "scheduleDemo": "Schedule a Demo",
+      "seeHowItWorks": "See How It Works",
+      "getEarlyAccess": "Get early access",
+      "viewPricing": "View pricing",
+      "seeIn20": "See it in 20 minutes",
+      "talkToUs": "Talk to us",
+      "sampleProject": "See a sample project →"
+    },
+    "locale": {
+      "switcherLabel": "Switch language"
+    }
+  },
+
+  "nav": {
+    "product": "Product",
+    "howItWorks": "How It Works",
+    "whyNow": "Why Now",
+    "pricing": "Pricing",
+    "faq": "FAQ"
+  },
+
+  "footer": {
+    "tagline": "Project documentation for architecture firms.",
+    "colProduct": "Product",
+    "colCompany": "Company",
+    "colResources": "Resources",
+    "features": "Features",
+    "howItWorks": "How It Works",
+    "faq": "FAQ",
+    "aboutArkytech": "About Arkytech",
+    "contact": "Contact",
+    "documentation": "Documentation",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "copyright": "© 2026 Arkytech. ArkyHub is a product of Arkytech.",
+    "version": "v0.1 · early access"
+  },
+
+  "home": {
+    "meta": {
+      "title": "ArkyHub — One workspace for every architecture project",
+      "description": "ArkyHub centralizes plans, BIM models, and virtual tours with version control and role-based access. Replace the patchwork of email, Drive, and WhatsApp."
+    },
+
+    "hero": {
+      "eyebrow": "The first product from Arkytech",
+      "h1Pre": "Your architecture projects,",
+      "h1Accent": "in one place.",
+      "subhead": "The patchwork of email, Drive, and WhatsApp wasn't built for architects. ArkyHub is. Centralize every plan, BIM model, and virtual tour in one workspace — with version control and the right access for every stakeholder."
+    },
+
+    "mockup": {
+      "projects": "Projects",
+      "lastUpdated": "Last updated · 2h ago by María L.",
+      "inProgress": "In progress",
+      "projectViews": "Project views",
+      "tabs": {
+        "Plans": "Plans",
+        "BIM": "BIM",
+        "Tour": "Tour",
+        "Stakeholders": "Stakeholders"
+      },
+      "plans": {
+        "floorPlanL0": "Floor plan — Level 0",
+        "floorPlanL1": "Floor plan — Level 1",
+        "sectionAA": "Section A-A"
+      },
+      "bim": {
+        "viewerMeta": "IFC · 42.6 MB · browser-native viewer",
+        "architectural": "Casa Ribera — Architectural",
+        "structural": "Casa Ribera — Structural",
+        "mep": "Casa Ribera — MEP"
+      },
+      "tour": {
+        "entrance": "Entrance",
+        "living": "Living",
+        "kitchen": "Kitchen",
+        "terrace": "Terrace",
+        "meta": "4 waypoints · 360° panoramic"
+      },
+      "stakeholders": {
+        "architect": "Architect",
+        "architectName": "María López · project lead",
+        "fullAccess": "Full access",
+        "contractor": "Contractor",
+        "contractorName": "García & Cia",
+        "plansIssues": "Plans + Issues",
+        "client": "Client",
+        "clientName": "M. Ribera",
+        "dashboardTour": "Dashboard + Tour",
+        "mepConsultant": "MEP consultant",
+        "mepName": "Ibérica Ingeniería",
+        "plansOnly": "Plans only"
+      }
+    },
+
+    "problem": {
+      "chaosHeadline": "Your project lives in chaos.",
+      "orderHeadlinePre": " brings ",
+      "orderHeadlineAccent": "order",
+      "orderHeadlinePost": ".",
+      "orderSubhead": "One workspace. Every document. Always current.",
+      "orbitalHeadlinePre": "Every layer, ",
+      "orbitalHeadlineAccent": "always connected",
+      "orbitalHeadlinePost": ".",
+      "orbitalSubhead": "Click any node to explore.",
+      "nodes": {
+        "floorPlans": {
+          "title": "Floor Plans",
+          "description": "Every plan revision, versioned and searchable. No more v12_final_FINAL.pdf in a Drive folder nobody opens."
+        },
+        "bimModels": {
+          "title": "BIM Models",
+          "description": "RVT and IFC in a browser-native viewer. Share the model with consultants and clients without handing out Revit licenses."
+        },
+        "virtualTour": {
+          "title": "Virtual Tour",
+          "description": "360° walkthroughs stitched from on-site panoramas. Clients step inside the project before the first brick lands."
+        },
+        "issueTracker": {
+          "title": "Issue Tracker",
+          "description": "Punch-list items pinned to the plan coordinates they describe. Close the loop between site and studio in one thread."
+        },
+        "stakeholders": {
+          "title": "Stakeholders",
+          "description": "Role-based access for architects, contractors, consultants, and clients. Everyone sees exactly what they should, nothing more."
+        }
+      }
+    },
+
+    "guide": {
+      "eyebrow": "Built by architects, for architects",
+      "headline": "We know the moment you stopped trusting your folder structure.",
+      "body1": "We know what it's like to search for the right version of a drawing while a client waits on the line. We know how it feels to discover the contractor built from a previous version.",
+      "body2Pre": "ArkyHub is the first product from ",
+      "body2Brand": "Arkytech",
+      "body2Post": " — a company built to digitalize the AEC sector. It wasn't adapted from construction management software or repurposed from a generic file drive. It was built around how architecture firms actually work.",
+      "credentials": {
+        "architectLed": "Architect-led design",
+        "aecNative": "AEC-native data model",
+        "builtInEurope": "Built in Europe"
+      }
+    },
+
+    "features": {
+      "eyebrow": "What's different",
+      "headline": "Four things the patchwork can't do.",
+      "subhead": "Each one is a problem we watched architecture firms solve manually, week after week.",
+      "items": [
+        {
+          "title": "Issues tied to the exact plan version",
+          "body": "When someone flags a problem, it points at the specific drawing version — not floating in a chat thread that gets lost by Friday."
+        },
+        {
+          "title": "BIM models, viewable in any browser",
+          "body": "No software install. No license fee. The contractor opens the model on a tablet on-site. The client opens it from their living room."
+        },
+        {
+          "title": "Virtual walkthroughs inside the project",
+          "body": "The tour lives next to the plans, not in a separate link buried in an email from three weeks ago."
+        },
+        {
+          "title": "Each stakeholder sees only what they need",
+          "body": "Contractors get plans. Clients get the dashboard. Your team manages the rest. One workspace, the right view for everyone."
+        }
+      ],
+      "current": "Current"
+    },
+
+    "howItWorks": {
+      "eyebrow": "The plan",
+      "headline": "Three steps. You can be running by lunch.",
+      "step": "STEP",
+      "steps": [
+        {
+          "title": "Create your account",
+          "body": "Set up your firm in minutes. No IT involvement. No procurement cycle."
+        },
+        {
+          "title": "Upload your first project",
+          "body": "Drop in your plans (DWG or PDF), BIM models, and virtual tours. Versioning starts the moment you upload."
+        },
+        {
+          "title": "Invite your team and stakeholders",
+          "body": "Each person sees exactly what they need — your team, your contractors, your clients. Nothing more, nothing less."
+        }
+      ]
+    },
+
+    "stats": {
+      "eyebrow": "Why we're building this",
+      "headline": "The numbers that convinced us.",
+      "subhead": "The industry problem is well-documented. The harder question was whether organized BIM coordination actually moves the needle. We had reason to know it does.",
+      "industryStat": {
+        "value": "48%",
+        "text": "of rework on U.S. construction sites is caused by poor communication and bad project data.",
+        "citation": "— PlanGrid & FMI, \"Construction Disconnected,\" 2018"
+      },
+      "founderIntro": "Then our founder joined a Madrid real estate development firm as BIM Manager. What happened over the next 27 months:",
+      "before": {
+        "label": "Before · 2022–2023",
+        "projects": "Projects",
+        "sqm": "m² managed",
+        "methodology": "Methodology",
+        "projectsValue": "7",
+        "projectsNote": "over 2 years",
+        "sqmValue": "611",
+        "methodValue": "AutoCAD 2D"
+      },
+      "after": {
+        "label": "After · 2024–2026",
+        "projects": "Projects",
+        "sqm": "m² managed",
+        "methodology": "Methodology",
+        "projectsValue": "27",
+        "projectsNote": "over 2.25 years",
+        "sqmValue": "2,534",
+        "methodValue": "Coordinated BIM"
+      },
+      "closing": {
+        "highlight": "In Q1 2026 alone, managed m² already exceeded the entire year of 2025.",
+        "bold": "ArkyHub is the tool we wished existed during those 27 months."
+      },
+      "attribution": "— Internal data, founder's prior firm. Identifying details omitted by request."
+    },
+
+    "pricing": {
+      "eyebrow": "Pricing",
+      "headline": "Start free. Scale when you're ready.",
+      "subhead": "One project is free forever — genuinely, not a trial. When your practice outgrows one, the jump is simple.",
+      "mostPopular": "Most popular",
+      "smallPrint": "All plans include unlimited stakeholders per project, no install, and browser-based BIM/tour viewers. Pricing may evolve before general availability — early adopters keep their rate.",
+      "tiers": [
+        {
+          "name": "Solo",
+          "tagline": "For the architect testing the workflow.",
+          "price": "Free",
+          "priceNote": "forever",
+          "projects": "1 project",
+          "features": [
+            "Unlimited stakeholders",
+            "Plans, BIM models, virtual tours",
+            "Version control on every file",
+            "Issue tracking tied to drawings",
+            "Browser-based — no installs",
+            "Community support"
+          ],
+          "cta": "Get early access"
+        },
+        {
+          "name": "Studio",
+          "tagline": "For the practice running multiple projects in parallel.",
+          "price": "Early-adopter pricing",
+          "priceNote": "[PENDING — per seat / month]",
+          "projects": "Up to 5 projects",
+          "features": [
+            "Everything in Solo",
+            "Priority email support",
+            "Custom workspace branding",
+            "Expanded storage per project",
+            "Onboarding session for your team"
+          ],
+          "cta": "Schedule a demo"
+        },
+        {
+          "name": "Firm",
+          "tagline": "For firms with dozens of active projects at once.",
+          "price": "Custom",
+          "priceNote": "talk to us",
+          "projects": "Unlimited projects",
+          "features": [
+            "Everything in Studio",
+            "SSO and admin controls",
+            "Role-based access policies",
+            "Dedicated success manager",
+            "SLA and security review",
+            "API access"
+          ],
+          "cta": "Talk to us"
+        }
+      ]
+    },
+
+    "cinematic": {
+      "pill1": "Browser-native",
+      "pill2": "Architect-led",
+      "pill3": "AEC-native",
+      "scrollHint": "Scroll",
+      "versionHistory": "Version history",
+      "plansVersioned": "Plans versioned",
+      "stakeholdersHeading": "Stakeholders · 4",
+      "feat1Step": "01 · PLANS",
+      "feat1Title": "Every drawing, every version.",
+      "feat1Body": "DWG and PDF, version-controlled from the moment you upload. Issues pin to the exact revision.",
+      "feat2Step": "02 · BIM",
+      "feat2Title": "Models, in any browser.",
+      "feat2Body": "RVT and IFC rendered browser-native — no install, no license required.",
+      "feat3Step": "03 · VIRTUAL TOUR",
+      "feat3Title": "Walkthroughs, inside the project.",
+      "feat3Body": "360° panoramic tours embedded beside the plans — clients step inside before the first brick lands.",
+      "feat4Step": "04 · STAKEHOLDERS",
+      "feat4Title": "Each person sees what they need.",
+      "feat4Body": "Contractors get plans. Clients get the dashboard. One workspace, the right view for everyone.",
+      "ctaH1": "Start with one project.",
+      "ctaH2": "Free, forever.",
+      "ctaSub": "Set up your firm in minutes. Upload your first project — plans, models, virtual tours. Invite your team and stakeholders. Running by lunch."
+    },
+
+    "midCta": {
+      "headlinePre": "You've seen what it costs to wait.",
+      "headlineAccent": "See what it looks like to stop."
+    },
+
+    "faq": {
+      "eyebrow": "Questions",
+      "headline": "What architects ask before signing up.",
+      "items": [
+        {
+          "q": "Do contractors need to install anything?",
+          "a": "No. ArkyHub runs entirely in the browser — including the BIM viewer. Your contractor opens a link, sees the latest plan. That's it."
+        },
+        {
+          "q": "How is this different from Google Drive?",
+          "a": "Drive stores files. ArkyHub knows what they are. Plans get version control. Issues get tied to the exact drawing. BIM and virtual tours render natively. Each stakeholder gets a different view."
+        },
+        {
+          "q": "How is it different from Procore or Autodesk Construction Cloud?",
+          "a": "Those are built for contractors and run by contractors. ArkyHub is built for the architect — you control the documentation, you decide what each stakeholder sees."
+        },
+        {
+          "q": "What file formats do you support?",
+          "a": "Plans in DWG and PDF. BIM models in IFC and RVT. Virtual tours via standard panoramic formats. If your workflow depends on a specific export pipeline, schedule a demo and we'll confirm the fit."
+        },
+        {
+          "q": "Is my client data isolated from my other projects?",
+          "a": "Yes. Each firm — and each project within a firm — is fully separated. Working with multiple clients never means data leaks between them."
+        },
+        {
+          "q": "How much does it cost?",
+          "a": "We're rolling out access with early-adopter pricing. Schedule a demo and we'll walk you through what fits your firm size."
+        }
+      ],
+      "ctaPre": "Have a question we didn't answer? ",
+      "ctaLink": "Schedule a demo",
+      "ctaPost": " and ask us live."
+    },
+
+    "finalCta": {
+      "eyebrow": "Two versions of your next project",
+      "headline": "The same project. Two different weeks.",
+      "withoutLabel": "Without ArkyHub",
+      "withLabel": "With ArkyHub",
+      "comparison": [
+        {
+          "without": "You spend Tuesday morning searching for the latest plan.",
+          "with": "The latest plan is the only plan anyone can see."
+        },
+        {
+          "without": "Your contractor calls — they built from a previous version.",
+          "with": "Your contractor only ever sees the approved version."
+        },
+        {
+          "without": "Your client emails: \u201Cany update?\u201D You don\u2019t have a fast answer.",
+          "with": "Your client opens the dashboard. They have their answer before they email."
+        },
+        {
+          "without": "Issues live in a WhatsApp group nobody scrolls back through.",
+          "with": "Every issue points to the exact drawing version it came from."
+        },
+        {
+          "without": "Your team manages files.",
+          "with": "Your team designs buildings."
+        }
+      ],
+      "closingPre": "One workspace. Every document. Every stakeholder. ",
+      "closingAccent": "Always current."
+    }
+  }
+}

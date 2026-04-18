@@ -1,0 +1,382 @@
+{
+  "common": {
+    "cta": {
+      "scheduleDemo": "Solicitar demo",
+      "seeHowItWorks": "Ver cómo funciona",
+      "getEarlyAccess": "Solicitar acceso anticipado",
+      "viewPricing": "Ver precios",
+      "seeIn20": "Véalo en 20 minutos",
+      "talkToUs": "Hablemos",
+      "sampleProject": "Ver un proyecto de ejemplo →"
+    },
+    "locale": {
+      "switcherLabel": "Cambiar idioma"
+    }
+  },
+
+  "nav": {
+    "product": "Producto",
+    "howItWorks": "Cómo funciona",
+    "whyNow": "Por qué ahora",
+    "pricing": "Precios",
+    "faq": "FAQ"
+  },
+
+  "footer": {
+    "tagline": "Documentación de proyectos para estudios de arquitectura.",
+    "colProduct": "Producto",
+    "colCompany": "Empresa",
+    "colResources": "Recursos",
+    "features": "Funcionalidades",
+    "howItWorks": "Cómo funciona",
+    "faq": "FAQ",
+    "aboutArkytech": "Sobre Arkytech",
+    "contact": "Contacto",
+    "documentation": "Documentación",
+    "privacy": "Privacidad",
+    "terms": "Términos",
+    "copyright": "© 2026 Arkytech. ArkyHub es un producto de Arkytech.",
+    "version": "v0.1 · acceso anticipado"
+  },
+
+  "home": {
+    "meta": {
+      "title": "ArkyHub — Un solo espacio de trabajo para cada proyecto de arquitectura",
+      "description": "ArkyHub centraliza planos, modelos BIM y recorridos virtuales con control de versiones y accesos por rol. Sustituye el parcheo de email, Drive y WhatsApp."
+    },
+
+    "hero": {
+      "eyebrow": "El primer producto de Arkytech",
+      "h1Pre": "Tus proyectos de arquitectura,",
+      "h1Accent": "en un solo lugar.",
+      "subhead": "El parcheo de email, Drive y WhatsApp no fue diseñado para arquitectos. ArkyHub sí. Centraliza cada plano, modelo BIM y recorrido virtual en un solo espacio — con control de versiones y el acceso adecuado para cada parte interesada."
+    },
+
+    "mockup": {
+      "projects": "Proyectos",
+      "lastUpdated": "Última actualización · hace 2h por María L.",
+      "inProgress": "En curso",
+      "projectViews": "Vistas del proyecto",
+      "tabs": {
+        "Plans": "Planos",
+        "BIM": "BIM",
+        "Tour": "Recorrido",
+        "Stakeholders": "Partes interesadas"
+      },
+      "plans": {
+        "floorPlanL0": "Planta baja — Nivel 0",
+        "floorPlanL1": "Planta baja — Nivel 1",
+        "sectionAA": "Sección A-A"
+      },
+      "bim": {
+        "viewerMeta": "IFC · 42,6 MB · visor en navegador",
+        "architectural": "Casa Ribera — Arquitectónico",
+        "structural": "Casa Ribera — Estructural",
+        "mep": "Casa Ribera — MEP"
+      },
+      "tour": {
+        "entrance": "Entrada",
+        "living": "Salón",
+        "kitchen": "Cocina",
+        "terrace": "Terraza",
+        "meta": "4 puntos · panorámica 360°"
+      },
+      "stakeholders": {
+        "architect": "Arquitecto/a",
+        "architectName": "María López · directora de proyecto",
+        "fullAccess": "Acceso completo",
+        "contractor": "Constructora",
+        "contractorName": "García y Cía",
+        "plansIssues": "Planos + Incidencias",
+        "client": "Cliente",
+        "clientName": "M. Ribera",
+        "dashboardTour": "Panel + Recorrido",
+        "mepConsultant": "Consultor MEP",
+        "mepName": "Ibérica Ingeniería",
+        "plansOnly": "Solo planos"
+      }
+    },
+
+    "problem": {
+      "chaosHeadline": "Tu proyecto vive en el caos.",
+      "orderHeadlinePre": " trae ",
+      "orderHeadlineAccent": "orden",
+      "orderHeadlinePost": ".",
+      "orderSubhead": "Un solo espacio. Cada documento. Siempre actualizado.",
+      "orbitalHeadlinePre": "Cada capa, ",
+      "orbitalHeadlineAccent": "siempre conectada",
+      "orbitalHeadlinePost": ".",
+      "orbitalSubhead": "Haz clic en cualquier nodo para explorar.",
+      "nodes": {
+        "floorPlans": {
+          "title": "Planos",
+          "description": "Cada revisión de plano, versionada y buscable. No más v12_final_FINAL.pdf en una carpeta de Drive que nadie abre."
+        },
+        "bimModels": {
+          "title": "Modelos BIM",
+          "description": "RVT e IFC en un visor nativo del navegador. Comparte el modelo con consultores y clientes sin repartir licencias de Revit."
+        },
+        "virtualTour": {
+          "title": "Recorrido virtual",
+          "description": "Paseos 360° cosidos a partir de panorámicas de obra. Los clientes entran al proyecto antes de que se ponga el primer ladrillo."
+        },
+        "issueTracker": {
+          "title": "Seguimiento de incidencias",
+          "description": "Elementos de la lista de repasos vinculados a las coordenadas del plano que describen. Cierra el bucle entre obra y estudio en un solo hilo."
+        },
+        "stakeholders": {
+          "title": "Partes interesadas",
+          "description": "Acceso por rol para arquitectos, constructoras, consultores y clientes. Cada uno ve exactamente lo que debe, nada más."
+        }
+      }
+    },
+
+    "guide": {
+      "eyebrow": "Hecho por arquitectos, para arquitectos",
+      "headline": "Sabemos el momento en que dejaste de confiar en tu estructura de carpetas.",
+      "body1": "Sabemos lo que es buscar la versión correcta de un plano mientras un cliente espera al teléfono. Sabemos cómo se siente descubrir que la constructora construyó a partir de una versión anterior.",
+      "body2Pre": "ArkyHub es el primer producto de ",
+      "body2Brand": "Arkytech",
+      "body2Post": " — una empresa creada para digitalizar el sector AEC. No fue adaptado de un software de gestión de obra ni reciclado de un drive genérico. Se construyó alrededor de cómo trabajan realmente los estudios de arquitectura.",
+      "credentials": {
+        "architectLed": "Diseño liderado por arquitectos",
+        "aecNative": "Modelo de datos nativo AEC",
+        "builtInEurope": "Hecho en Europa"
+      }
+    },
+
+    "features": {
+      "eyebrow": "Qué lo hace diferente",
+      "headline": "Cuatro cosas que el parcheo no puede hacer.",
+      "subhead": "Cada una es un problema que vimos resolver a mano a estudios de arquitectura, semana tras semana.",
+      "items": [
+        {
+          "title": "Incidencias vinculadas a la versión exacta del plano",
+          "body": "Cuando alguien señala un problema, apunta a la versión concreta del dibujo — no flota en un chat que se pierde para el viernes."
+        },
+        {
+          "title": "Modelos BIM, visibles en cualquier navegador",
+          "body": "Sin instalar software. Sin licencia. La constructora abre el modelo en una tablet en obra. El cliente lo abre desde su salón."
+        },
+        {
+          "title": "Recorridos virtuales dentro del proyecto",
+          "body": "El recorrido vive junto a los planos, no en un enlace aparte enterrado en un email de hace tres semanas."
+        },
+        {
+          "title": "Cada parte interesada ve solo lo que necesita",
+          "body": "Las constructoras ven los planos. Los clientes ven el panel. Tu equipo gestiona el resto. Un espacio, la vista correcta para cada uno."
+        }
+      ],
+      "current": "Actual"
+    },
+
+    "howItWorks": {
+      "eyebrow": "El plan",
+      "headline": "Tres pasos. Puedes estar funcionando antes de comer.",
+      "step": "PASO",
+      "steps": [
+        {
+          "title": "Crea tu cuenta",
+          "body": "Configura tu estudio en minutos. Sin departamento de IT. Sin ciclo de compras."
+        },
+        {
+          "title": "Sube tu primer proyecto",
+          "body": "Arrastra tus planos (DWG o PDF), modelos BIM y recorridos virtuales. El versionado empieza en el momento de subir."
+        },
+        {
+          "title": "Invita a tu equipo y partes interesadas",
+          "body": "Cada persona ve exactamente lo que necesita — tu equipo, tus constructoras, tus clientes. Ni más, ni menos."
+        }
+      ]
+    },
+
+    "stats": {
+      "eyebrow": "Por qué estamos construyendo esto",
+      "headline": "Los números que nos convencieron.",
+      "subhead": "El problema del sector está bien documentado. La pregunta más difícil era si la coordinación BIM organizada realmente marca la diferencia. Teníamos motivos para saber que sí.",
+      "industryStat": {
+        "value": "48%",
+        "text": "de los retrabajos en obras de EE. UU. se deben a mala comunicación y datos de proyecto deficientes.",
+        "citation": "— PlanGrid & FMI, \"Construction Disconnected,\" 2018"
+      },
+      "founderIntro": "Entonces nuestro fundador se incorporó a una promotora inmobiliaria de Madrid como BIM Manager. Lo que ocurrió en los siguientes 27 meses:",
+      "before": {
+        "label": "Antes · 2022–2023",
+        "projects": "Proyectos",
+        "sqm": "m² gestionados",
+        "methodology": "Metodología",
+        "projectsValue": "7",
+        "projectsNote": "en 2 años",
+        "sqmValue": "611",
+        "methodValue": "AutoCAD 2D"
+      },
+      "after": {
+        "label": "Después · 2024–2026",
+        "projects": "Proyectos",
+        "sqm": "m² gestionados",
+        "methodology": "Metodología",
+        "projectsValue": "27",
+        "projectsNote": "en 2,25 años",
+        "sqmValue": "2.534",
+        "methodValue": "BIM coordinado"
+      },
+      "closing": {
+        "highlight": "Solo en el Q1 de 2026, los m² gestionados ya superaron todo el año 2025.",
+        "bold": "ArkyHub es la herramienta que deseamos haber tenido durante esos 27 meses."
+      },
+      "attribution": "— Datos internos, empresa anterior del fundador. Detalles identificativos omitidos por petición."
+    },
+
+    "pricing": {
+      "eyebrow": "Precios",
+      "headline": "Empieza gratis. Escala cuando estés listo.",
+      "subhead": "Un proyecto es gratis para siempre — de verdad, no es un periodo de prueba. Cuando tu estudio necesite más, el salto es simple.",
+      "mostPopular": "Más popular",
+      "smallPrint": "Todos los planes incluyen partes interesadas ilimitadas por proyecto, sin instalación, y visores BIM/recorrido en el navegador. Los precios pueden evolucionar antes de la disponibilidad general — los early adopters mantienen su tarifa.",
+      "tiers": [
+        {
+          "name": "Solo",
+          "tagline": "Para el arquitecto que prueba el flujo de trabajo.",
+          "price": "Gratis",
+          "priceNote": "para siempre",
+          "projects": "1 proyecto",
+          "features": [
+            "Partes interesadas ilimitadas",
+            "Planos, modelos BIM, recorridos virtuales",
+            "Control de versiones en cada archivo",
+            "Seguimiento de incidencias vinculado a planos",
+            "Basado en navegador — sin instalaciones",
+            "Soporte de la comunidad"
+          ],
+          "cta": "Solicitar acceso anticipado"
+        },
+        {
+          "name": "Studio",
+          "tagline": "Para el estudio que lleva varios proyectos en paralelo.",
+          "price": "Precio early adopter",
+          "priceNote": "[PENDIENTE — por usuario / mes]",
+          "projects": "Hasta 5 proyectos",
+          "features": [
+            "Todo lo de Solo",
+            "Soporte prioritario por email",
+            "Branding personalizado del workspace",
+            "Almacenamiento ampliado por proyecto",
+            "Sesión de onboarding para tu equipo"
+          ],
+          "cta": "Solicitar demo"
+        },
+        {
+          "name": "Firm",
+          "tagline": "Para estudios con decenas de proyectos activos a la vez.",
+          "price": "Personalizado",
+          "priceNote": "hablemos",
+          "projects": "Proyectos ilimitados",
+          "features": [
+            "Todo lo de Studio",
+            "SSO y controles de administración",
+            "Políticas de acceso por rol",
+            "Success manager dedicado",
+            "SLA y revisión de seguridad",
+            "Acceso API"
+          ],
+          "cta": "Hablemos"
+        }
+      ]
+    },
+
+    "cinematic": {
+      "pill1": "En navegador",
+      "pill2": "Liderado por arquitectos",
+      "pill3": "Nativo AEC",
+      "scrollHint": "Scroll",
+      "versionHistory": "Historial de versiones",
+      "plansVersioned": "Planos versionados",
+      "stakeholdersHeading": "Partes interesadas · 4",
+      "feat1Step": "01 · PLANOS",
+      "feat1Title": "Cada dibujo, cada versión.",
+      "feat1Body": "DWG y PDF, con control de versiones desde el momento de subir. Las incidencias apuntan a la revisión exacta.",
+      "feat2Step": "02 · BIM",
+      "feat2Title": "Modelos, en cualquier navegador.",
+      "feat2Body": "RVT e IFC renderizados en el navegador — sin instalar nada, sin licencia.",
+      "feat3Step": "03 · RECORRIDO VIRTUAL",
+      "feat3Title": "Paseos, dentro del proyecto.",
+      "feat3Body": "Tours panorámicos 360° junto a los planos — los clientes entran al proyecto antes de poner el primer ladrillo.",
+      "feat4Step": "04 · PARTES INTERESADAS",
+      "feat4Title": "Cada persona ve lo que necesita.",
+      "feat4Body": "Las constructoras ven los planos. Los clientes ven el panel. Un espacio, la vista correcta para cada uno.",
+      "ctaH1": "Empieza con un proyecto.",
+      "ctaH2": "Gratis, para siempre.",
+      "ctaSub": "Configura tu estudio en minutos. Sube tu primer proyecto — planos, modelos, recorridos virtuales. Invita a tu equipo y partes interesadas. Funcionando antes de comer."
+    },
+
+    "midCta": {
+      "headlinePre": "Ya has visto lo que cuesta esperar.",
+      "headlineAccent": "Mira cómo es dejar de hacerlo."
+    },
+
+    "faq": {
+      "eyebrow": "Preguntas",
+      "headline": "Lo que preguntan los arquitectos antes de registrarse.",
+      "items": [
+        {
+          "q": "¿La constructora necesita instalar algo?",
+          "a": "No. ArkyHub funciona completamente en el navegador — incluido el visor BIM. Tu constructora abre un enlace, ve el último plano. Eso es todo."
+        },
+        {
+          "q": "¿En qué se diferencia de Google Drive?",
+          "a": "Drive almacena archivos. ArkyHub sabe qué son. Los planos tienen control de versiones. Las incidencias se vinculan al dibujo exacto. BIM y recorridos virtuales se renderizan de forma nativa. Cada parte interesada ve una vista diferente."
+        },
+        {
+          "q": "¿En qué se diferencia de Procore o Autodesk Construction Cloud?",
+          "a": "Esos están construidos para constructoras y los gestionan constructoras. ArkyHub está hecho para el arquitecto — tú controlas la documentación, tú decides qué ve cada parte interesada."
+        },
+        {
+          "q": "¿Qué formatos de archivo soportáis?",
+          "a": "Planos en DWG y PDF. Modelos BIM en IFC y RVT. Recorridos virtuales en formatos panorámicos estándar. Si tu flujo de trabajo depende de un pipeline de exportación específico, solicita una demo y confirmamos la compatibilidad."
+        },
+        {
+          "q": "¿Los datos de mi cliente están aislados de mis otros proyectos?",
+          "a": "Sí. Cada estudio — y cada proyecto dentro de un estudio — está completamente separado. Trabajar con varios clientes nunca implica fugas de datos entre ellos."
+        },
+        {
+          "q": "¿Cuánto cuesta?",
+          "a": "Estamos desplegando acceso con precios para early adopters. Solicita una demo y te explicamos qué se adapta al tamaño de tu estudio."
+        }
+      ],
+      "ctaPre": "¿Tienes una pregunta que no respondimos? ",
+      "ctaLink": "Solicita una demo",
+      "ctaPost": " y pregúntanos en directo."
+    },
+
+    "finalCta": {
+      "eyebrow": "Dos versiones de tu próximo proyecto",
+      "headline": "El mismo proyecto. Dos semanas diferentes.",
+      "withoutLabel": "Sin ArkyHub",
+      "withLabel": "Con ArkyHub",
+      "comparison": [
+        {
+          "without": "Pasas el martes por la mañana buscando el último plano.",
+          "with": "El último plano es el único que cualquiera puede ver."
+        },
+        {
+          "without": "Tu constructora llama — construyeron a partir de una versión anterior.",
+          "with": "Tu constructora solo ve la versión aprobada."
+        },
+        {
+          "without": "Tu cliente escribe: \"¿alguna novedad?\" No tienes una respuesta rápida.",
+          "with": "Tu cliente abre el panel. Tiene su respuesta antes de escribir."
+        },
+        {
+          "without": "Las incidencias viven en un grupo de WhatsApp que nadie recorre hacia arriba.",
+          "with": "Cada incidencia apunta a la versión exacta del dibujo de la que proviene."
+        },
+        {
+          "without": "Tu equipo gestiona archivos.",
+          "with": "Tu equipo diseña edificios."
+        }
+      ],
+      "closingPre": "Un solo espacio. Cada documento. Cada parte interesada. ",
+      "closingAccent": "Siempre actualizado."
+    }
+  }
+}

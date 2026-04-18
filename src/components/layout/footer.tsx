@@ -1,32 +1,35 @@
+import { useTranslations } from "next-intl";
 import { Container } from "@/components/ui/container";
 
-const COLS = [
-  {
-    title: "Product",
-    links: [
-      { label: "Features", href: "#features" },
-      { label: "How It Works", href: "#how-it-works" },
-      { label: "FAQ", href: "#faq" },
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      { label: "About Arkytech", href: "#" },
-      { label: "Contact", href: "#" },
-    ],
-  },
-  {
-    title: "Resources",
-    links: [
-      { label: "Documentation", href: "#" },
-      { label: "Privacy", href: "#" },
-      { label: "Terms", href: "#" },
-    ],
-  },
-];
-
 export function Footer() {
+  const t = useTranslations("footer");
+
+  const COLS = [
+    {
+      title: t("colProduct"),
+      links: [
+        { label: t("features"), href: "#features" },
+        { label: t("howItWorks"), href: "#how-it-works" },
+        { label: t("faq"), href: "#faq" },
+      ],
+    },
+    {
+      title: t("colCompany"),
+      links: [
+        { label: t("aboutArkytech"), href: "#" },
+        { label: t("contact"), href: "#" },
+      ],
+    },
+    {
+      title: t("colResources"),
+      links: [
+        { label: t("documentation"), href: "#" },
+        { label: t("privacy"), href: "#" },
+        { label: t("terms"), href: "#" },
+      ],
+    },
+  ];
+
   return (
     <footer className="border-t border-[var(--border)] bg-[var(--background)] py-16">
       <Container size="xl">
@@ -41,7 +44,7 @@ export function Footer() {
               ArkyHub
             </div>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-[var(--text-secondary)]">
-              Project documentation for architecture firms.
+              {t("tagline")}
             </p>
           </div>
 
@@ -67,8 +70,8 @@ export function Footer() {
         </div>
 
         <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-[var(--border)] pt-8 text-xs text-[var(--text-muted)] sm:flex-row sm:items-center">
-          <p>© 2026 Arkytech. ArkyHub is a product of Arkytech.</p>
-          <p className="font-mono">v0.1 · early access</p>
+          <p>{t("copyright")}</p>
+          <p className="font-mono">{t("version")}</p>
         </div>
       </Container>
     </footer>

@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { SparklesCore } from "@/components/ui/sparkles";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -183,7 +184,7 @@ export function CinematicHero() {
       const isMob = window.innerWidth < 768;
 
       /* Initial states */
-      gsap.set(".ch-eyebrow, .ch-line-a, .ch-line-b, .ch-sub, .ch-pills", {
+      gsap.set(".ch-eyebrow, .ch-line-a, .ch-line-b, .ch-sparkles, .ch-sub, .ch-pills", {
         autoAlpha: 0, y: 40, filter: "blur(14px)",
       });
       gsap.set(".ch-card", {
@@ -212,6 +213,7 @@ export function CinematicHero() {
         .to(".ch-eyebrow",  { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 0.8, ease: "power3.out" })
         .to(".ch-line-a",   { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 1.0, ease: "expo.out" }, "-=0.4")
         .to(".ch-line-b",   { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 1.2, ease: "expo.out" }, "-=0.7")
+        .to(".ch-sparkles", { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 1.0, ease: "power3.out" }, "-=0.6")
         .to(".ch-sub",      { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 0.9, ease: "power3.out" }, "-=0.8")
         .to(".ch-pills",    { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 0.8, ease: "power3.out" }, "-=0.6")
         .to(".ch-hint",     { autoAlpha: 1, duration: 0.6 }, "-=0.3");
@@ -389,7 +391,7 @@ export function CinematicHero() {
         {/* Headline */}
         <h1
           className="font-[family-name:var(--font-display)] font-bold max-w-[1100px] mx-auto"
-          style={{ fontSize: "clamp(2.5rem, 8vw, 6.25rem)", lineHeight: 0.95, letterSpacing: "-0.035em" }}
+          style={{ fontSize: "clamp(2.5rem, 8vw, 6.25rem)", lineHeight: 1.05, letterSpacing: "-0.035em" }}
         >
           <span
             className="ch-line-a block text-[var(--text-primary)]"
@@ -411,25 +413,55 @@ export function CinematicHero() {
           </span>
         </h1>
 
-        {/* Subheadline */}
+        {/* ── Sparkles divider ── */}
+        <div
+          className="ch-sparkles relative w-full max-w-[48rem] h-36 mt-1"
+          style={{
+            maskImage: "radial-gradient(420px 180px at 50% 0%, black 30%, transparent 85%)",
+            WebkitMaskImage: "radial-gradient(420px 180px at 50% 0%, black 30%, transparent 85%)",
+          }}
+        >
+          {/* Gradient glow lines */}
+          <div className="absolute left-[10%] right-[10%] top-0 bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent h-[2px] blur-sm opacity-80" />
+          <div className="absolute left-[10%] right-[10%] top-0 bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent h-px opacity-90" />
+          <div className="absolute left-[30%] right-[30%] top-0 bg-gradient-to-r from-transparent via-teal-400 to-transparent h-[5px] blur-sm opacity-70" />
+          <div className="absolute left-[30%] right-[30%] top-0 bg-gradient-to-r from-transparent via-teal-400 to-transparent h-px opacity-80" />
+
+          {/* Sparkles canvas */}
+          <SparklesCore
+            background="transparent"
+            minSize={0.5}
+            maxSize={1.8}
+            particleDensity={1400}
+            className="w-full h-full"
+            particleColor={ACCENT_2}
+            speed={0.5}
+          />
+        </div>
+
+        {/* Subheadline — Holded style */}
         <p
-          className="ch-sub mx-auto mt-7 max-w-[620px] text-[var(--text-secondary)] leading-relaxed"
+          className="ch-sub mx-auto max-w-[560px] text-[var(--text-secondary)] leading-relaxed"
           style={{ fontSize: "clamp(1rem, 1.3vw, 1.125rem)", textWrap: "pretty" }}
         >
           {tHero("subhead")}
         </p>
 
-        {/* Pills */}
-        <div className="ch-pills mt-5 flex gap-2.5 flex-wrap justify-center">
-          {[tCin("pill1"), tCin("pill2"), tCin("pill3")].map((p) => (
-            <span
-              key={p}
-              className="text-[11px] tracking-[0.08em] uppercase font-semibold text-[var(--text-muted)] border border-[var(--border)] bg-[var(--surface-elevated)] px-2.5 py-1.5 rounded-full"
-            >
-              {p}
-            </span>
-          ))}
-        </div>
+        {/* Arkytech family tag */}
+        <p className="ch-pills mt-5 text-[12px] tracking-[0.04em] text-[var(--text-muted)]">
+          {tHero("familyTag")}{" "}
+          <span
+            className="font-semibold"
+            style={{
+              background: `linear-gradient(180deg, var(--text-primary) 0%, ${ACCENT_2} 100%)`,
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              color: "transparent",
+            }}
+          >
+            Arkytech
+          </span>
+        </p>
       </div>
 
       {/* ═══════ CTA LAYER (revealed at end) ═══════ */}
@@ -515,11 +547,12 @@ export function CinematicHero() {
           <div
             className="ch-order absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none z-[5] text-white font-[family-name:var(--font-display)] font-bold max-w-[86%]"
             style={{
-              fontSize: "clamp(2rem, 5vw, 4.5rem)", lineHeight: 1.02, letterSpacing: "-0.035em",
+              fontSize: "clamp(2rem, 5vw, 4.5rem)", lineHeight: 1.15, letterSpacing: "-0.035em",
               filter: "drop-shadow(0 12px 28px rgba(0,0,0,0.55))",
             }}
           >
             <span
+              className="block"
               style={{
                 background: "linear-gradient(180deg, #ffffff 0%, #8cbfbb 85%)",
                 WebkitBackgroundClip: "text",
@@ -531,11 +564,7 @@ export function CinematicHero() {
             >
               ArkyHub
             </span>
-            {tProblem("orderHeadlinePre")}<span style={{ color: ACCENT_2 }}>{tProblem("orderHeadlineAccent")}</span>
-            {tProblem("orderHeadlinePost")}
-            <small className="block mt-4 text-[0.26em] tracking-[0.02em] font-medium" style={{ color: "rgba(227,242,240,0.65)" }}>
-              {tProblem("orderSubhead")}
-            </small>
+            <span className="block">{tProblem("orderHeadlinePre").trim()} <span style={{ color: ACCENT_2 }}>{tProblem("orderHeadlineAccent")}</span></span>
           </div>
 
           {/* ── Card content grid ── */}

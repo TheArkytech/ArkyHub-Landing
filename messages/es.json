@@ -47,9 +47,10 @@
 
     "hero": {
       "eyebrow": "El primer producto de Arkytech",
-      "h1Pre": "Tus proyectos de arquitectura,",
+      "h1Pre": "Tus proyectos,",
       "h1Accent": "en un solo lugar.",
-      "subhead": "El parcheo de email, Drive y WhatsApp no fue diseñado para arquitectos. ArkyHub sí. Centraliza cada plano, modelo BIM y recorrido virtual en un solo espacio — con control de versiones y el acceso adecuado para cada parte interesada."
+      "subhead": "ArkyHub es el espacio de trabajo que centraliza cada plano, modelo BIM y recorrido virtual — con control de versiones y el acceso adecuado para cada parte interesada.",
+      "familyTag": "Un producto de"
     },
 
     "mockup": {

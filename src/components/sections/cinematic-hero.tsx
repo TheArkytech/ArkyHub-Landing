@@ -47,11 +47,11 @@ const S = {
   featureCard: {
     borderRadius: 24,
     padding: "36px 40px",
-    background: `radial-gradient(120% 80% at 0% 0%, rgba(43,165,158,0.14), transparent 55%), linear-gradient(160deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.015) 100%)`,
-    border: "1px solid rgba(255,255,255,0.1)",
-    boxShadow: "0 40px 80px -20px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08)",
-    backdropFilter: "blur(20px)",
-    WebkitBackdropFilter: "blur(20px)",
+    background: `radial-gradient(120% 80% at 0% 0%, rgba(43,165,158,0.18), transparent 55%), linear-gradient(160deg, rgba(8,24,23,0.95) 0%, rgba(6,18,17,0.98) 100%)`,
+    border: "1px solid rgba(255,255,255,0.12)",
+    boxShadow: "0 40px 80px -20px rgba(0,0,0,0.6), 0 2px 0 rgba(255,255,255,0.06) inset, 0 -1px 0 rgba(0,0,0,0.4) inset",
+    backdropFilter: "blur(40px) saturate(1.4)",
+    WebkitBackdropFilter: "blur(40px) saturate(1.4)",
     color: "#e9f6f4",
   },
 } as const;
@@ -201,8 +201,13 @@ export function CinematicHero() {
       gsap.set(".ch-reveal", { autoAlpha: 0, y: 20 });
       gsap.set(".ch-cta-wrap", { autoAlpha: 0, scale: 0.85, filter: "blur(24px)" });
       gsap.set(".ch-hint", { autoAlpha: 0 });
-      gsap.set(".ch-brand", { autoAlpha: 0, y: 40, scale: 0.9, filter: "blur(14px)" });
-      gsap.set(".ch-feat", { autoAlpha: 0, y: 60, scale: 0.94, filter: "blur(12px)" });
+      gsap.set(".ch-order-label", { opacity: 0 });
+      /* Stacked cards: all visible, layered with offset */
+      gsap.set('.ch-feat[data-f="plans"]', { autoAlpha: 1, y: 0, scale: 1 });
+      gsap.set('.ch-feat[data-f="bim"]',   { autoAlpha: 1, y: 8, scale: 0.97 });
+      gsap.set('.ch-feat[data-f="tour"]',  { autoAlpha: 1, y: 16, scale: 0.94 });
+      gsap.set('.ch-feat[data-f="stk"]',   { autoAlpha: 1, y: 24, scale: 0.91 });
+      gsap.set(".ch-feat-stack", { autoAlpha: 0, y: 60, filter: "blur(12px)" });
       gsap.set(".ch-fill", { scaleX: 0 });
       gsap.set("#chCanvas", { opacity: 0 });
       gsap.set(".ch-chaos, .ch-order", { opacity: 0 });
@@ -249,15 +254,34 @@ export function CinematicHero() {
         .to({}, { duration: 1.6 })
         .call(() => { particlePhaseRef.current = "clusters"; })
         .to({}, { duration: 1.2 })
-        .to(".ch-order",  { opacity: 0, duration: 0.6 })
-        .to("#chCanvas",  { opacity: 0, duration: 0.8 })
+
+        /* 4 — "brings order" fades, ArkyHub migrates to top-right */
+        .to(".ch-order-sub", { opacity: 0, y: 20, duration: 0.6, ease: "power3.in" })
+        .to("#chCanvas", { opacity: 0, duration: 0.8 }, "<")
         .call(() => { particlePhaseRef.current = "done"; })
 
-        /* 4 — card expands full-bleed */
-        .to(".ch-card", { width: "100vw", height: "100vh", borderRadius: 0, ease: "power3.inOut", duration: 1.3 })
+        /* card expands + ArkyHub moves to top-right simultaneously */
+        .addLabel("expand")
+        .to(".ch-card", { width: "100vw", height: "100vh", borderRadius: 0, ease: "power3.inOut", duration: 1.3 }, "expand")
+        .to(".ch-order", {
+          top: "8%", left: "auto", right: "6%",
+          xPercent: 0, yPercent: 0,
+          x: 0, y: 0,
+          fontSize: "clamp(2.5rem, 5.5vw, 5rem)",
+          textAlign: "right",
+          lineHeight: 0.9,
+          duration: 1.4,
+          ease: "expo.inOut",
+        }, "expand")
+
+        /* show ARKYTECH BRAND label */
+        .to(".ch-order-label", { opacity: 1, duration: 0.6, ease: "power2.out" }, "-=0.4")
+
+        /* hold so brand is visible alone */
+        .to({}, { duration: 1.4 })
 
         /* 5 — workspace reveals */
-        .to(".ch-ws-wrap", { autoAlpha: 1, y: 0, rotationX: 0, rotationY: 0, scale: 1, ease: "expo.out", duration: 2.0 }, "-=0.6")
+        .to(".ch-ws-wrap", { autoAlpha: 1, y: 0, rotationX: 0, rotationY: 0, scale: 1, ease: "expo.out", duration: 2.0 })
         .to(".ch-card-right", { autoAlpha: 1, x: 0, duration: 1.2, ease: "expo.out" }, "<")
         .fromTo(".ch-card-right", { x: 40, scale: 0.9 }, { x: 0, scale: 1, duration: 1.2, ease: "expo.out" }, "<")
 
@@ -265,31 +289,37 @@ export function CinematicHero() {
         .to(".ch-reveal", { autoAlpha: 1, y: 0, stagger: 0.12, ease: "back.out(1.1)", duration: 0.9 }, "-=1.4")
         .to(".ch-counter", { innerText: 148, snap: { innerText: 1 }, duration: 1.8, ease: "expo.out" }, "-=1.6")
 
-        /* 7 — hold + brand */
-        .to({}, { duration: 1.4 })
-        .to(".ch-brand", { autoAlpha: 1, y: -20, scale: 1, filter: "blur(0px)", duration: 1.0, ease: "expo.out" })
-
-        /* 8 — feature cards cycle */
-        .addLabel("f1", "+=0.4")
-        .to('.ch-feat[data-f="plans"]',  { autoAlpha: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.9, ease: "expo.out" }, "f1")
-        .to(".ch-fill-1", { scaleX: 1, duration: 1.8, ease: "none" }, "f1")
+        /* hold */
         .to({}, { duration: 1.0 })
-        .to('.ch-feat[data-f="plans"]',  { autoAlpha: 0, y: -30, scale: 0.96, filter: "blur(8px)", duration: 0.7, ease: "power3.in" })
 
+        /* 8 — stacked feature cards */
+        .addLabel("fStack", "+=0.4")
+        /* Reveal the whole stack */
+        .to(".ch-feat-stack", { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 1.0, ease: "expo.out" }, "fStack")
+        .to(".ch-fill-1", { scaleX: 1, duration: 1.8, ease: "none" }, "fStack")
+        .to({}, { duration: 1.0 })
+
+        /* Peel card 1 (plans) → card 2 (bim) moves to front */
         .addLabel("f2")
-        .to('.ch-feat[data-f="bim"]',    { autoAlpha: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.9, ease: "expo.out" }, "f2")
+        .to('.ch-feat[data-f="plans"]', { y: -120, autoAlpha: 0, scale: 0.92, duration: 0.8, ease: "power3.in" }, "f2")
+        .to('.ch-feat[data-f="bim"]',   { y: 0, scale: 1, duration: 0.8, ease: "expo.out" }, "f2")
+        .to('.ch-feat[data-f="tour"]',  { y: 8, scale: 0.97, duration: 0.8, ease: "expo.out" }, "f2")
+        .to('.ch-feat[data-f="stk"]',   { y: 16, scale: 0.94, duration: 0.8, ease: "expo.out" }, "f2")
         .to(".ch-fill-2", { scaleX: 1, duration: 1.8, ease: "none" }, "f2")
         .to({}, { duration: 1.0 })
-        .to('.ch-feat[data-f="bim"]',    { autoAlpha: 0, y: -30, scale: 0.96, filter: "blur(8px)", duration: 0.7, ease: "power3.in" })
 
+        /* Peel card 2 (bim) → card 3 (tour) moves to front */
         .addLabel("f3")
-        .to('.ch-feat[data-f="tour"]',   { autoAlpha: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.9, ease: "expo.out" }, "f3")
+        .to('.ch-feat[data-f="bim"]',  { y: -120, autoAlpha: 0, scale: 0.92, duration: 0.8, ease: "power3.in" }, "f3")
+        .to('.ch-feat[data-f="tour"]', { y: 0, scale: 1, duration: 0.8, ease: "expo.out" }, "f3")
+        .to('.ch-feat[data-f="stk"]',  { y: 8, scale: 0.97, duration: 0.8, ease: "expo.out" }, "f3")
         .to(".ch-fill-3", { scaleX: 1, duration: 1.8, ease: "none" }, "f3")
         .to({}, { duration: 1.0 })
-        .to('.ch-feat[data-f="tour"]',   { autoAlpha: 0, y: -30, scale: 0.96, filter: "blur(8px)", duration: 0.7, ease: "power3.in" })
 
+        /* Peel card 3 (tour) → card 4 (stk) is last */
         .addLabel("f4")
-        .to('.ch-feat[data-f="stk"]',    { autoAlpha: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.9, ease: "expo.out" }, "f4")
+        .to('.ch-feat[data-f="tour"]', { y: -120, autoAlpha: 0, scale: 0.92, duration: 0.8, ease: "power3.in" }, "f4")
+        .to('.ch-feat[data-f="stk"]',  { y: 0, scale: 1, duration: 0.8, ease: "expo.out" }, "f4")
         .to(".ch-fill-4", { scaleX: 1, duration: 1.8, ease: "none" }, "f4")
         .to({}, { duration: 1.2 })
 
@@ -545,14 +575,15 @@ export function CinematicHero() {
             {tProblem("chaosHeadline")}
           </div>
           <div
-            className="ch-order absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none z-[5] text-white font-[family-name:var(--font-display)] font-bold max-w-[86%]"
+            className="ch-order absolute text-center pointer-events-none z-[5] text-white font-[family-name:var(--font-display)] font-bold"
             style={{
+              top: "50%", left: "50%", transform: "translate(-50%, -50%)",
               fontSize: "clamp(2rem, 5vw, 4.5rem)", lineHeight: 1.15, letterSpacing: "-0.035em",
               filter: "drop-shadow(0 12px 28px rgba(0,0,0,0.55))",
             }}
           >
             <span
-              className="block"
+              className="ch-order-word block"
               style={{
                 background: "linear-gradient(180deg, #ffffff 0%, #8cbfbb 85%)",
                 WebkitBackgroundClip: "text",
@@ -564,7 +595,19 @@ export function CinematicHero() {
             >
               ArkyHub
             </span>
-            <span className="block">{tProblem("orderHeadlinePre").trim()} <span style={{ color: ACCENT_2 }}>{tProblem("orderHeadlineAccent")}</span></span>
+            <span className="ch-order-sub block">{tProblem("orderHeadlinePre").trim()} <span style={{ color: ACCENT_2 }}>{tProblem("orderHeadlineAccent")}</span></span>
+            <small
+              className="ch-order-label block font-semibold"
+              style={{
+                fontSize: "0.18em",
+                letterSpacing: "0.28em",
+                marginTop: 10,
+                color: "rgba(227,242,240,0.55)",
+                opacity: 0,
+              }}
+            >
+              ARKYTECH BRAND
+            </small>
           </div>
 
           {/* ── Card content grid ── */}
@@ -764,54 +807,35 @@ export function CinematicHero() {
               </div>
             </div>
 
-            {/* RIGHT — brand + feature deck */}
+            {/* RIGHT — feature deck */}
             <div className="ch-card-right flex flex-col justify-center items-stretch gap-7 h-full">
-              {/* Wordmark */}
-              <div
-                className="ch-brand font-[family-name:var(--font-display)] font-extrabold text-right"
-                style={{
-                  fontSize: "clamp(2.5rem, 5.5vw, 5rem)",
-                  lineHeight: 0.9,
-                  letterSpacing: "-0.06em",
-                  background: "linear-gradient(180deg, #ffffff 0%, #8cbfbb 85%)",
-                  WebkitBackgroundClip: "text",
-                  backgroundClip: "text",
-                  color: "transparent",
-                  filter: "drop-shadow(0 14px 28px rgba(0,0,0,0.5))",
-                }}
-              >
-                ArkyHub
-                <small className="block text-[0.18em] tracking-[0.28em] font-semibold mt-2.5" style={{ color: "rgba(227,242,240,0.55)", WebkitBackgroundClip: "initial", backgroundClip: "initial" }}>
-                  ARKYTECH BRAND
-                </small>
-              </div>
-
-              {/* Feature deck */}
-              <div className="relative w-full" style={{ height: 320, marginTop: 8 }}>
-                {/* Feature cards */}
+              {/* Feature deck — stacked cards */}
+              <div className="ch-feat-stack relative w-full" style={{ height: 260, marginTop: 8 }}>
                 {([
-                  { key: "plans", step: tCin("feat1Step"), title: tCin("feat1Title"), body: tCin("feat1Body"), vis: "plans" },
-                  { key: "bim",   step: tCin("feat2Step"), title: tCin("feat2Title"), body: tCin("feat2Body"), vis: "bim" },
-                  { key: "tour",  step: tCin("feat3Step"), title: tCin("feat3Title"), body: tCin("feat3Body"), vis: "tour" },
-                  { key: "stk",   step: tCin("feat4Step"), title: tCin("feat4Title"), body: tCin("feat4Body"), vis: "stk" },
-                ] as const).map((f) => (
+                  { key: "plans", step: tCin("feat1Step"), title: tCin("feat1Title"), body: tCin("feat1Body") },
+                  { key: "bim",   step: tCin("feat2Step"), title: tCin("feat2Title"), body: tCin("feat2Body") },
+                  { key: "tour",  step: tCin("feat3Step"), title: tCin("feat3Title"), body: tCin("feat3Body") },
+                  { key: "stk",   step: tCin("feat4Step"), title: tCin("feat4Title"), body: tCin("feat4Body") },
+                ] as const).map((f, i) => (
                   <div
                     key={f.key}
-                    className="ch-feat absolute inset-0 grid gap-7 items-center will-change-transform"
+                    className="ch-feat absolute inset-x-0 top-0 will-change-transform"
                     data-f={f.key}
-                    style={{ ...S.featureCard, gridTemplateColumns: "1.1fr 1fr" }}
+                    style={{
+                      ...S.featureCard,
+                      height: "auto",
+                      minHeight: 200,
+                      zIndex: 4 - i,
+                    }}
                   >
-                    <div>
-                      <div className="font-[family-name:var(--font-mono)] text-[10.5px] tracking-[0.18em] uppercase mb-3.5 inline-flex items-center gap-2" style={{ color: ACCENT_2 }}>
-                        <span className="w-6 h-px" style={{ background: ACCENT_2 }} />
-                        {f.step}
-                      </div>
-                      <h4 className="font-[family-name:var(--font-display)] font-bold text-white m-0 mb-3" style={{ fontSize: "clamp(1.5rem, 2.4vw, 2rem)", lineHeight: 1.1, letterSpacing: "-0.025em" }}>
-                        {f.title}
-                      </h4>
-                      <p className="text-[0.98rem] leading-relaxed m-0" style={{ color: "rgba(227,242,240,0.72)" }}>{f.body}</p>
+                    <div className="font-[family-name:var(--font-mono)] text-[10.5px] tracking-[0.18em] uppercase mb-3 inline-flex items-center gap-2" style={{ color: ACCENT_2 }}>
+                      <span className="w-6 h-px" style={{ background: ACCENT_2 }} />
+                      {f.step}
                     </div>
-                    <FeatureVisual type={f.vis} />
+                    <h4 className="font-[family-name:var(--font-display)] font-bold text-white m-0 mb-2.5" style={{ fontSize: "clamp(1.3rem, 2vw, 1.65rem)", lineHeight: 1.15, letterSpacing: "-0.025em" }}>
+                      {f.title}
+                    </h4>
+                    <p className="text-[0.9rem] leading-relaxed m-0" style={{ color: "rgba(227,242,240,0.72)" }}>{f.body}</p>
                   </div>
                 ))}
 
@@ -862,121 +886,3 @@ export function CinematicHero() {
   );
 }
 
-/* ─── Feature card visual illustrations ─── */
-function FeatureVisual({ type }: { type: "plans" | "bim" | "tour" | "stk" }) {
-  const base: React.CSSProperties = {
-    position: "relative",
-    height: 220,
-    borderRadius: 16,
-    overflow: "hidden",
-    background: "rgba(0,0,0,0.35)",
-    border: "1px solid rgba(255,255,255,0.06)",
-  };
-
-  if (type === "plans") {
-    return (
-      <div style={base}>
-        <div
-          className="absolute inset-0 opacity-55"
-          style={{
-            backgroundImage: `linear-gradient(to right, rgba(43,165,158,0.35) 1px, transparent 1px), linear-gradient(to bottom, rgba(43,165,158,0.35) 1px, transparent 1px)`,
-            backgroundSize: "14px 14px",
-          }}
-        />
-        <svg viewBox="0 0 200 160" preserveAspectRatio="xMidYMid meet" className="absolute inset-3 w-[calc(100%-24px)] h-[calc(100%-24px)]">
-          <g stroke="rgba(140,191,187,0.9)" strokeWidth="1" fill="none">
-            <rect x="20" y="20" width="160" height="120" />
-            <line x1="20" y1="70" x2="180" y2="70" />
-            <line x1="80" y1="20" x2="80" y2="140" />
-            <line x1="130" y1="70" x2="130" y2="140" />
-            <rect x="30" y="28" width="20" height="10" fill="rgba(43,165,158,0.3)" stroke="none" />
-            <text x="155" y="135" fontFamily="JetBrains Mono" fontSize="7" fill="rgba(43,165,158,1)">v07</text>
-          </g>
-        </svg>
-      </div>
-    );
-  }
-
-  if (type === "bim") {
-    return (
-      <div style={base}>
-        <svg viewBox="0 0 200 160" preserveAspectRatio="xMidYMid meet" className="absolute inset-0 w-full h-full">
-          <g stroke="rgba(140,191,187,0.9)" strokeWidth="1" fill="none" strokeLinejoin="round">
-            <path d="M60 110 L100 90 L140 110 L100 130 Z" fill="rgba(43,165,158,0.08)" />
-            <path d="M60 110 L60 70 L100 50 L100 90" />
-            <path d="M140 110 L140 70 L100 50" />
-            <path d="M100 90 L100 130" strokeDasharray="2 3" />
-            <path d="M60 70 L100 88 L140 70" strokeDasharray="2 3" />
-            <circle cx="100" cy="50" r="2" fill="rgba(140,191,187,0.9)" />
-          </g>
-        </svg>
-      </div>
-    );
-  }
-
-  if (type === "tour") {
-    return (
-      <div style={base}>
-        <div
-          className="absolute inset-0"
-          style={{
-            background: "radial-gradient(circle at 30% 60%, rgba(43,165,158,0.25), transparent 60%), radial-gradient(circle at 75% 40%, rgba(43,165,158,0.18), transparent 55%)",
-          }}
-        />
-        <div
-          className="absolute inset-0 opacity-25"
-          style={{
-            backgroundImage: "linear-gradient(to right, rgba(255,255,255,0.18) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.18) 1px, transparent 1px)",
-            backgroundSize: "16px 16px",
-          }}
-        />
-        {[
-          { x: "18%", y: "68%", active: false },
-          { x: "42%", y: "48%", active: true },
-          { x: "64%", y: "42%", active: false },
-          { x: "82%", y: "64%", active: false },
-        ].map((wp, i) => (
-          <span
-            key={i}
-            className="absolute w-3.5 h-3.5 rounded-full -translate-x-1/2 -translate-y-1/2"
-            style={{
-              left: wp.x, top: wp.y,
-              background: wp.active ? ACCENT_2 : "rgba(255,255,255,0.06)",
-              border: `1px solid rgba(43,165,158,0.5)`,
-              boxShadow: wp.active ? `0 0 0 6px rgba(43,165,158,0.2)` : undefined,
-            }}
-          />
-        ))}
-      </div>
-    );
-  }
-
-  /* stk */
-  return (
-    <div style={{ ...base, padding: "16px 18px", display: "flex", flexDirection: "column", gap: 8 }}>
-      {[
-        { initials: "ML", role: "Architect", scope: "Full", accent: true },
-        { initials: "GC", role: "Contractor", scope: "Plans", accent: false },
-        { initials: "MR", role: "Client", scope: "Tour", accent: false },
-      ].map((r, i) => (
-        <div
-          key={i}
-          className="flex items-center gap-2.5 px-2.5 py-2 rounded-[10px]"
-          style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)" }}
-        >
-          <span
-            className="w-[26px] h-[26px] rounded-full font-[family-name:var(--font-mono)] text-[10px] font-semibold flex items-center justify-center"
-            style={r.accent
-              ? { background: `rgba(43,165,158,0.14)`, color: ACCENT_2, border: `1px solid rgba(43,165,158,0.35)` }
-              : { background: "rgba(255,255,255,0.04)", color: "rgba(227,242,240,0.8)", border: "1px solid rgba(255,255,255,0.1)" }
-            }
-          >
-            {r.initials}
-          </span>
-          <span className="text-xs font-medium text-[#e9f6f4]">{r.role}</span>
-          <span className="ml-auto font-[family-name:var(--font-mono)] text-[10px]" style={{ color: "rgba(227,242,240,0.5)" }}>{r.scope}</span>
-        </div>
-      ))}
-    </div>
-  );
-}

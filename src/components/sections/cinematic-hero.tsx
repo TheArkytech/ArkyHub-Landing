@@ -266,12 +266,12 @@ export function CinematicHero() {
         .addLabel("expand")
         .to(".ch-card", { width: "100vw", height: "100vh", borderRadius: 0, ease: "power3.inOut", duration: 1.3 }, "expand")
         .to(".ch-order", {
-          top: "14%", left: "auto", right: "6%",
+          top: "18%", left: "auto", right: "8%",
           xPercent: 0, yPercent: 0,
           x: 0, y: 0,
           fontSize: "clamp(2.25rem, 5vw, 4.5rem)",
           textAlign: "right",
-          lineHeight: 0.95,
+          lineHeight: 1.0,
           duration: 1.4,
           ease: "expo.inOut",
         }, "expand")
@@ -615,6 +615,7 @@ export function CinematicHero() {
                 letterSpacing: "-0.06em",
                 fontWeight: 800,
                 whiteSpace: "nowrap",
+                padding: "0.22em 0.08em",
               }}
             >
               ArkyHub

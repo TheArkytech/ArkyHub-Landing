@@ -261,19 +261,19 @@ export function CinematicHero() {
       gsap.set(".ch-reveal", { autoAlpha: 0, y: 20 });
       gsap.set(".ch-cta-wrap", { autoAlpha: 0, scale: 0.85, filter: "blur(24px)" });
       gsap.set(".ch-hint", { autoAlpha: 0 });
-      /* Stacked cards: all visible, layered with offset */
-      gsap.set('.ch-feat[data-f="plans"]', { autoAlpha: 1, y: 0, scale: 1 });
-      gsap.set('.ch-feat[data-f="bim"]',   { autoAlpha: 1, y: 8, scale: 0.97 });
-      gsap.set('.ch-feat[data-f="tour"]',  { autoAlpha: 1, y: 16, scale: 0.94 });
-      gsap.set('.ch-feat[data-f="stk"]',   { autoAlpha: 1, y: 24, scale: 0.91 });
+      /* Stacked cards: all visible, layered with offset (projects on top) */
+      gsap.set('.ch-feat[data-f="projects"]', { autoAlpha: 1, y: 0, scale: 1 });
+      gsap.set('.ch-feat[data-f="plans"]',    { autoAlpha: 1, y: 8, scale: 0.97 });
+      gsap.set('.ch-feat[data-f="bim"]',      { autoAlpha: 1, y: 16, scale: 0.94 });
+      gsap.set('.ch-feat[data-f="tour"]',     { autoAlpha: 1, y: 24, scale: 0.91 });
+      gsap.set('.ch-feat[data-f="stk"]',      { autoAlpha: 1, y: 32, scale: 0.88 });
       gsap.set(".ch-feat-stack", { autoAlpha: 0, y: 60, filter: "blur(12px)" });
-      /* Mockup tab state — plans active on mount */
+      /* Mockup tab state — projects active on mount; tabs all dim; Projects tooltip visible */
       gsap.set('.ch-tab-content', { autoAlpha: 0 });
-      gsap.set('.ch-tab-content[data-tab="plans"]', { autoAlpha: 1 });
+      gsap.set('.ch-tab-content[data-tab="projects"]', { autoAlpha: 1 });
       gsap.set('.ch-tab-underline', { scaleX: 0 });
-      gsap.set('.ch-tab-underline[data-tab="plans"]', { scaleX: 1 });
       gsap.set('.ch-tab-label', { color: "rgba(227,242,240,0.5)" });
-      gsap.set('.ch-tab-label[data-tab="plans"]', { color: "#fff" });
+      gsap.set('.ch-projects-tooltip', { autoAlpha: 1 });
       gsap.set(".ch-fill", { scaleX: 0 });
       gsap.set("#chCanvas", { opacity: 0 });
       gsap.set(".ch-chaos, .ch-order", { opacity: 0 });
@@ -363,20 +363,35 @@ export function CinematicHero() {
         /* hold */
         .to({}, { duration: 1.0 })
 
-        /* 8 — stacked feature cards */
+        /* 8 — stacked feature cards: projects card on top, mockup still on Projects list */
         .addLabel("fStack", "+=0.4")
-        /* Reveal the whole stack */
         .to(".ch-feat-stack", { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 1.0, ease: "expo.out" }, "fStack")
         .to(".ch-fill-1", { scaleX: 1, duration: 1.8, ease: "none" }, "fStack")
         .to({}, { duration: 1.0 })
 
-        /* Peel card 1 (plans) → card 2 (bim) moves to front + mockup tab switches */
+        /* Peel projects → plans to front + mockup tab switch projects→plans + tooltip fade */
+        .addLabel("fPlans")
+        .to('.ch-feat[data-f="projects"]', { y: -120, autoAlpha: 0, scale: 0.92, duration: 0.8, ease: "power3.in" }, "fPlans")
+        .to('.ch-feat[data-f="plans"]',    { y: 0, scale: 1, duration: 0.8, ease: "expo.out" }, "fPlans")
+        .to('.ch-feat[data-f="bim"]',      { y: 8, scale: 0.97, duration: 0.8, ease: "expo.out" }, "fPlans")
+        .to('.ch-feat[data-f="tour"]',     { y: 16, scale: 0.94, duration: 0.8, ease: "expo.out" }, "fPlans")
+        .to('.ch-feat[data-f="stk"]',      { y: 24, scale: 0.91, duration: 0.8, ease: "expo.out" }, "fPlans")
+        .to(".ch-fill-2", { scaleX: 1, duration: 1.8, ease: "none" }, "fPlans")
+        /* Tab switch: projects → plans + hide sidebar tooltip */
+        .to('.ch-tab-content[data-tab="projects"]', { autoAlpha: 0, duration: 0.4, ease: "power2.inOut" }, "fPlans+=0.2")
+        .to('.ch-tab-content[data-tab="plans"]',    { autoAlpha: 1, duration: 0.4, ease: "power2.inOut" }, "fPlans+=0.4")
+        .to('.ch-tab-underline[data-tab="plans"]',  { scaleX: 1, duration: 0.3, ease: "power2.out" }, "fPlans+=0.4")
+        .to('.ch-tab-label[data-tab="plans"]',      { color: "#fff", duration: 0.3 }, "fPlans+=0.4")
+        .to('.ch-projects-tooltip',                 { autoAlpha: 0, duration: 0.3, ease: "power2.in" }, "fPlans+=0.2")
+        .to({}, { duration: 1.0 })
+
+        /* Peel plans → bim to front + mockup tab switch plans→bim */
         .addLabel("f2")
         .to('.ch-feat[data-f="plans"]', { y: -120, autoAlpha: 0, scale: 0.92, duration: 0.8, ease: "power3.in" }, "f2")
         .to('.ch-feat[data-f="bim"]',   { y: 0, scale: 1, duration: 0.8, ease: "expo.out" }, "f2")
         .to('.ch-feat[data-f="tour"]',  { y: 8, scale: 0.97, duration: 0.8, ease: "expo.out" }, "f2")
         .to('.ch-feat[data-f="stk"]',   { y: 16, scale: 0.94, duration: 0.8, ease: "expo.out" }, "f2")
-        .to(".ch-fill-2", { scaleX: 1, duration: 1.8, ease: "none" }, "f2")
+        .to(".ch-fill-3", { scaleX: 1, duration: 1.8, ease: "none" }, "f2")
         /* Tab switch: plans → bim */
         .to('.ch-tab-content[data-tab="plans"]', { autoAlpha: 0, duration: 0.4, ease: "power2.inOut" }, "f2+=0.2")
         .to('.ch-tab-content[data-tab="bim"]',   { autoAlpha: 1, duration: 0.4, ease: "power2.inOut" }, "f2+=0.4")
@@ -391,7 +406,7 @@ export function CinematicHero() {
         .to('.ch-feat[data-f="bim"]',  { y: -120, autoAlpha: 0, scale: 0.92, duration: 0.8, ease: "power3.in" }, "f3")
         .to('.ch-feat[data-f="tour"]', { y: 0, scale: 1, duration: 0.8, ease: "expo.out" }, "f3")
         .to('.ch-feat[data-f="stk"]',  { y: 8, scale: 0.97, duration: 0.8, ease: "expo.out" }, "f3")
-        .to(".ch-fill-3", { scaleX: 1, duration: 1.8, ease: "none" }, "f3")
+        .to(".ch-fill-4", { scaleX: 1, duration: 1.8, ease: "none" }, "f3")
         /* Tab switch: bim → tour */
         .to('.ch-tab-content[data-tab="bim"]',  { autoAlpha: 0, duration: 0.4, ease: "power2.inOut" }, "f3+=0.2")
         .to('.ch-tab-content[data-tab="tour"]', { autoAlpha: 1, duration: 0.4, ease: "power2.inOut" }, "f3+=0.4")
@@ -405,7 +420,7 @@ export function CinematicHero() {
         .addLabel("f4")
         .to('.ch-feat[data-f="tour"]', { y: -120, autoAlpha: 0, scale: 0.92, duration: 0.8, ease: "power3.in" }, "f4")
         .to('.ch-feat[data-f="stk"]',  { y: 0, scale: 1, duration: 0.8, ease: "expo.out" }, "f4")
-        .to(".ch-fill-4", { scaleX: 1, duration: 1.8, ease: "none" }, "f4")
+        .to(".ch-fill-5", { scaleX: 1, duration: 1.8, ease: "none" }, "f4")
         /* Tab switch: tour → stk */
         .to('.ch-tab-content[data-tab="tour"]', { autoAlpha: 0, duration: 0.4, ease: "power2.inOut" }, "f4+=0.2")
         .to('.ch-tab-content[data-tab="stk"]',  { autoAlpha: 1, duration: 0.4, ease: "power2.inOut" }, "f4+=0.4")
@@ -825,9 +840,9 @@ export function CinematicHero() {
                         >
                           <FolderOpen size={16} strokeWidth={2} />
                         </button>
-                        {/* Hover tooltip — suggesting collapsed state */}
+                        {/* Hover tooltip — visible in Projects state, fades when entering tabs */}
                         <div
-                          className="absolute left-full top-1/2 -translate-y-1/2 ml-3 px-2 py-1 rounded-md text-[10px] font-medium whitespace-nowrap pointer-events-none"
+                          className="ch-projects-tooltip absolute left-full top-1/2 -translate-y-1/2 ml-3 px-2 py-1 rounded-md text-[10px] font-medium whitespace-nowrap pointer-events-none"
                           style={{
                             background: "rgba(10,22,21,0.95)",
                             color: "#e9f6f4",
@@ -873,7 +888,7 @@ export function CinematicHero() {
                     {/* Tabs — 5 clickable tabs, each scrolls to its timeline label */}
                     <div className="ch-reveal flex items-center shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
                       {[
-                        { k: "plans", label: "Planos", tl: "fStack" },
+                        { k: "plans", label: "Planos", tl: "fPlans" },
                         { k: "bim", label: "BIM", tl: "f2" },
                         { k: "tour", label: "Recorrido", tl: "f3" },
                         { k: "stk", label: "Partes", tl: "f4" },
@@ -904,6 +919,58 @@ export function CinematicHero() {
 
                     {/* Viewer — all tab contents stacked, absolute positioned */}
                     <div className="ch-reveal flex-1 relative min-h-0 rounded-[8px] overflow-hidden" style={{ border: "1px solid rgba(255,255,255,0.06)" }}>
+
+                      {/* ═════ PROJECTS (initial / pre-tabs) ═════ */}
+                      <div className="ch-tab-content absolute inset-0 flex flex-col" data-tab="projects">
+                        <div className="flex-1 flex flex-col overflow-hidden">
+                          <div className="flex items-center justify-between px-3 py-2 shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+                            <div>
+                              <h5 className="text-xs font-semibold m-0">Proyectos</h5>
+                              <p className="font-[family-name:var(--font-mono)] text-[9px] m-0" style={{ color: "rgba(227,242,240,0.45)" }}>4 activos · 1 archivado</p>
+                            </div>
+                            <button className="px-2.5 py-1 rounded text-[10px] font-medium flex items-center gap-1 border-none cursor-default" style={{ background: `linear-gradient(180deg, ${ACCENT_2} 0%, ${ACCENT} 100%)`, color: "#fff", boxShadow: `0 2px 6px -1px rgba(43,165,158,0.4), 0 0 0 1px rgba(43,165,158,0.35)` }}>
+                              <Plus size={10} strokeWidth={2} /> Nuevo proyecto
+                            </button>
+                          </div>
+                          <div className="flex-1 p-2 grid grid-cols-2 gap-2 overflow-hidden content-start">
+                            {[
+                              { name: "Casa Ribera", updated: "hace 2h", plans: 3, members: 4, status: "Activo", active: true },
+                              { name: "Edificio Marítimo", updated: "ayer", plans: 12, members: 6, status: "Activo" },
+                              { name: "Estudio Soler", updated: "hace 3 días", plans: 5, members: 3, status: "Borrador", statusColor: "#fbbf24" },
+                              { name: "Vivienda Olivos", updated: "hace 2 semanas", plans: 8, members: 2, status: "Archivado", statusColor: "rgba(227,242,240,0.4)" },
+                            ].map((p, i) => (
+                              <div key={i} className="rounded-[8px] overflow-hidden" style={{
+                                border: p.active ? `1px solid rgba(43,165,158,0.4)` : "1px solid rgba(255,255,255,0.06)",
+                                background: p.active ? `rgba(43,165,158,0.05)` : "rgba(255,255,255,0.02)",
+                              }}>
+                                <div className="relative h-[56px]" style={{ background: "linear-gradient(180deg, rgba(43,165,158,0.08) 0%, rgba(0,0,0,0) 100%), #081817" }}>
+                                  <div className="absolute inset-0 opacity-30" style={{
+                                    backgroundImage: `linear-gradient(to right, rgba(43,165,158,0.3) 1px, transparent 1px), linear-gradient(to bottom, rgba(43,165,158,0.3) 1px, transparent 1px)`,
+                                    backgroundSize: "8px 8px",
+                                  }} />
+                                  <svg viewBox="0 0 100 40" className="absolute inset-0 w-full h-full opacity-60" preserveAspectRatio="xMidYMid meet">
+                                    <g stroke="rgba(233,246,244,0.4)" strokeWidth="0.5" fill="none">
+                                      <rect x="15" y="8" width="70" height="24" />
+                                      <line x1={40 + i*3} y1="8" x2={40 + i*3} y2="22" />
+                                      <line x1="15" y1="22" x2={50 + i*2} y2="22" />
+                                    </g>
+                                  </svg>
+                                  {p.active && (
+                                    <span className="absolute top-1 left-1 px-1.5 py-px rounded text-[8px] font-[family-name:var(--font-mono)]" style={{ background: `rgba(43,165,158,0.3)`, color: "#fff", border: `1px solid rgba(43,165,158,0.5)` }}>Último</span>
+                                  )}
+                                </div>
+                                <div className="px-2 py-1.5">
+                                  <div className="flex items-center justify-between mb-0.5 gap-1">
+                                    <p className="m-0 text-[10.5px] font-semibold truncate">{p.name}</p>
+                                    <span className="text-[8.5px] font-medium whitespace-nowrap" style={{ color: p.statusColor ?? (p.active ? ACCENT_2 : "#22c55e") }}>{p.status}</span>
+                                  </div>
+                                  <p className="m-0 font-[family-name:var(--font-mono)] text-[8.5px]" style={{ color: "rgba(227,242,240,0.45)" }}>{p.plans} planos · {p.members} miembros · {p.updated}</p>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
 
                       {/* ═════ PLANS TAB ═════ */}
                       <div className="ch-tab-content absolute inset-0 flex flex-col" data-tab="plans">
@@ -1127,10 +1194,6 @@ export function CinematicHero() {
                               <text x="-18" y="-10" fill="#3b82f6">Y</text>
                             </g>
                           </svg>
-                          <div className="absolute bottom-2 left-2 flex items-center gap-1.5 px-2 py-1 rounded-md" style={{ background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.1)" }}>
-                            <div className="w-1.5 h-1.5 rounded-full" style={{ background: "#22c55e", boxShadow: "0 0 6px #22c55e" }} />
-                            <span className="font-[family-name:var(--font-mono)] text-[9px]" style={{ color: "rgba(227,242,240,0.75)" }}>Autodesk Fusion · connected</span>
-                          </div>
                           <div className="absolute top-2 right-2 flex gap-1">
                             {[Link2, RefreshCw, Maximize].map((Icon, i) => (
                               <button key={i} className="w-7 h-7 rounded-md flex items-center justify-center border-none cursor-default" style={{
@@ -1353,6 +1416,7 @@ export function CinematicHero() {
               {/* Feature deck — stacked cards */}
               <div className="ch-feat-stack relative w-full" style={{ height: 260, marginTop: 8 }}>
                 {([
+                  { key: "projects", step: "00 · PROYECTOS", title: "Todos tus proyectos, en un lugar", body: "Dashboard central con cada obra y cada versión. Busca cualquier plano del estudio en segundos — sin emails, sin carpetas perdidas." },
                   { key: "plans", step: tCin("feat1Step"), title: tCin("feat1Title"), body: tCin("feat1Body") },
                   { key: "bim",   step: tCin("feat2Step"), title: tCin("feat2Title"), body: tCin("feat2Body") },
                   { key: "tour",  step: tCin("feat3Step"), title: tCin("feat3Title"), body: tCin("feat3Body") },
@@ -1380,9 +1444,9 @@ export function CinematicHero() {
                   </div>
                 ))}
 
-                {/* Progress dots */}
+                {/* Progress dots — 5 (projects · plans · bim · tour · stk) */}
                 <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 flex gap-2.5">
-                  {[1, 2, 3, 4].map((n) => (
+                  {[1, 2, 3, 4, 5].map((n) => (
                     <div key={n} className="relative overflow-hidden" style={{ width: 28, height: 3, borderRadius: 3, background: "rgba(255,255,255,0.12)" }}>
                       <div className={`ch-fill ch-fill-${n} absolute inset-0`} style={{ background: ACCENT_2, transformOrigin: "left", transform: "scaleX(0)" }} />
                     </div>

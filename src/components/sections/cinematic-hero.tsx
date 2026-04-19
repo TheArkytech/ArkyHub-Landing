@@ -602,6 +602,7 @@ export function CinematicHero() {
               top: "50%", left: "50%", transform: "translate(-50%, -50%)",
               fontSize: "clamp(2rem, 5vw, 4.5rem)", lineHeight: 1.15, letterSpacing: "-0.035em",
               filter: "drop-shadow(0 12px 28px rgba(0,0,0,0.55))",
+              minWidth: "max-content",
             }}
           >
             <span
@@ -613,6 +614,7 @@ export function CinematicHero() {
                 color: "transparent",
                 letterSpacing: "-0.06em",
                 fontWeight: 800,
+                whiteSpace: "nowrap",
               }}
             >
               ArkyHub

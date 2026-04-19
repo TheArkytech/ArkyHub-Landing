@@ -261,12 +261,13 @@ export function CinematicHero() {
       gsap.set(".ch-reveal", { autoAlpha: 0, y: 20 });
       gsap.set(".ch-cta-wrap", { autoAlpha: 0, scale: 0.85, filter: "blur(24px)" });
       gsap.set(".ch-hint", { autoAlpha: 0 });
-      /* Stacked cards: all visible, layered with offset (projects on top) */
+      /* Stacked cards: all visible, layered with offset (projects on top, issues at bottom) */
       gsap.set('.ch-feat[data-f="projects"]', { autoAlpha: 1, y: 0, scale: 1 });
       gsap.set('.ch-feat[data-f="plans"]',    { autoAlpha: 1, y: 8, scale: 0.97 });
       gsap.set('.ch-feat[data-f="bim"]',      { autoAlpha: 1, y: 16, scale: 0.94 });
       gsap.set('.ch-feat[data-f="tour"]',     { autoAlpha: 1, y: 24, scale: 0.91 });
       gsap.set('.ch-feat[data-f="stk"]',      { autoAlpha: 1, y: 32, scale: 0.88 });
+      gsap.set('.ch-feat[data-f="issues"]',   { autoAlpha: 1, y: 40, scale: 0.85 });
       gsap.set(".ch-feat-stack", { autoAlpha: 0, y: 60, filter: "blur(12px)" });
       /* Mockup tab state — projects active on mount; tabs all dim; Projects tooltip visible */
       gsap.set('.ch-tab-content', { autoAlpha: 0 });
@@ -331,11 +332,11 @@ export function CinematicHero() {
         .addLabel("expand")
         .to(".ch-card", { width: "100vw", height: "100vh", borderRadius: 0, ease: "power3.inOut", duration: 1.3 }, "expand")
         .to(".ch-order", {
-          top: "18%", left: "auto", right: "8%",
+          top: "18%", left: "6%", right: "auto",
           xPercent: 0, yPercent: 0,
           x: 0, y: 0,
           fontSize: "clamp(2.25rem, 5vw, 4.5rem)",
-          textAlign: "right",
+          textAlign: "left",
           lineHeight: 1.0,
           duration: 1.4,
           ease: "expo.inOut",
@@ -376,6 +377,7 @@ export function CinematicHero() {
         .to('.ch-feat[data-f="bim"]',      { y: 8, scale: 0.97, duration: 0.8, ease: "expo.out" }, "fPlans")
         .to('.ch-feat[data-f="tour"]',     { y: 16, scale: 0.94, duration: 0.8, ease: "expo.out" }, "fPlans")
         .to('.ch-feat[data-f="stk"]',      { y: 24, scale: 0.91, duration: 0.8, ease: "expo.out" }, "fPlans")
+        .to('.ch-feat[data-f="issues"]',   { y: 32, scale: 0.88, duration: 0.8, ease: "expo.out" }, "fPlans")
         .to(".ch-fill-2", { scaleX: 1, duration: 1.8, ease: "none" }, "fPlans")
         /* Tab switch: projects → plans + hide sidebar tooltip */
         .to('.ch-tab-content[data-tab="projects"]', { autoAlpha: 0, duration: 0.4, ease: "power2.inOut" }, "fPlans+=0.2")
@@ -391,6 +393,7 @@ export function CinematicHero() {
         .to('.ch-feat[data-f="bim"]',   { y: 0, scale: 1, duration: 0.8, ease: "expo.out" }, "f2")
         .to('.ch-feat[data-f="tour"]',  { y: 8, scale: 0.97, duration: 0.8, ease: "expo.out" }, "f2")
         .to('.ch-feat[data-f="stk"]',   { y: 16, scale: 0.94, duration: 0.8, ease: "expo.out" }, "f2")
+        .to('.ch-feat[data-f="issues"]',{ y: 24, scale: 0.91, duration: 0.8, ease: "expo.out" }, "f2")
         .to(".ch-fill-3", { scaleX: 1, duration: 1.8, ease: "none" }, "f2")
         /* Tab switch: plans → bim */
         .to('.ch-tab-content[data-tab="plans"]', { autoAlpha: 0, duration: 0.4, ease: "power2.inOut" }, "f2+=0.2")
@@ -406,6 +409,7 @@ export function CinematicHero() {
         .to('.ch-feat[data-f="bim"]',  { y: -120, autoAlpha: 0, scale: 0.92, duration: 0.8, ease: "power3.in" }, "f3")
         .to('.ch-feat[data-f="tour"]', { y: 0, scale: 1, duration: 0.8, ease: "expo.out" }, "f3")
         .to('.ch-feat[data-f="stk"]',  { y: 8, scale: 0.97, duration: 0.8, ease: "expo.out" }, "f3")
+        .to('.ch-feat[data-f="issues"]',{ y: 16, scale: 0.94, duration: 0.8, ease: "expo.out" }, "f3")
         .to(".ch-fill-4", { scaleX: 1, duration: 1.8, ease: "none" }, "f3")
         /* Tab switch: bim → tour */
         .to('.ch-tab-content[data-tab="bim"]',  { autoAlpha: 0, duration: 0.4, ease: "power2.inOut" }, "f3+=0.2")
@@ -416,10 +420,11 @@ export function CinematicHero() {
         .to('.ch-tab-label[data-tab="tour"]', { color: "#fff", duration: 0.3 }, "f3+=0.4")
         .to({}, { duration: 1.0 })
 
-        /* Peel card 3 (tour) → card 4 (stk) is last + tab switch */
+        /* Peel card 3 (tour) → card 4 (stk) moves forward + tab switch */
         .addLabel("f4")
         .to('.ch-feat[data-f="tour"]', { y: -120, autoAlpha: 0, scale: 0.92, duration: 0.8, ease: "power3.in" }, "f4")
         .to('.ch-feat[data-f="stk"]',  { y: 0, scale: 1, duration: 0.8, ease: "expo.out" }, "f4")
+        .to('.ch-feat[data-f="issues"]',{ y: 8, scale: 0.97, duration: 0.8, ease: "expo.out" }, "f4")
         .to(".ch-fill-5", { scaleX: 1, duration: 1.8, ease: "none" }, "f4")
         /* Tab switch: tour → stk */
         .to('.ch-tab-content[data-tab="tour"]', { autoAlpha: 0, duration: 0.4, ease: "power2.inOut" }, "f4+=0.2")
@@ -430,19 +435,25 @@ export function CinematicHero() {
         .to('.ch-tab-label[data-tab="stk"]',  { color: "#fff", duration: 0.3 }, "f4+=0.4")
         .to({}, { duration: 0.8 })
 
-        /* Peel the last card (stk) so the mockup stands alone before CTA + tab switch stk → issues */
-        .addLabel("fClear", "+=0.2")
-        .to('.ch-feat[data-f="stk"]', { y: -120, autoAlpha: 0, scale: 0.92, duration: 0.8, ease: "power3.in" }, "fClear")
-        .to(".ch-card-right",          { autoAlpha: 0, duration: 0.6, ease: "power2.in" }, "fClear+=0.3")
-        .to(".ch-order",               { autoAlpha: 0, y: -20, duration: 0.8, ease: "power3.in" }, "fClear")
+        /* Peel stk → issues card forward + mockup tab switch stk → issues */
+        .addLabel("fIssues", "+=0.2")
+        .to('.ch-feat[data-f="stk"]',   { y: -120, autoAlpha: 0, scale: 0.92, duration: 0.8, ease: "power3.in" }, "fIssues")
+        .to('.ch-feat[data-f="issues"]',{ y: 0, scale: 1, duration: 0.8, ease: "expo.out" }, "fIssues")
+        .to(".ch-fill-6", { scaleX: 1, duration: 1.8, ease: "none" }, "fIssues")
         /* Tab switch: stk → issues */
-        .to('.ch-tab-content[data-tab="stk"]',    { autoAlpha: 0, duration: 0.4, ease: "power2.inOut" }, "fClear+=0.2")
-        .to('.ch-tab-content[data-tab="issues"]', { autoAlpha: 1, duration: 0.4, ease: "power2.inOut" }, "fClear+=0.4")
-        .to('.ch-tab-underline[data-tab="stk"]',    { scaleX: 0, duration: 0.3, ease: "power2.in" }, "fClear+=0.2")
-        .to('.ch-tab-underline[data-tab="issues"]', { scaleX: 1, duration: 0.3, ease: "power2.out" }, "fClear+=0.4")
-        .to('.ch-tab-label[data-tab="stk"]',    { color: "rgba(227,242,240,0.5)", duration: 0.3 }, "fClear+=0.2")
-        .to('.ch-tab-label[data-tab="issues"]', { color: "#fff", duration: 0.3 }, "fClear+=0.4")
-        .addLabel("fIssues")
+        .to('.ch-tab-content[data-tab="stk"]',    { autoAlpha: 0, duration: 0.4, ease: "power2.inOut" }, "fIssues+=0.2")
+        .to('.ch-tab-content[data-tab="issues"]', { autoAlpha: 1, duration: 0.4, ease: "power2.inOut" }, "fIssues+=0.4")
+        .to('.ch-tab-underline[data-tab="stk"]',    { scaleX: 0, duration: 0.3, ease: "power2.in" }, "fIssues+=0.2")
+        .to('.ch-tab-underline[data-tab="issues"]', { scaleX: 1, duration: 0.3, ease: "power2.out" }, "fIssues+=0.4")
+        .to('.ch-tab-label[data-tab="stk"]',    { color: "rgba(227,242,240,0.5)", duration: 0.3 }, "fIssues+=0.2")
+        .to('.ch-tab-label[data-tab="issues"]', { color: "#fff", duration: 0.3 }, "fIssues+=0.4")
+        .to({}, { duration: 1.0 })
+
+        /* Peel last card (issues) so the mockup stands alone before CTA */
+        .addLabel("fClear", "+=0.2")
+        .to('.ch-feat[data-f="issues"]', { y: -120, autoAlpha: 0, scale: 0.92, duration: 0.8, ease: "power3.in" }, "fClear")
+        .to(".ch-card-right",            { autoAlpha: 0, duration: 0.6, ease: "power2.in" }, "fClear+=0.3")
+        .to(".ch-order",                 { autoAlpha: 0, y: -20, duration: 0.8, ease: "power3.in" }, "fClear")
         .to({}, { duration: 0.8 })
 
         /* 9 — CTA swap: outer card frame fades to page; inner mockup shrinks to its own closing size */
@@ -510,22 +521,12 @@ export function CinematicHero() {
       className="relative w-screen h-screen overflow-hidden flex items-center justify-center"
       style={{ perspective: 1600 }}
     >
-      {/* ── Ambient teal radial ── */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -z-0"
-        style={{
-          inset: "-20% -10% auto -10%",
-          height: "80%",
-          background: `radial-gradient(60% 50% at 50% 30%, color-mix(in oklab, ${ACCENT} 14%, transparent), transparent 70%)`,
-        }}
-      />
-      {/* ── Hairline grid ── */}
+      {/* ── Hairline grid (theme-aware via --foreground) ── */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-0 opacity-55"
         style={{
-          backgroundImage: `linear-gradient(to right, color-mix(in oklab, var(--fg, #0a0a0a) 7%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in oklab, var(--fg, #0a0a0a) 7%, transparent) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(to right, color-mix(in oklab, var(--foreground) 8%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in oklab, var(--foreground) 8%, transparent) 1px, transparent 1px)`,
           backgroundSize: "64px 64px",
           maskImage: "radial-gradient(ellipse 70% 55% at 50% 40%, #000 10%, transparent 80%)",
           WebkitMaskImage: "radial-gradient(ellipse 70% 55% at 50% 40%, #000 10%, transparent 80%)",
@@ -888,11 +889,11 @@ export function CinematicHero() {
                     {/* Tabs — 5 clickable tabs, each scrolls to its timeline label */}
                     <div className="ch-reveal flex items-center shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
                       {[
-                        { k: "plans", label: "Planos", tl: "fPlans" },
-                        { k: "bim", label: "BIM", tl: "f2" },
-                        { k: "tour", label: "Recorrido", tl: "f3" },
-                        { k: "stk", label: "Partes", tl: "f4" },
-                        { k: "issues", label: "Incidencias", tl: "fIssues" },
+                        { k: "plans", label: tMockup("tabs.Plans"), tl: "fPlans" },
+                        { k: "bim", label: tMockup("tabs.BIM"), tl: "f2" },
+                        { k: "tour", label: tMockup("tabs.Tour"), tl: "f3" },
+                        { k: "stk", label: tMockup("tabs.Stakeholders"), tl: "f4" },
+                        { k: "issues", label: tMockup("tabs.Issues"), tl: "fIssues" },
                       ].map((t) => (
                         <div key={t.k} className="relative inline-flex items-center">
                           <button
@@ -925,19 +926,19 @@ export function CinematicHero() {
                         <div className="flex-1 flex flex-col overflow-hidden">
                           <div className="flex items-center justify-between px-3 py-2 shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
                             <div>
-                              <h5 className="text-xs font-semibold m-0">Proyectos</h5>
-                              <p className="font-[family-name:var(--font-mono)] text-[9px] m-0" style={{ color: "rgba(227,242,240,0.45)" }}>4 activos · 1 archivado</p>
+                              <h5 className="text-xs font-semibold m-0">{tMockup("projectsView.title")}</h5>
+                              <p className="font-[family-name:var(--font-mono)] text-[9px] m-0" style={{ color: "rgba(227,242,240,0.45)" }}>{tMockup("projectsView.subtitle")}</p>
                             </div>
                             <button className="px-2.5 py-1 rounded text-[10px] font-medium flex items-center gap-1 border-none cursor-default" style={{ background: `linear-gradient(180deg, ${ACCENT_2} 0%, ${ACCENT} 100%)`, color: "#fff", boxShadow: `0 2px 6px -1px rgba(43,165,158,0.4), 0 0 0 1px rgba(43,165,158,0.35)` }}>
-                              <Plus size={10} strokeWidth={2} /> Nuevo proyecto
+                              <Plus size={10} strokeWidth={2} /> {tMockup("projectsView.newProject")}
                             </button>
                           </div>
                           <div className="flex-1 p-2 grid grid-cols-2 gap-2 overflow-hidden content-start">
                             {[
-                              { name: "Casa Ribera", updated: "hace 2h", plans: 3, members: 4, status: "Activo", active: true },
-                              { name: "Edificio Marítimo", updated: "ayer", plans: 12, members: 6, status: "Activo" },
-                              { name: "Estudio Soler", updated: "hace 3 días", plans: 5, members: 3, status: "Borrador", statusColor: "#fbbf24" },
-                              { name: "Vivienda Olivos", updated: "hace 2 semanas", plans: 8, members: 2, status: "Archivado", statusColor: "rgba(227,242,240,0.4)" },
+                              { name: "Casa Ribera", meta: tMockup("projectsView.meta1"), status: tMockup("projectsView.statusActive"), active: true },
+                              { name: "Edificio Marítimo", meta: tMockup("projectsView.meta2"), status: tMockup("projectsView.statusActive") },
+                              { name: "Estudio Soler", meta: tMockup("projectsView.meta3"), status: tMockup("projectsView.statusDraft"), statusColor: "#fbbf24" },
+                              { name: "Vivienda Olivos", meta: tMockup("projectsView.meta4"), status: tMockup("projectsView.statusArchived"), statusColor: "rgba(227,242,240,0.4)" },
                             ].map((p, i) => (
                               <div key={i} className="rounded-[8px] overflow-hidden" style={{
                                 border: p.active ? `1px solid rgba(43,165,158,0.4)` : "1px solid rgba(255,255,255,0.06)",
@@ -955,16 +956,13 @@ export function CinematicHero() {
                                       <line x1="15" y1="22" x2={50 + i*2} y2="22" />
                                     </g>
                                   </svg>
-                                  {p.active && (
-                                    <span className="absolute top-1 left-1 px-1.5 py-px rounded text-[8px] font-[family-name:var(--font-mono)]" style={{ background: `rgba(43,165,158,0.3)`, color: "#fff", border: `1px solid rgba(43,165,158,0.5)` }}>Último</span>
-                                  )}
                                 </div>
                                 <div className="px-2 py-1.5">
                                   <div className="flex items-center justify-between mb-0.5 gap-1">
                                     <p className="m-0 text-[10.5px] font-semibold truncate">{p.name}</p>
                                     <span className="text-[8.5px] font-medium whitespace-nowrap" style={{ color: p.statusColor ?? (p.active ? ACCENT_2 : "#22c55e") }}>{p.status}</span>
                                   </div>
-                                  <p className="m-0 font-[family-name:var(--font-mono)] text-[8.5px]" style={{ color: "rgba(227,242,240,0.45)" }}>{p.plans} planos · {p.members} miembros · {p.updated}</p>
+                                  <p className="m-0 font-[family-name:var(--font-mono)] text-[8.5px]" style={{ color: "rgba(227,242,240,0.45)" }}>{p.meta}</p>
                                 </div>
                               </div>
                             ))}
@@ -977,7 +975,7 @@ export function CinematicHero() {
                         {/* Toolbar */}
                         <div className="flex items-center gap-2 px-2.5 py-1.5 shrink-0" style={{ background: "rgba(255,255,255,0.02)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
                           <div className="min-w-0 max-w-[160px]">
-                            <p className="text-[10px] font-semibold truncate m-0 leading-tight">CF_Av oporto 4_G&amp;H_V2</p>
+                            <p className="text-[10px] font-semibold truncate m-0 leading-tight">CR_Planta_Nivel_0_V2</p>
                             <p className="font-[family-name:var(--font-mono)] text-[8.5px] m-0" style={{ color: "rgba(227,242,240,0.45)" }}>v1 · 347.8 KB</p>
                           </div>
                           <div className="w-px h-5" style={{ background: "rgba(255,255,255,0.06)" }} />
@@ -1117,37 +1115,37 @@ export function CinematicHero() {
                           {/* Right Files panel */}
                           <div className="w-[160px] shrink-0 flex flex-col" style={{ borderLeft: "1px solid rgba(255,255,255,0.05)", background: "rgba(0,0,0,0.2)" }}>
                             <div className="flex shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-                              <button className="flex-1 py-1.5 text-[10px] font-semibold border-none cursor-default bg-transparent" style={{ color: ACCENT_2, borderBottom: `1.5px solid ${ACCENT_2}` }}>Files</button>
-                              <button className="flex-1 py-1.5 text-[10px] font-medium border-none cursor-default bg-transparent" style={{ color: "rgba(227,242,240,0.5)" }}>Issues (1)</button>
+                              <button className="flex-1 py-1.5 text-[10px] font-semibold border-none cursor-default bg-transparent" style={{ color: ACCENT_2, borderBottom: `1.5px solid ${ACCENT_2}` }}>{tMockup("plansView.files")}</button>
+                              <button className="flex-1 py-1.5 text-[10px] font-medium border-none cursor-default bg-transparent" style={{ color: "rgba(227,242,240,0.5)" }}>{tMockup("plansView.issuesCount")}</button>
                             </div>
                             <div className="flex-1 overflow-hidden p-1.5 flex flex-col gap-1.5">
                               <button className="w-full py-1.5 rounded text-[10px] font-medium flex items-center justify-center gap-1 border-none cursor-default" style={{ background: `rgba(43,165,158,0.1)`, color: ACCENT_2, border: `1px dashed rgba(43,165,158,0.3)` }}>
-                                <Plus size={10} strokeWidth={2.2} /> Upload New Plan
+                                <Plus size={10} strokeWidth={2.2} /> {tMockup("plansView.uploadNew")}
                               </button>
                               <div className="p-1.5 rounded" style={{ background: `rgba(43,165,158,0.06)`, boxShadow: `inset 0 0 0 1px rgba(43,165,158,0.25)` }}>
                                 <div className="flex items-start gap-1">
                                   <FileText size={10} style={{ color: ACCENT_2, marginTop: 1, flexShrink: 0 }} />
                                   <div className="min-w-0 flex-1">
-                                    <p className="m-0 font-semibold truncate text-[10px]">CF_Av oporto 4_G&amp;H_V2</p>
+                                    <p className="m-0 font-semibold truncate text-[10px]">CR_Planta_Nivel_0_V2</p>
                                     <p className="font-[family-name:var(--font-mono)] text-[8.5px] m-0 mt-0.5" style={{ color: ACCENT_2 }}>v1 · 347.8 KB</p>
                                     <p className="font-[family-name:var(--font-mono)] text-[8.5px] m-0" style={{ color: "rgba(227,242,240,0.4)" }}>17/4/2026</p>
                                   </div>
                                 </div>
                               </div>
                               <div className="mt-0.5">
-                                <p className="font-[family-name:var(--font-mono)] text-[8.5px] tracking-[0.14em] uppercase m-0 mb-1" style={{ color: "rgba(227,242,240,0.45)" }}>VERSION HISTORY</p>
+                                <p className="font-[family-name:var(--font-mono)] text-[8.5px] tracking-[0.14em] uppercase m-0 mb-1" style={{ color: "rgba(227,242,240,0.45)" }}>{tMockup("plansView.versionHistory")}</p>
                                 <div className="flex items-center gap-1 py-1 text-[10px]">
                                   <FileText size={9} style={{ color: "rgba(227,242,240,0.5)" }} />
                                   <span>v1</span>
-                                  <span className="px-1 py-px rounded text-[8.5px] font-[family-name:var(--font-mono)]" style={{ background: `rgba(43,165,158,0.15)`, color: ACCENT_2, border: `1px solid rgba(43,165,158,0.3)` }}>Current</span>
+                                  <span className="px-1 py-px rounded text-[8.5px] font-[family-name:var(--font-mono)]" style={{ background: `rgba(43,165,158,0.15)`, color: ACCENT_2, border: `1px solid rgba(43,165,158,0.3)` }}>{tMockup("plansView.current")}</span>
                                 </div>
                                 <p className="font-[family-name:var(--font-mono)] text-[8.5px] m-0 pl-4" style={{ color: "rgba(227,242,240,0.4)" }}>347.8 KB</p>
                                 <p className="font-[family-name:var(--font-mono)] text-[8.5px] m-0 pl-4" style={{ color: "rgba(227,242,240,0.4)" }}>17/4/2026, 19:42</p>
                               </div>
-                              <p className="text-[9px] text-center m-0 mt-1" style={{ color: "rgba(227,242,240,0.35)" }}>No previous versions</p>
+                              <p className="text-[9px] text-center m-0 mt-1" style={{ color: "rgba(227,242,240,0.35)" }}>{tMockup("plansView.noPrevious")}</p>
                               <div className="mt-auto text-center pt-1.5" style={{ borderTop: "1px dashed rgba(255,255,255,0.06)" }}>
                                 <span className="ch-counter font-[family-name:var(--font-display)] font-bold text-[16px] tracking-tight text-white">0</span>
-                                <span className="block text-[8px] tracking-[0.1em] uppercase" style={{ color: "rgba(227,242,240,0.5)" }}>Plans · Project Total</span>
+                                <span className="block text-[8px] tracking-[0.1em] uppercase" style={{ color: "rgba(227,242,240,0.5)" }}>{tMockup("plansView.totalLabel")}</span>
                               </div>
                             </div>
                           </div>
@@ -1260,7 +1258,7 @@ export function CinematicHero() {
                           </svg>
                           <div className="absolute top-2 left-2 flex items-center gap-1.5 px-2 py-1 rounded-md" style={{ background: "rgba(0,0,0,0.45)", backdropFilter: "blur(10px)", WebkitBackdropFilter: "blur(10px)", border: "1px solid rgba(255,255,255,0.15)" }}>
                             <Eye size={10} strokeWidth={1.8} style={{ color: "#fff" }} />
-                            <span className="text-[10px] font-medium" style={{ color: "#fff" }}>Salón · 360°</span>
+                            <span className="text-[10px] font-medium" style={{ color: "#fff" }}>{tMockup("tourView.roomLabel")}</span>
                           </div>
                           <div className="absolute bottom-2 left-2 w-[60px] h-[60px] rounded" style={{ background: "rgba(0,0,0,0.55)", border: "1px solid rgba(255,255,255,0.18)", padding: 4 }}>
                             <svg viewBox="0 0 60 60" className="w-full h-full">
@@ -1293,20 +1291,20 @@ export function CinematicHero() {
                         <div className="flex-1 flex flex-col overflow-hidden">
                           <div className="flex items-center justify-between px-3 py-2 shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
                             <div>
-                              <h5 className="text-xs font-semibold m-0">Project Team</h5>
-                              <p className="font-[family-name:var(--font-mono)] text-[9px] m-0" style={{ color: "rgba(227,242,240,0.45)" }}>4 members · 1 pending invite</p>
+                              <h5 className="text-xs font-semibold m-0">{tMockup("teamView.title")}</h5>
+                              <p className="font-[family-name:var(--font-mono)] text-[9px] m-0" style={{ color: "rgba(227,242,240,0.45)" }}>{tMockup("teamView.subtitle")}</p>
                             </div>
                             <button className="px-2.5 py-1 rounded text-[10px] font-medium flex items-center gap-1 border-none cursor-default" style={{ background: `linear-gradient(180deg, ${ACCENT_2} 0%, ${ACCENT} 100%)`, color: "#fff", boxShadow: `0 2px 6px -1px rgba(43,165,158,0.4), 0 0 0 1px rgba(43,165,158,0.35)` }}>
-                              <UserPlus size={10} strokeWidth={2} /> Invite
+                              <UserPlus size={10} strokeWidth={2} /> {tMockup("teamView.invite")}
                             </button>
                           </div>
                           <div className="flex-1 overflow-hidden">
                             {[
-                              { initials: "GB", name: "Guillermo Borras", email: "guillermo@arky.tech", role: "Admin", access: "Full access", teal: true, me: true },
-                              { initials: "ML", name: "María López", email: "maria@lopezarch.es", role: "Architect", access: "Full access", teal: true },
-                              { initials: "GC", name: "Grupo Construcción", email: "ops@gcsa.es", role: "Contractor", access: "Plans + Issues" },
-                              { initials: "MR", name: "Miguel Ribera", email: "m.ribera@owner.com", role: "Client", access: "Tour + Dashboard" },
-                              { initials: "II", name: "Ingeniería MEP", email: "mep@infra.es", role: "MEP", access: "Plans only", pending: true },
+                              { initials: "GB", name: "Guillermo Borrás", email: "guillermo@arky.tech", role: tMockup("teamView.roleAdmin"), access: tMockup("teamView.accessFull"), teal: true, me: true },
+                              { initials: "ML", name: "María López", email: "maria@lopezarch.es", role: tMockup("teamView.roleArchitect"), access: tMockup("teamView.accessFull"), teal: true },
+                              { initials: "GC", name: "Grupo Construcción", email: "ops@gcsa.es", role: tMockup("teamView.roleContractor"), access: tMockup("teamView.accessPlansIssues") },
+                              { initials: "MR", name: "Miguel Ribera", email: "m.ribera@owner.com", role: tMockup("teamView.roleClient"), access: tMockup("teamView.accessTourPanel") },
+                              { initials: "II", name: "Ingeniería MEP", email: "mep@infra.es", role: tMockup("teamView.roleMep"), access: tMockup("teamView.accessPlansOnly"), pending: true },
                             ].map((u, i) => (
                               <div key={i} className="flex items-center gap-2 px-3 py-2 text-[10px]" style={{ borderBottom: i < 4 ? "1px solid rgba(255,255,255,0.04)" : undefined, background: u.me ? "rgba(43,165,158,0.06)" : undefined }}>
                                 <div className="w-7 h-7 rounded-full shrink-0 flex items-center justify-center text-[9px] font-semibold" style={u.teal
@@ -1318,8 +1316,8 @@ export function CinematicHero() {
                                 <div className="min-w-0 flex-1">
                                   <div className="flex items-center gap-1.5">
                                     <p className="m-0 font-medium text-[10px] truncate">{u.name}</p>
-                                    {u.me && <span className="px-1 py-px rounded text-[8px] font-[family-name:var(--font-mono)]" style={{ background: `rgba(43,165,158,0.15)`, color: ACCENT_2, border: `1px solid rgba(43,165,158,0.3)` }}>You</span>}
-                                    {u.pending && <span className="px-1 py-px rounded text-[8px] font-[family-name:var(--font-mono)]" style={{ background: "rgba(251,191,36,0.12)", color: "#fbbf24", border: "1px solid rgba(251,191,36,0.3)" }}>Pending</span>}
+                                    {u.me && <span className="px-1 py-px rounded text-[8px] font-[family-name:var(--font-mono)]" style={{ background: `rgba(43,165,158,0.15)`, color: ACCENT_2, border: `1px solid rgba(43,165,158,0.3)` }}>{tMockup("teamView.you")}</span>}
+                                    {u.pending && <span className="px-1 py-px rounded text-[8px] font-[family-name:var(--font-mono)]" style={{ background: "rgba(251,191,36,0.12)", color: "#fbbf24", border: "1px solid rgba(251,191,36,0.3)" }}>{tMockup("teamView.pending")}</span>}
                                   </div>
                                   <p className="m-0 font-[family-name:var(--font-mono)] text-[8.5px] truncate" style={{ color: "rgba(227,242,240,0.45)" }}>{u.email}</p>
                                 </div>
@@ -1336,10 +1334,10 @@ export function CinematicHero() {
                           <div className="shrink-0 px-3 py-2 flex items-center gap-2" style={{ borderTop: "1px solid rgba(255,255,255,0.06)", background: "rgba(0,0,0,0.2)" }}>
                             <Shield size={11} strokeWidth={1.8} style={{ color: ACCENT_2 }} />
                             <div className="min-w-0 flex-1">
-                              <p className="m-0 text-[10px] font-medium">Share project settings</p>
-                              <p className="m-0 font-[family-name:var(--font-mono)] text-[8.5px]" style={{ color: "rgba(227,242,240,0.45)" }}>Link access · permissions · export rules</p>
+                              <p className="m-0 text-[10px] font-medium">{tMockup("teamView.shareTitle")}</p>
+                              <p className="m-0 font-[family-name:var(--font-mono)] text-[8.5px]" style={{ color: "rgba(227,242,240,0.45)" }}>{tMockup("teamView.shareSubtitle")}</p>
                             </div>
-                            <button className="px-2 py-1 rounded text-[9px] font-medium border-none cursor-default" style={{ background: "rgba(255,255,255,0.06)", color: "#e9f6f4", border: "1px solid rgba(255,255,255,0.08)" }}>Configure</button>
+                            <button className="px-2 py-1 rounded text-[9px] font-medium border-none cursor-default" style={{ background: "rgba(255,255,255,0.06)", color: "#e9f6f4", border: "1px solid rgba(255,255,255,0.08)" }}>{tMockup("teamView.shareConfigure")}</button>
                           </div>
                         </div>
                       </div>
@@ -1350,10 +1348,10 @@ export function CinematicHero() {
                           <div className="flex items-center gap-1.5 px-2.5 py-1.5 shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
                             <div className="relative flex-1 max-w-[140px]">
                               <Search size={10} className="absolute left-1.5 top-1/2 -translate-y-1/2" style={{ color: "rgba(227,242,240,0.45)" }} />
-                              <div className="w-full text-[9px] rounded pl-5 pr-2 py-1" style={{ border: "1px solid rgba(255,255,255,0.08)", color: "rgba(227,242,240,0.45)" }}>Search issues…</div>
+                              <div className="w-full text-[9px] rounded pl-5 pr-2 py-1" style={{ border: "1px solid rgba(255,255,255,0.08)", color: "rgba(227,242,240,0.45)" }}>{tMockup("issuesView.search")}</div>
                             </div>
-                            <div className="text-[9px] rounded px-2 py-1 flex items-center gap-1" style={{ border: "1px solid rgba(255,255,255,0.08)", color: "rgba(227,242,240,0.7)" }}>Status: All</div>
-                            <div className="text-[9px] rounded px-2 py-1 flex items-center gap-1" style={{ border: "1px solid rgba(255,255,255,0.08)", color: "rgba(227,242,240,0.7)" }}>Type: All</div>
+                            <div className="text-[9px] rounded px-2 py-1 flex items-center gap-1" style={{ border: "1px solid rgba(255,255,255,0.08)", color: "rgba(227,242,240,0.7)" }}>{tMockup("issuesView.statusAll")}</div>
+                            <div className="text-[9px] rounded px-2 py-1 flex items-center gap-1" style={{ border: "1px solid rgba(255,255,255,0.08)", color: "rgba(227,242,240,0.7)" }}>{tMockup("issuesView.typeAll")}</div>
                             <div className="ml-auto flex gap-1">
                               <button className="w-6 h-6 rounded flex items-center justify-center border-none cursor-default bg-transparent" style={{ border: "1px solid rgba(255,255,255,0.08)", color: "rgba(227,242,240,0.55)" }}>
                                 <MoreVertical size={10} strokeWidth={1.8} />
@@ -1365,18 +1363,18 @@ export function CinematicHero() {
                           </div>
                           <div className="grid items-center gap-2 px-3 py-1.5 shrink-0 font-[family-name:var(--font-mono)] text-[8.5px] tracking-[0.1em] uppercase" style={{ gridTemplateColumns: "10px 1fr 70px 70px 40px", color: "rgba(227,242,240,0.45)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
                             <div></div>
-                            <div>Title</div>
-                            <div>Status</div>
-                            <div>Assignee</div>
-                            <div>Page</div>
+                            <div>{tMockup("issuesView.colTitle")}</div>
+                            <div>{tMockup("issuesView.colStatus")}</div>
+                            <div>{tMockup("issuesView.colAssignee")}</div>
+                            <div>{tMockup("issuesView.colPage")}</div>
                           </div>
                           <div className="flex-1 overflow-hidden">
                             {[
-                              { color: "#f97316", title: "Waterproofing detail missing", type: "Clash", status: "Open", assignee: "GC", page: "1" },
-                              { color: "#3b82f6", title: "Window schedule — dimensions off", type: "Design", status: "In Progress", assignee: "ML", page: "2" },
-                              { color: "#a855f7", title: "Ceiling height discrepancy", type: "Coordination", status: "In Review", assignee: "II", page: "1" },
-                              { color: "#f97316", title: "Door swing conflicts with column", type: "Clash", status: "Open", assignee: "GC", page: "3" },
-                              { color: "#22c55e", title: "Emergency exit signage", type: "Safety", status: "Closed", assignee: "ML", page: "1" },
+                              { color: "#f97316", title: tMockup("issuesView.item1Title"), type: tMockup("issuesView.item1Type"), status: tMockup("issuesView.item1Status"), assignee: "GC", page: "1" },
+                              { color: "#3b82f6", title: tMockup("issuesView.item2Title"), type: tMockup("issuesView.item2Type"), status: tMockup("issuesView.item2Status"), assignee: "ML", page: "2" },
+                              { color: "#a855f7", title: tMockup("issuesView.item3Title"), type: tMockup("issuesView.item3Type"), status: tMockup("issuesView.item3Status"), assignee: "II", page: "1" },
+                              { color: "#f97316", title: tMockup("issuesView.item4Title"), type: tMockup("issuesView.item4Type"), status: tMockup("issuesView.item4Status"), assignee: "GC", page: "3" },
+                              { color: "#22c55e", title: tMockup("issuesView.item5Title"), type: tMockup("issuesView.item5Type"), status: tMockup("issuesView.item5Status"), assignee: "ML", page: "1" },
                             ].map((issue, i) => (
                               <div key={i} className="grid items-center gap-2 px-3 py-1.5 text-[10px]" style={{ gridTemplateColumns: "10px 1fr 70px 70px 40px", borderBottom: i < 4 ? "1px solid rgba(255,255,255,0.04)" : undefined }}>
                                 <span className="w-1.5 h-1.5 rounded-full" style={{ background: issue.color, boxShadow: `0 0 0 2px ${issue.color}25` }} />
@@ -1416,11 +1414,12 @@ export function CinematicHero() {
               {/* Feature deck — stacked cards */}
               <div className="ch-feat-stack relative w-full" style={{ height: 260, marginTop: 8 }}>
                 {([
-                  { key: "projects", step: "00 · PROYECTOS", title: "Todos tus proyectos, en un lugar", body: "Dashboard central con cada obra y cada versión. Busca cualquier plano del estudio en segundos — sin emails, sin carpetas perdidas." },
+                  { key: "projects", step: tMockup("projectsFeatureCard.step"), title: tMockup("projectsFeatureCard.title"), body: tMockup("projectsFeatureCard.body") },
                   { key: "plans", step: tCin("feat1Step"), title: tCin("feat1Title"), body: tCin("feat1Body") },
                   { key: "bim",   step: tCin("feat2Step"), title: tCin("feat2Title"), body: tCin("feat2Body") },
                   { key: "tour",  step: tCin("feat3Step"), title: tCin("feat3Title"), body: tCin("feat3Body") },
                   { key: "stk",   step: tCin("feat4Step"), title: tCin("feat4Title"), body: tCin("feat4Body") },
+                  { key: "issues", step: tMockup("issuesFeatureCard.step"), title: tMockup("issuesFeatureCard.title"), body: tMockup("issuesFeatureCard.body") },
                 ] as const).map((f, i) => (
                   <div
                     key={f.key}
@@ -1444,9 +1443,9 @@ export function CinematicHero() {
                   </div>
                 ))}
 
-                {/* Progress dots — 5 (projects · plans · bim · tour · stk) */}
+                {/* Progress dots — 6 (projects · plans · bim · tour · stk · issues) */}
                 <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 flex gap-2.5">
-                  {[1, 2, 3, 4, 5].map((n) => (
+                  {[1, 2, 3, 4, 5, 6].map((n) => (
                     <div key={n} className="relative overflow-hidden" style={{ width: 28, height: 3, borderRadius: 3, background: "rgba(255,255,255,0.12)" }}>
                       <div className={`ch-fill ch-fill-${n} absolute inset-0`} style={{ background: ACCENT_2, transformOrigin: "left", transform: "scaleX(0)" }} />
                     </div>
@@ -1469,15 +1468,6 @@ export function CinematicHero() {
         </div>
       </div>
 
-      {/* ═══════ FILM GRAIN ═══════ */}
-      <div
-        aria-hidden
-        className="absolute inset-0 pointer-events-none z-[60] opacity-[0.04]"
-        style={{
-          mixBlendMode: "multiply",
-          background: `url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)"/></svg>')`,
-        }}
-      />
 
       {/* Keyframe for scroll-dot animation */}
       <style>{`

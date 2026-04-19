@@ -62,7 +62,8 @@
         "Plans": "Plans",
         "BIM": "BIM",
         "Tour": "Tour",
-        "Stakeholders": "Stakeholders"
+        "Stakeholders": "Stakeholders",
+        "Issues": "Issues"
       },
       "plans": {
         "floorPlanL0": "Floor plan — Level 0",
@@ -95,6 +96,83 @@
         "mepConsultant": "MEP consultant",
         "mepName": "Ibérica Ingeniería",
         "plansOnly": "Plans only"
+      },
+      "projectsFeatureCard": {
+        "step": "00 · PROJECTS",
+        "title": "All your projects, in one place",
+        "body": "Central dashboard with every active job and every version. Find any drawing in seconds — no emails, no lost folders."
+      },
+      "issuesFeatureCard": {
+        "step": "05 · ISSUES",
+        "title": "Every detail, accounted for",
+        "body": "Issue tracking pinned to the exact plan revision — clashes, design reviews, site observations. Close the loop between studio and site in a single thread."
+      },
+      "projectsView": {
+        "title": "Projects",
+        "subtitle": "4 active · 1 archived",
+        "newProject": "New project",
+        "statusActive": "Active",
+        "statusDraft": "Draft",
+        "statusArchived": "Archived",
+        "meta1": "3 plans · 4 members · 2h ago",
+        "meta2": "12 plans · 6 members · yesterday",
+        "meta3": "5 plans · 3 members · 3 days ago",
+        "meta4": "8 plans · 2 members · 2 weeks ago"
+      },
+      "plansView": {
+        "files": "Files",
+        "issuesCount": "Issues (1)",
+        "uploadNew": "Upload plan",
+        "versionHistory": "VERSION HISTORY",
+        "current": "Current",
+        "noPrevious": "No previous versions",
+        "totalLabel": "Plans · project total"
+      },
+      "tourView": {
+        "roomLabel": "Living · 360°"
+      },
+      "teamView": {
+        "title": "Project team",
+        "subtitle": "4 members · 1 pending invite",
+        "invite": "Invite",
+        "you": "You",
+        "pending": "Pending",
+        "roleAdmin": "Admin",
+        "roleArchitect": "Architect",
+        "roleContractor": "Contractor",
+        "roleClient": "Client",
+        "roleMep": "MEP",
+        "accessFull": "Full access",
+        "accessPlansIssues": "Plans + Issues",
+        "accessTourPanel": "Tour + Dashboard",
+        "accessPlansOnly": "Plans only",
+        "shareTitle": "Share project",
+        "shareSubtitle": "Link access · permissions · exports",
+        "shareConfigure": "Configure"
+      },
+      "issuesView": {
+        "search": "Search issues…",
+        "statusAll": "Status: All",
+        "typeAll": "Type: All",
+        "colTitle": "Title",
+        "colStatus": "Status",
+        "colAssignee": "Assignee",
+        "colPage": "Page",
+        "item1Title": "Missing waterproofing detail",
+        "item1Type": "Clash",
+        "item1Status": "Open",
+        "item2Title": "Window schedule — dimensions off",
+        "item2Type": "Design",
+        "item2Status": "In Progress",
+        "item3Title": "Ceiling height discrepancy",
+        "item3Type": "Coordination",
+        "item3Status": "In Review",
+        "item4Title": "Door swing conflicts with column",
+        "item4Type": "Clash",
+        "item4Status": "Open",
+        "item5Title": "Emergency exit signage",
+        "item5Type": "Safety",
+        "item5Status": "Closed"
       }
     },
 

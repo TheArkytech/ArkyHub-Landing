@@ -62,7 +62,8 @@
         "Plans": "Planos",
         "BIM": "BIM",
         "Tour": "Recorrido",
-        "Stakeholders": "Partes interesadas"
+        "Stakeholders": "Partes",
+        "Issues": "Incidencias"
       },
       "plans": {
         "floorPlanL0": "Planta baja — Nivel 0",
@@ -95,6 +96,83 @@
         "mepConsultant": "Consultor MEP",
         "mepName": "Ibérica Ingeniería",
         "plansOnly": "Solo planos"
+      },
+      "projectsFeatureCard": {
+        "step": "00 · PROYECTOS",
+        "title": "Todos tus proyectos, en un lugar",
+        "body": "Dashboard central con cada obra y cada versión. Busca cualquier plano del estudio en segundos — sin emails, sin carpetas perdidas."
+      },
+      "issuesFeatureCard": {
+        "step": "05 · INCIDENCIAS",
+        "title": "Cada detalle, bajo control",
+        "body": "Seguimiento de incidencias ancladas al plano — clashes, revisiones, observaciones de obra. Cierra el bucle entre estudio y obra en un solo hilo."
+      },
+      "projectsView": {
+        "title": "Proyectos",
+        "subtitle": "4 activos · 1 archivado",
+        "newProject": "Nuevo proyecto",
+        "statusActive": "Activo",
+        "statusDraft": "Borrador",
+        "statusArchived": "Archivado",
+        "meta1": "3 planos · 4 miembros · hace 2h",
+        "meta2": "12 planos · 6 miembros · ayer",
+        "meta3": "5 planos · 3 miembros · hace 3 días",
+        "meta4": "8 planos · 2 miembros · hace 2 semanas"
+      },
+      "plansView": {
+        "files": "Archivos",
+        "issuesCount": "Incidencias (1)",
+        "uploadNew": "Subir plano",
+        "versionHistory": "HISTORIAL DE VERSIONES",
+        "current": "Actual",
+        "noPrevious": "Sin versiones anteriores",
+        "totalLabel": "Planos · total del proyecto"
+      },
+      "tourView": {
+        "roomLabel": "Salón · 360°"
+      },
+      "teamView": {
+        "title": "Equipo del proyecto",
+        "subtitle": "4 miembros · 1 invitación pendiente",
+        "invite": "Invitar",
+        "you": "Tú",
+        "pending": "Pendiente",
+        "roleAdmin": "Admin",
+        "roleArchitect": "Arquitecto/a",
+        "roleContractor": "Contratista",
+        "roleClient": "Cliente",
+        "roleMep": "MEP",
+        "accessFull": "Acceso total",
+        "accessPlansIssues": "Planos + Incidencias",
+        "accessTourPanel": "Recorrido + Panel",
+        "accessPlansOnly": "Solo planos",
+        "shareTitle": "Compartir proyecto",
+        "shareSubtitle": "Accesos por enlace · permisos · exportaciones",
+        "shareConfigure": "Configurar"
+      },
+      "issuesView": {
+        "search": "Buscar incidencias…",
+        "statusAll": "Estado: Todos",
+        "typeAll": "Tipo: Todos",
+        "colTitle": "Título",
+        "colStatus": "Estado",
+        "colAssignee": "Responsable",
+        "colPage": "Página",
+        "item1Title": "Falta detalle de impermeabilización",
+        "item1Type": "Clash",
+        "item1Status": "Abierto",
+        "item2Title": "Carpintería — dimensiones incorrectas",
+        "item2Type": "Diseño",
+        "item2Status": "En progreso",
+        "item3Title": "Discrepancia altura de techo",
+        "item3Type": "Coordinación",
+        "item3Status": "En revisión",
+        "item4Title": "Barrido de puerta choca con pilar",
+        "item4Type": "Clash",
+        "item4Status": "Abierto",
+        "item5Title": "Señalización de emergencia",
+        "item5Type": "Seguridad",
+        "item5Status": "Cerrado"
       }
     },
 

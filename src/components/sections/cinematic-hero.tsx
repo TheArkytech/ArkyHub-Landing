@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
+import { Zap, Building2, FolderOpen, User, Settings, ChevronLeft } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { SparklesCore } from "@/components/ui/sparkles";
 
@@ -53,6 +54,41 @@ const S = {
     backdropFilter: "blur(40px) saturate(1.4)",
     WebkitBackdropFilter: "blur(40px) saturate(1.4)",
     color: "#e9f6f4",
+  },
+  /* ─── iPad frame styling ─── */
+  ipadBezel: {
+    background: "linear-gradient(158deg, #3a3a3d 0%, #1f1f22 50%, #0e0e10 100%)",
+    boxShadow: `
+      0 60px 120px -20px rgba(0,0,0,0.85),
+      0 24px 48px -12px rgba(0,0,0,0.6),
+      0 0 0 1px rgba(255,255,255,0.06),
+      inset 0 0 0 1px rgba(255,255,255,0.12),
+      inset 0 -3px 4px rgba(0,0,0,0.65),
+      inset 0 3px 4px rgba(255,255,255,0.1)
+    `,
+    borderRadius: 30,
+    padding: 20,
+  },
+  ipadScreen: {
+    position: "relative" as const,
+    width: "100%",
+    height: "100%",
+    borderRadius: 14,
+    overflow: "hidden" as const,
+    background: "#0b1b1a",
+    boxShadow: "inset 0 0 20px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(255,255,255,0.04)",
+  },
+  ipadCamera: {
+    position: "absolute" as const,
+    top: "8px",
+    left: "50%",
+    transform: "translateX(-50%)",
+    width: "7px",
+    height: "7px",
+    borderRadius: "50%",
+    background: "radial-gradient(circle at 35% 30%, #444 0%, #000 55%, #141414 100%)",
+    boxShadow: "0 0 0 1px rgba(255,255,255,0.1), inset 0 0 2px rgba(100,200,255,0.15), inset 0 0 0 1px rgba(0,0,0,0.9)",
+    zIndex: 60,
   },
 } as const;
 
@@ -198,8 +234,8 @@ export function CinematicHero() {
       gsap.set(".ch-ws-wrap", {
         autoAlpha: 0,
         y: 120, rotationX: 30, rotationY: -12, scale: 0.7,
-        /* Start nested at a smaller size so it can "expand" like the outer card */
-        top: "24%", bottom: "20%", left: "18%", right: "18%",
+        /* Right-column iPad position (~4:3 landscape) */
+        top: "20%", bottom: "16%", left: "46%", right: "4%",
       });
       gsap.set(".ch-reveal", { autoAlpha: 0, y: 20 });
       gsap.set(".ch-cta-wrap", { autoAlpha: 0, scale: 0.85, filter: "blur(24px)" });
@@ -279,11 +315,11 @@ export function CinematicHero() {
         /* hold so brand is visible alone */
         .to({}, { duration: 1.4 })
 
-        /* 5 — inner mockup rises + expands (mirrors the outer card's expand arc) */
+        /* 5 — inner mockup rises + settles into right-column iPad position */
         .to(".ch-ws-wrap", {
           autoAlpha: 1,
           y: 0, rotationX: 0, rotationY: 0, scale: 1,
-          top: "12%", bottom: "6%", left: "5%", right: "5%",
+          top: "16%", bottom: "14%", left: "45%", right: "3%",
           ease: "expo.out", duration: 2.0,
         })
         .fromTo(".ch-card-right",
@@ -344,9 +380,9 @@ export function CinematicHero() {
         .to(".ch-card-bg", { autoAlpha: 0, ease: "power2.inOut", duration: 1.6 }, "pull")
         .to(".ch-ws-wrap", {
           top: isMob ? "14%" : "18%",
-          bottom: isMob ? "9%" : "14%",
-          left: isMob ? "3%" : "9%",
-          right: isMob ? "3%" : "9%",
+          bottom: isMob ? "9%" : "18%",
+          left: isMob ? "3%" : "22%",
+          right: isMob ? "3%" : "22%",
           ease: "expo.inOut", duration: 1.6,
         }, "pull")
         .to(".ch-cta-wrap", { scale: 1, filter: "blur(0px)", ease: "expo.inOut", duration: 1.6 }, "pull")
@@ -648,16 +684,16 @@ export function CinematicHero() {
               }}
             >
               <div
-                className="ch-ws relative w-full h-full overflow-hidden will-change-transform"
+                className="ch-ws relative w-full h-full will-change-transform"
                 style={{
-                  borderRadius: 20,
-                  background: "#0b1b1a",
-                  boxShadow: "0 40px 80px -20px rgba(0,0,0,0.7), 0 18px 30px -10px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.08)",
+                  ...S.ipadBezel,
                   transformStyle: "preserve-3d",
                 }}
               >
-                {/* Screen glare */}
-                <div className="absolute inset-0 pointer-events-none z-50" style={{ background: "linear-gradient(115deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 42%)" }} />
+                {/* Inner iPad screen */}
+                <div style={S.ipadScreen}>
+                  {/* Screen glare */}
+                  <div className="absolute inset-0 pointer-events-none z-50" style={{ background: "linear-gradient(115deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 42%)" }} />
 
                 {/* Chrome bar */}
                 <div className="flex items-center gap-3 px-3.5 py-3" style={S.chrome}>
@@ -675,33 +711,93 @@ export function CinematicHero() {
                 </div>
 
                 {/* Body */}
-                <div className="grid h-[calc(100%-49px)]" style={{ gridTemplateColumns: "140px 1fr" }}>
-                  {/* Sidebar */}
-                  <aside className="p-3" style={S.sidebar}>
-                    <p className="font-[family-name:var(--font-mono)] text-[9.5px] tracking-[0.16em] uppercase mb-2 ml-1" style={{ color: "rgba(227,242,240,0.42)" }}>
-                      {tMockup("projects")}
-                    </p>
-                    <ul className="flex flex-col gap-0.5 list-none m-0 p-0">
-                      {["Casa Ribera", "Edificio Marítimo", "Estudio Soler", "Vivienda Olivos"].map((name, i) => (
-                        <li
-                          key={name}
-                          className="flex items-center gap-2 px-2 py-1.5 rounded-[7px] text-[11.5px]"
-                          style={i === 0
-                            ? { background: `rgba(43,165,158,0.08)`, color: "#e9f6f4", boxShadow: `inset 0 0 0 1px rgba(43,165,158,0.25)` }
-                            : { color: "rgba(227,242,240,0.62)" }
-                          }
+                <div className="grid h-[calc(100%-49px)]" style={{ gridTemplateColumns: "64px 1fr" }}>
+                  {/* Collapsed sidebar — icon rail (mirrors AppSidebar collapsed state) */}
+                  <aside className="flex flex-col relative" style={S.sidebar}>
+                    {/* Header — company/workspace mark */}
+                    <div className="h-11 flex items-center justify-center" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+                      <div
+                        className="w-8 h-8 rounded-lg flex items-center justify-center text-[10px] font-bold tracking-tight"
+                        style={{
+                          background: `linear-gradient(160deg, ${ACCENT_2} 0%, ${ACCENT} 100%)`,
+                          color: "#fff",
+                          letterSpacing: "-0.02em",
+                          boxShadow: `0 2px 4px -1px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.25)`,
+                        }}
+                      >
+                        BM
+                      </div>
+                    </div>
+
+                    {/* Collapse toggle — sits on the border between sidebar and main */}
+                    <div
+                      className="absolute top-3 -right-2 w-4 h-4 rounded-full flex items-center justify-center"
+                      style={{
+                        background: "#0b1b1a",
+                        border: "1px solid rgba(255,255,255,0.15)",
+                        color: "rgba(227,242,240,0.65)",
+                        boxShadow: "0 2px 4px rgba(0,0,0,0.4)",
+                        zIndex: 5,
+                      }}
+                    >
+                      <ChevronLeft size={10} strokeWidth={2.2} />
+                    </div>
+
+                    {/* Digitize action — muted nav style */}
+                    <div className="p-1.5 flex justify-center" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+                      <button className="w-9 h-9 rounded-[9px] flex items-center justify-center border-none bg-transparent cursor-default" style={{ color: "rgba(227,242,240,0.55)" }}>
+                        <Zap size={16} strokeWidth={1.8} />
+                      </button>
+                    </div>
+
+                    {/* Nav menu */}
+                    <div className="flex-1 flex flex-col items-center gap-1 pt-2">
+                      <button className="w-9 h-9 rounded-[9px] flex items-center justify-center border-none bg-transparent cursor-default" style={{ color: "rgba(227,242,240,0.55)" }}>
+                        <Building2 size={16} strokeWidth={1.8} />
+                      </button>
+
+                      <div className="relative">
+                        <button
+                          className="w-9 h-9 rounded-[9px] flex items-center justify-center border-none cursor-default"
+                          style={{
+                            background: `rgba(43,165,158,0.14)`,
+                            color: ACCENT_2,
+                            boxShadow: `inset 0 0 0 1px rgba(43,165,158,0.3)`,
+                          }}
                         >
+                          <FolderOpen size={16} strokeWidth={2} />
+                        </button>
+                        {/* Hover tooltip — suggesting collapsed state */}
+                        <div
+                          className="absolute left-full top-1/2 -translate-y-1/2 ml-3 px-2 py-1 rounded-md text-[10px] font-medium whitespace-nowrap pointer-events-none"
+                          style={{
+                            background: "rgba(10,22,21,0.95)",
+                            color: "#e9f6f4",
+                            border: "1px solid rgba(255,255,255,0.1)",
+                            boxShadow: "0 8px 20px -4px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,0,0,0.4)",
+                            zIndex: 20,
+                          }}
+                        >
+                          {/* Pointer */}
                           <span
-                            className="w-[5px] h-[5px] rounded-full"
-                            style={i === 0
-                              ? { background: ACCENT_2, boxShadow: `0 0 0 3px rgba(43,165,158,0.22)` }
-                              : { background: "rgba(255,255,255,0.2)" }
-                            }
+                            className="absolute top-1/2 -left-1 w-2 h-2 rotate-45 -translate-y-1/2"
+                            style={{ background: "rgba(10,22,21,0.95)", borderLeft: "1px solid rgba(255,255,255,0.1)", borderBottom: "1px solid rgba(255,255,255,0.1)" }}
                           />
-                          {name}
-                        </li>
-                      ))}
-                    </ul>
+                          Projects
+                        </div>
+                      </div>
+
+                      <button className="w-9 h-9 rounded-[9px] flex items-center justify-center border-none bg-transparent cursor-default" style={{ color: "rgba(227,242,240,0.55)" }}>
+                        <User size={16} strokeWidth={1.8} />
+                      </button>
+                    </div>
+
+                    {/* Settings */}
+                    <div className="p-1.5 flex justify-center" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                      <button className="w-9 h-9 rounded-[9px] flex items-center justify-center border-none bg-transparent cursor-default" style={{ color: "rgba(227,242,240,0.55)" }}>
+                        <Settings size={16} strokeWidth={1.8} />
+                      </button>
+                    </div>
                   </aside>
 
                   {/* Main */}
@@ -818,25 +914,26 @@ export function CinematicHero() {
                             >
                               {s.initials}
                             </span>
-                            <span className="text-[11px] font-medium text-[#e9f6f4]">{s.role}</span>
-                            <span className="ml-auto font-[family-name:var(--font-mono)] text-[9.5px]" style={{ color: "rgba(227,242,240,0.45)" }}>{s.scope}</span>
+                            <span className="text-[11px] font-medium text-[#e9f6f4] whitespace-nowrap">{s.role}</span>
+                            <span className="ml-auto font-[family-name:var(--font-mono)] text-[9px] whitespace-nowrap overflow-hidden text-ellipsis max-w-[50%]" style={{ color: "rgba(227,242,240,0.45)" }}>{s.scope}</span>
                           </div>
                         ))}
                       </div>
                     </div>
                   </div>
                 </div>
+                </div>
               </div>
             </div>
 
-            {/* Feature deck — absolutely overlaid on the right side of the mockup */}
+            {/* Feature deck — left column alongside the iPad mockup */}
             <div
               className="ch-card-right absolute flex flex-col justify-center items-stretch gap-7 pointer-events-none"
               style={{
-                right: "clamp(24px, 6vw, 120px)",
+                left: "clamp(24px, 4vw, 80px)",
                 top: "50%",
                 transform: "translateY(-50%)",
-                width: "min(40vw, 460px)",
+                width: "min(36vw, 420px)",
                 zIndex: 5,
               }}
             >

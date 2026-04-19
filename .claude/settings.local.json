@@ -1,7 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "Bash(pnpm lint *)"
+      "Bash(pnpm lint *)",
+      "Bash(awk 'NR>=684 && NR<=868 { *)",
+      "Bash(awk 'NR>=684 && NR<=868' C:/Users/Guillermo/Documents/GitHub/ArkyHub-Landing/src/components/sections/cinematic-hero.tsx)",
+      "Bash(grep -cE '^\\\\s*/>$' C:/Users/Guillermo/Documents/GitHub/ArkyHub-Landing/src/components/sections/cinematic-hero.tsx)",
+      "Bash(npx --yes @babel/parser --help)",
+      "Bash(node -e ' *)",
+      "Bash(npx tsc *)"
     ]
   }
 }

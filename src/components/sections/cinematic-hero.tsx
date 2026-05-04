@@ -479,31 +479,48 @@ export function CinematicHero() {
     return () => ctx.revert();
   }, []);
 
-  /* ── Mouse sheen + mockup tilt ── */
+  /* ── Mouse sheen + mockup tilt ──
+     Throttled to ~30fps and split: sheen updates synchronously every tick (cheap CSS var write),
+     iPad rotation tween only restarts every 100ms to avoid compositor saturation that was
+     starving the sparkles canvas's layer updates. */
   useEffect(() => {
     let rafId = 0;
+    let lastTickTs = 0;
+    let lastTweenTs = 0;
+    let lastEvent: MouseEvent | null = null;
     const handler = (e: MouseEvent) => {
       if (window.scrollY > window.innerHeight * 2) return;
+      lastEvent = e;
+      const now = performance.now();
+      if (now - lastTickTs < 33) return; // ~30fps cap
+      lastTickTs = now;
       cancelAnimationFrame(rafId);
       rafId = requestAnimationFrame(() => {
+        const ev = lastEvent;
+        if (!ev) return;
         const cardEl = stageRef.current?.querySelector(".ch-card") as HTMLElement | null;
-        const wsEl = stageRef.current?.querySelector(".ch-ws") as HTMLElement | null;
         if (!cardEl) return;
         const r = cardEl.getBoundingClientRect();
-        cardEl.style.setProperty("--mx", `${e.clientX - r.left}px`);
-        cardEl.style.setProperty("--my", `${e.clientY - r.top}px`);
-        if (wsEl) {
-          gsap.to(wsEl, {
-            rotationY: ((e.clientX / window.innerWidth) - 0.5) * 16,
-            rotationX: -((e.clientY / window.innerHeight) - 0.5) * 12,
-            ease: "power3.out",
-            duration: 1.2,
-            transformPerspective: 1200,
-          });
+        cardEl.style.setProperty("--mx", `${ev.clientX - r.left}px`);
+        cardEl.style.setProperty("--my", `${ev.clientY - r.top}px`);
+        const ts = performance.now();
+        if (ts - lastTweenTs > 100) {
+          lastTweenTs = ts;
+          const wsEl = stageRef.current?.querySelector(".ch-ws") as HTMLElement | null;
+          if (wsEl) {
+            gsap.to(wsEl, {
+              rotationY: ((ev.clientX / window.innerWidth) - 0.5) * 16,
+              rotationX: -((ev.clientY / window.innerHeight) - 0.5) * 12,
+              ease: "power3.out",
+              duration: 1.2,
+              transformPerspective: 1200,
+              overwrite: "auto",
+            });
+          }
         }
       });
     };
-    window.addEventListener("mousemove", handler);
+    window.addEventListener("mousemove", handler, { passive: true });
     return () => window.removeEventListener("mousemove", handler);
   }, []);
 

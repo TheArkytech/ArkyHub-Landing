@@ -1469,13 +1469,20 @@ export function CinematicHero() {
       </div>
 
 
-      {/* Keyframe for scroll-dot animation */}
+      {/* Keyframe for scroll-dot animation + FOUC guards
+         (initial states match gsap.set() below; prevents flash before useEffect runs) */}
       <style>{`
         @keyframes chScrollDot {
           0% { opacity: 0; transform: translate(-50%, 0); }
           40% { opacity: 1; }
           100% { opacity: 0; transform: translate(-50%, 10px); }
         }
+        .ch-eyebrow, .ch-line-a, .ch-line-b, .ch-sparkles, .ch-sub, .ch-pills,
+        .ch-card, .ch-card-right, .ch-ws-wrap, .ch-reveal, .ch-cta-wrap,
+        .ch-hint, .ch-feat-stack {
+          visibility: hidden;
+        }
+        .ch-order, .ch-chaos { opacity: 0; }
       `}</style>
     </div>
   );

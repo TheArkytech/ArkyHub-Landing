@@ -143,6 +143,7 @@ export function SparklesCore({
       ref={canvasRef}
       id={id}
       className={cn("h-full w-full", className)}
+      style={{ willChange: "contents", transform: "translateZ(0)" }}
     />
   );
 }

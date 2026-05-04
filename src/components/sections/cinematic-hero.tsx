@@ -591,7 +591,7 @@ export function CinematicHero() {
             particleDensity={1400}
             className="w-full h-full"
             particleColor={ACCENT_2}
-            speed={0.5}
+            speed={1.4}
           />
         </div>
 
